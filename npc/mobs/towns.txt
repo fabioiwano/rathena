@@ -37,3 +37,13 @@ jawaii_in,72,74,5,1	monster	Black Mushroom	1084,2,3000000,1200000
 // Inside Lighthalzen
 //==================================================
 lhz_in01,157,54	monster	Red Mushroom	1085,1,120000,100000
+
+//==================================================
+// Starting Point Dummies
+//==================================================
+prt_monk,70,207	monster	Small Dummy	2413,1,120000,100000 // Small Dummy
+prt_monk,73,207	monster	Small Dummy	2413,1,120000,100000 // Small Dummy
+prt_monk,70,211	monster	Medium Dummy	2410,1,120000,100000 // Medium Dummy
+prt_monk,73,211	monster	Medium Dummy	2410,1,120000,100000 // Medium Dummy
+prt_monk,70,215	monster	Large Dummy	2411,1,120000,100000 //Large Dummy
+prt_monk,73,215	monster	Large Dummy	2411,1,120000,100000 //Large Dummy

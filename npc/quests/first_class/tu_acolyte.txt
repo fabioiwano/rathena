@@ -1399,7 +1399,7 @@ prt_monk,219,164,3	script	Gloria#tu	4_F_SISTER,{
 
 // Cleope Verce
 //============================================================
-prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
+prt_monk,148,215,3	script	Cleope Verce	4_F_SISTER,{
 	mes "[Cleope Verce]";
 	if(BaseJob == Job_Acolyte){
 		if (JobLevel < 40) {

@@ -1,0 +1,52 @@
+//--------------------------------------------------------------
+// rAthena
+// Made by Euphy
+//--------------------------------------------------------------
+// NPC Item deleter
+//--------------------------------------------------------------
+
+prt_monk,113,212,6	script	Meow item eater	4_cat_sailor4,{
+
+mes "[Meow item eater]";
+mes "Type your inventory´s ID item that you want to delete FOREVER.";
+
+	getinventorylist;
+
+	for(set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1)
+ 
+		mes "[ "+@inventorylist_id[.@i]+" ] "+getitemname(@inventorylist_id[.@i])+" x"+@inventorylist_amount[.@i];
+
+	next;
+
+	input .@item;
+    mes "Now, please type the amount I should delete.";
+	if (getitemname(.@item) != "null") {
+
+		if (countitem(.@item)) {
+
+			input .@amount;
+
+			if (.@amount && countitem(.@item) >= .@amount) {
+
+				delitem .@item,.@amount;
+
+				mes getitemname(.@item)+" x"+.@amount+" deleted.";
+
+				close;
+
+			} else {
+
+				mes "Invalid amount "+.@amount+".";
+
+				close;
+
+			}
+
+		}
+
+	}
+
+	mes "Invalid input "+.@item+".";
+
+	close;
+ 	}

@@ -1,0 +1,59 @@
+prt_monk,107,211,3	script	Emissary#Eden	4_M_DEATH,{	
+	end;
+	
+OnNPCKillEvent:
+	if(.wbActive == 0){
+		.wbKilledMob++;
+		delwaitingroom;
+		waitingroom (.killPopBoss - .wbKilledMob) + " for boss." ,0;
+		//setnpcdisplay(strnpcinfo(0), "Emissary", 4_M_DEATH,0);
+	}
+	
+	if(.wbKilledMob >= .killPopBoss)
+	{
+		
+		.wbActive = 1;	
+		.wbKilledMob = 0;
+		.currentBossNumber = rand(getarraysize(.wBossId$));
+		.@map$ = .townMap$[rand(getarraysize(.townMap$))];
+		.@currentBoss = .wBossId$[.currentBossNumber];
+		.@currentBossName = .@bossName$[.currentBossNumber]; 
+		 setarray .@anounce$[0],
+		 "[World Boss " + strmobinfo(1,.@currentBoss) +"]:" + strcharinfo(0) + ", how dare you...to kill my fellows! Come to " + .@map$ + ". Bring all your coward friends.. you will get what you deserve...",
+		 "[World Boss " + strmobinfo(1,.@currentBoss) +"]: Time has arrived. Let's invade " + .@map$ + ". Attaaacckkkk!!!",
+		 "[World Boss " + strmobinfo(1,.@currentBoss) +"]: " + .@map$ + " warriors, you are not match for me...I came here only to beat the adventurer " + strcharinfo(0) + ". Where are you?!!";
+		areamonster .@map$, 0, 0, 250, 250, "Furious " + strmobinfo(1,.@currentBoss), .@currentBoss, 1, strnpcinfo(3) + "::OnWBossDied",2;
+		areamonster .@map$, 0, 0, 250, 250, strmobinfo(1,.@currentBoss) + " mercenary", 1875, 150, "",0;
+		areamonster .@map$, 0, 0, 250, 250, strmobinfo(1,.@currentBoss) + " mercenary", 3454, 10, "",0;
+		areamonster .@map$, 0, 0, 250, 250, .@map$  + " Warrior", 2544, 60, "",0,1;
+		areamonster .@map$, 0, 0, 250, 250, .@map$  + " Maid", 1275, 40, "",0,1;
+		areamonster .@map$, 0, 0, 250, 250, .@map$  + " Tourist", 2914, 40, "",0,1;
+		announce .@anounce$[rand(getarraysize(.@anounce$))], 0xFFFF00;	
+		delwaitingroom;
+		waitingroom "WB in " + .@map$ ,0;
+	}
+	end;
+	//3454 syren  2914 coelho
+OnWBossDied:
+	.wbActive = 0;
+	announce "[World Boss] " + strcharinfo(0) + " Defeated the World Boss and brought peace to Citizens.", bc_all, 0x03BB85;
+	.wbKilledMob = 0;
+	killmonsterall strcharinfo(3);
+	getitem 7606, .rewardCount;
+	getitem F_Rand(7619,7620,12103,12690,12691,12692,12693,12694,12695,17070,12210,12328,14530,12710,12412,14608,12299,12883,12404,12778,14317), .rewardCount;
+	//getitem .rewardId$[rand(getarraysize(.rewardId$))], .rewardCount;
+	delwaitingroom;
+	end;
+	
+OnInit:
+	.killPopBoss = 2000;
+	setarray .townMap$[0],"izlude","geffen","morocc","payon","izlude","alberta","aldebaran","brasilis","dewata"; //to fill
+	setarray .wBossId$[0],1646,1832,2442,2443,2444,2448,1418,1583,2109,2249,2253,2255,1832,2251,1917,2483,2563,3074,2562,1646,1648,2236,1930,1779,2186,3633,1785,3621,1719,2564,2238,2241,3190;
+	.currentBossNumber = 0;
+	.currentBossName = "";
+	.rewardCount = 10;
+	.wbActive = 0;
+	end;
+
+}
+

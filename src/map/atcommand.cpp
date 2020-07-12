@@ -1966,9 +1966,9 @@ ACMD_FUNC(go)
 		{ MAP_NIFLHEIM,     21, 153 }, // 13=Niflheim
 		{ MAP_LOUYANG,     217,  40 }, // 14=Louyang
 #ifdef RENEWAL
-		{ MAP_NOVICE,       18, 26  }, // 15=Training Grounds (Renewal)
+		{ MAP_NOVICE,       95, 208  }, // 15=Start Point (Renewal)
 #else
-		{ MAP_NOVICE,       53, 111 }, // 15=Training Grounds
+		{ MAP_NOVICE,       95, 208 }, // 15=Start Point
 #endif
 		{ MAP_JAIL,         23,  61 }, // 16=Prison
 		{ MAP_JAWAII,      249, 127 }, // 17=Jawaii
@@ -1991,6 +1991,11 @@ ACMD_FUNC(go)
 		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
 		{ MAP_ECLAGE,      110,  39 }, // 35=Eclage
 		{ MAP_LASAGNA,     193, 182 }, // 36=Lasagna
+		{ MAP_HARBORO1,     126, 203 }, // 37=Rockridge
+		{ MAP_VERUS04,     107, 221 }, // 38=Verus
+		{ MAP_PORING01,     204,110 }, // 39=Poringland
+		{ MAP_PRIVYARD,     135, 170 }, // 40=Jardim
+		{ MAP_NOOBS,     50, 45 } // 41=Noobs
 	};
 
 	nullpo_retr(-1, sd);

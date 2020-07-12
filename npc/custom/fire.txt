@@ -1,0 +1,4 @@
+prt_monk,101,206,4	script	Mission FirePit#pay	10252,{
+	
+
+}

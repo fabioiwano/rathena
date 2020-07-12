@@ -1,0 +1,20 @@
+//===== rAthena Script ======================================= 
+//= Welcome Board
+
+prt_monk,141,210,5	script	#1_1	2257,{
+		
+mes "Play a lot and have fun at JufaRO!";
+close;
+
+OnInit:
+waitingroom "Exchange Quest",0;
+/*
+while (1) {
+	sleep 10000;
+	npctalk "Welcome to JufaRO!";
+}
+*/
+end;
+}
+
+

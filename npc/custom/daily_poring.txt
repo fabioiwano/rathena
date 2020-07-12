@@ -1,0 +1,464 @@
+//===== EinherjarRO Scripts ================================== 
+//= Requested 
+//===== By: ================================================== 
+//= Stolao
+//===== Current Version: =====================================
+//= 2.1C
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= A reward system for players who play more frequently
+//===== Todo =================================================
+//= Make Logging out then it continue count
+//===== Additional Comments: =================================
+//= 2.00 Origional Make
+//= 2.01 Fixed Logic Bug
+//= 2.02 Fixed Year Multiplier
+//= 2.03 Added an IP check
+//= 2.04 Split Rewards up
+//= 2.05 Move ip check to Daily reward collection
+//= 2.06 Added ability to see next day via commands/relogging
+//= 2.07 Added Delay
+//= 2.08 Moved Delay to none VIP only
+//= 2.09 Removed some useless lines
+//= 2.0A Removed Menus due to bugs
+//= 2.0B Fixed VIP Cutin
+//= 2.0C Added it showing previos day cutin
+//= 2.0D Added a for loop
+//= 2.0E Fixed Ramined logged in time calculation (visual bug)
+//= 2.0F Added a F_InsertPlural to "more minute"
+//= 2.10 Added a Mac Check
+//= 2.11 Changed the IP check to [Sader1992] version
+//= 2.12 Enable Bound Type
+//= 2.13 Added 'collectreward', 'dailyreward', 'collectdaily' Commands
+//= 2.14 Added 'nextreward' Command
+//= 2.15 Added Daily Buffs
+//= 2.16 Added Exp Rewards
+//= 2.17 Removed Reards for Autotraders
+//= 2.18 Move Buffs to Daily so VIP wont trigger twice
+//= 2.19 Optimized Slightly
+//= 2.1A Fixed a bug with VIP getting bonus rewards in normal rewards
+//= 2.1B Fixed some documentaion
+//= 2.1C Fixed extra '['
+//===== Contact Info: ========================================
+//= [Stolao] 
+//= Email: Taingram11@gmail.com
+//============================================================
+prontera,5,5,5	script	LOGIN	111,{
+OnPCLoginEvent:
+	if(!@logintime)
+		@logintime = gettime(DT_YEAR) * 60 * 24 * 365 + gettime(DT_DAYOFYEAR) * 60 * 24 + gettime(DT_HOUR) * 60 + gettime(DT_MINUTE);
+OnLoginCmnd:
+	.@i = gettime(DT_YEAR) * 12 * 31 + gettime(DT_MONTH) * 31 + gettime(DT_DAYOFMONTH);
+	if(.Reset && .@i > #LastDailyReward + 1)
+		#DRewardCon = 0;
+	if(.Reset && .@i > #LastVIPReward + 1)
+		#VIPRewardCon = 0;
+	.@VIPSize = getarraysize(.VIPRewards$);
+	.@Size = getarraysize(.Rewards$);
+	if(#DRewardCon >= .@Size && #VIPRewardCon >= .@VIPSize){
+		#LastDailyReward = .@i;
+		#LastVIPReward = .@i;
+		end;
+	}
+	sleep2 1000;
+	for(.@k = 0; .@k < 2; .@k++){
+		if(!.@k){
+			if(!vip_status(VIP_STATUS_ACTIVE) && .VIPRewards$[#VIPRewardCon + 1] != ""){
+				//message strcharinfo(0),"[Daily Rewards]: Become a VIP for more rewards.";
+				continue;
+			} else if(#VIPRewardCon >= .@VIPSize){
+				message strcharinfo(0),"[Daily Rewards]: No more VIP rewards remaining this month.";
+				continue;
+			} else if(.@i <= #LastVIPReward){
+				message strcharinfo(0),"[Daily Rewards]: VIP Rewards already collected today";
+				continue;
+			}
+		} else {
+			if(#DRewardCon >= .@Size){
+				message strcharinfo(0),"[Daily Rewards]: No more rewards remaining this month.";
+				continue;
+			} else if(.@i <= #LastDailyReward){
+				message strcharinfo(0),"[Daily Rewards]: Rewards already collected today.";
+				cutin .Cutins$[.@g+1],4;
+				continue;
+			}
+		}
+		if(!.@k)
+			explode(.@XT$,.VIPRewards$[#VIPRewardCon + 1],",");
+		else {
+			if(.IPCheck){
+				query_sql("SELECT account_id FROM `login` WHERE last_ip = '"+getcharip()+"'", .@AccountId);
+				.@Size = getarraysize(.@AccountId);
+				for(.@i=0; .@i < .@Size; .@i++){
+					query_sql("SELECT `value` FROM `acc_reg_num` WHERE `account_id` = '"+.@AccountId[.@i]+"' AND `key` = '#LastDailyReward'",.@LastIp2);
+					if(.@i <= .@LastIp2){
+						message strcharinfo(0),"[Daily Rewards]: Rewards are limited to 1 per IP sorry.";
+						continue;
+					}
+				}
+			}
+			if(.MacCheck){
+				query_sql("SELECT last_unique_id FROM `login` WHERE account_id = "+getcharid(3)+"", .@last_unique_id$);
+				query_sql("SELECT account_id FROM `login` WHERE last_unique_id = '"+.@last_unique_id$+"'", .@AccountId2);
+				.@Size = getarraysize(.@AccountId2);
+				for(.@i=0; .@i < .@Size; .@i++){
+					query_sql("SELECT `value` FROM `acc_reg_num` WHERE `account_id` = '"+.@AccountId2[.@i]+"' AND `key` = '#LastDailyReward'",.@MacCheck2);
+					if(.@i <= .@MacCheck2){
+						message strcharinfo(0),"[Daily Rewards]: Rewards are limited to 1 per computer sorry.";
+						continue;
+					}
+				}
+			}
+			if(.Rest){
+				.@time = gettime(DT_YEAR) * 60 * 24 * 365 + gettime(DT_DAYOFYEAR) * 60 * 24 + gettime(DT_HOUR) * 60 + gettime(DT_MINUTE);
+				if(.@time < @logintime + .Rest){
+					.@delay = @logintime + .Rest - .@time;
+					message strcharinfo(0),"[Daily Rewards]: to collect reward you must remain logged in for "+callfunc("F_InsertPlural",.@delay,"more minute")+".";
+					continue;
+				}	
+			}
+			deletearray .@XT$[0],getarraysize(.@XT$);
+			.@NextDay = #DRewardCon + 1;
+			explode(.@XT$,.Rewards$[.@NextDay],",");
+		}
+		if(checkvending() & 2 && .Mode & 256){
+			message strcharinfo(0),"[Daily Rewards]: Venders cannot recive rewards.";
+			end;
+		}
+		.@Size = getarraysize(.@XT$);
+		deletearray .@TT[0],getarraysize(.@TT);
+		deletearray .@itms[0],getarraysize(.@itms);
+		deletearray .@qnts[0],getarraysize(.@qnts);
+		for(.@x = y = 0; .@x < .@Size; .@x++)
+			.@TT[.@x] = atoi(.@XT$[.@x]);
+		if(.Mode & 1 && (.@TT[4] > 0 || .@vip[4] > 0)){
+			.@Size = getarraysize(.@TT);
+			for(.@x = 4; .@x <= .@Size - 1 ; .@x += 2){
+				.@itms[.@y] = .@TT[.@x];
+				.@qnts[.@y] = .@TT[.@x + 1];
+				.@y++;
+			}
+			if(checkweight2(.@itms,.@qnts)){
+				for(.@x = 0; .@x < .@y; .@x++){
+					if(.Mode & 128)
+						getitembound  .@itms[.@x], .@qnts[.@x], .Bound_Mode;
+					else	getitem  .@itms[.@x], .@qnts[.@x];
+				}
+			} else {
+				message strcharinfo(0),"[Daily Rewards]: You cannot carry the prizes, please use storage and relog.";
+				continue;
+			}
+		}
+		if(.Mode & 2 && (.@TT[1])){
+			#Loyalty += .@TT[1];
+			message strcharinfo(0),"[Daily Rewards]: Recieved "+ .@TT[1] +" "+.Points$;
+		}
+		if(.Mode & 4 && (.@TT[0])){
+			zeny += .@TT[0];
+			message strcharinfo(0),"[Daily Rewards]: Recieved "+ .@TT[0] +"z";
+		}
+		if(.Mode & 8 && (.@TT[3] || .@TT[4]))
+			getexp .@TT[3], .@TT[4];
+
+		if(!.@k){
+			if(.Mode & 32)
+				cutin .VIPCutins$[#VIPRewardCon],4;
+				soundeffect("by_chance.wav", 0); 
+			#VIPRewardCon++;
+			#LastVIPReward = .@i;
+			sleep2 1000;
+			if(.Mode & 64)
+				cutin .VIPCutins$[#VIPRewardCon],4;
+			message strcharinfo(0),"[Daily Rewards]: You have collected your VIP reward, for "+callfunc("F_InsertPlural",#VIPRewardCon,"day")+" this month.";
+		} else {
+			if(.Mode & 16){
+				.@Size = getarraysize(.BuffInfo);
+				for(.@x = 0; .@x < .@Size; .@x += 4){
+					if(.@NextDay == .BuffInfo[.@x + 1])
+						sc_start .BuffInfo[.@x], .BuffInfo[.@x + 2] * 60000, .BuffInfo[.@x + 3];
+				}
+			}
+			if(.Mode & 32)
+				cutin .Cutins$[#DRewardCon],4;
+				soundeffect("by_chance.wav", 0); 
+			#DRewardCon++;
+			#LastDailyReward = .@i;
+			sleep2 1000;
+			if(.Mode & 64)
+				cutin .Cutins$[#DRewardCon],4;
+				soundeffect("by_chance.wav", 0); 
+			message strcharinfo(0),"[Daily Rewards]: You have collected your daily reward, for "+callfunc("F_InsertPlural",#DRewardCon,"day")+" this month.";
+		}	
+		if(.Mode & 32 || .Mode & 64){
+			sleep2 15000;
+			cutin "",255;
+		}
+	}
+	end;
+
+OnNextCmnd:
+	.@time = gettime(DT_YEAR) * 60 * 24 * 365 + gettime(DT_DAYOFYEAR) * 60 * 24 + gettime(DT_HOUR) * 60 + gettime(DT_MINUTE);
+	if(.@time >= @logintime + .Rest){
+		message strcharinfo(0),"[Daily Rewards]: your next reward is available.";
+	} else {
+		.@i = gettime(DT_YEAR) * 12 * 31 + gettime(DT_MONTH) * 31 + gettime(DT_DAYOFMONTH);
+		if(.@i <= #LastDailyReward)
+			message strcharinfo(0),"[Daily Rewards]: Your next reward will be aviable tomorrow.";
+			
+		else {
+			.@days = (.@time >= @logintime + .Rest) / 60 / 24;
+			.@hours = ((.@time >= @logintime + .Rest) / 60) % 24;
+			.@mins = (.@time >= @logintime + .Rest) % 60;
+			message strcharinfo(0),"[Daily Rewards]: You have "+ ((.@days) ? .@days +" Days " : "") + ((.@hours) ? .@hours +" Hours " : "") + ((.@mins) ? .@mins +" Minutes " : "") +"till your next reward.";
+		}
+		if(.Mode & 32 || .Mode & 64){
+			if(.@NextDay >= getarraysize(.Rewards$))
+				.@g = 0;
+			else	.@g = #DRewardCon + 1;
+			cutin .Cutins$[.@g],4;
+			soundeffect("by_chance.wav", 0); 
+		}
+	}
+	end;
+
+OnHour00:
+	if(gettime(DT_DAYOFMONTH) == 1){
+		query_sql("DELETE FROM `acc_reg_num` WHERE `key` = '#DRewardCon' OR `key` = '#VIPRewardCon' OR `key` = '#LastVIPReward' OR `key` = '#LastDailyReward'");
+		addrid(0);
+		#DRewardCon = #VIPRewardCon = #LastVIPReward = #LastDailyReward = 0;
+	}
+	end;
+
+OnInit:
+	// Basic Settings
+	//   1: Item | 2: Points | 4: Zeny | 8: Exp
+	//   16: Gain Buffs
+	//   32: Show Cutins | 64: Show Next Day Cutin
+	//   128: Item Rewards Bound
+	//   256: No Rewards for Autotraders 
+	//     (a bit value, e.g. 3 = Items & Points from Multi)
+	.Mode = 1|2|4|16|32|64|128|256;
+
+	// Item Binding Mode
+	//	 Bound_Account : Account Bound item
+	//	 Bound_Guild   : Guild Bound item
+	//	 Bound_Party   : Party Bound item
+	//	 Bound_Char    : Character Bound item
+	.Bound_Mode = Bound_Account;
+
+	// To disable the command '@loginreward' comment the next lines
+	// * Needs extra commands for typos
+	bindatcmd("relog","LOGIN::OnLoginCmnd",0,99);
+	bindatcmd("collectreward",strnpcinfo(3)+"::OnLoginCmnd",0,99);
+	bindatcmd("dailyreward",strnpcinfo(3)+"::OnLoginCmnd",0,99);
+	bindatcmd("collectdaily",strnpcinfo(3)+"::OnLoginCmnd",0,99);
+	bindatcmd("nextreward",strnpcinfo(3)+"::OnNextCmnd",0,99);
+
+	// Reset days back to 0 on a skipped day.
+	// Toggle 
+	// [0] = Off
+	// [1] = On
+	.Reset = 0;
+
+	// .Rest
+	// Delay after login to collect rewards
+	// In Minutes
+	.Rest = 0;
+
+	// Point Name
+	.Points$ = "Loyalty Points";
+
+	// Ip check to prevent multi accounts
+	// Toggle 
+	// [0] = Off
+	// [1] = On
+	.IPCheck = 0;
+
+	// Consecutive Days Buff
+	// Each buff contains 4 variables
+	// <Type>,<Days>,<Duration>,<Rate>, // Buff 1
+	// <Type>,<Days>,<Duration>,<Rate>, // Buff 2
+	//   ...;
+	//
+	//  Example: 188,7,45,3
+	//    -On the 7th day logged in Player gains +3 Str for 45 mins
+	//
+	//  Type is 188, which references which SC_ to use, SC_INCSTR in this example
+	//     -For a full list of SC_ visit the db/const.txt
+	//  Days is days buff is applied, in this example 7, so every 7th day, 14,21,28....
+	//  Duration is buff duration is Minuits, in this example 45 mins
+	//  Rate is buff val1, in this example player gains 3 Str
+	setarray .BuffInfo
+				,198,1,240,10	// +10% Hp for 120 Mins on 3rd Day
+				,196,2,240,25	// +25 Flee for 120 Mins on 5th Day
+				,257,3,240,50	// +50% Exp for 120 Mins on 7th Day
+				,198,4,120,10	// +10% Hp for 120 Mins on 9th Day
+				,196,5,120,25	// +25 Flee for 120 Mins on 10th Day
+                ,198,6,240,10	// +10% Hp for 120 Mins on 3rd Day
+				,196,7,240,25	// +25 Flee for 120 Mins on 5th Day
+				,257,8,240,50	// +50% Exp for 240 Mins on 7th Day
+				,198,9,120,10	// +10% Hp for 120 Mins on 9th Day
+				,196,10,120,25	// +25 Flee for 120 Mins on 10th Day
+                ,198,11,240,10	// +10% Hp for 120 Mins on 3rd Day
+				,196,12,240,25	// +25 Flee for 120 Mins on 5th Day
+				,257,13,240,50	// +50% Exp for 240 Mins on 7th Day
+				,198,14,120,10	// +10% Hp for 120 Mins on 9th Day
+				,196,15,120,25	// +25 Flee for 120 Mins on 10th Day
+                ,198,16,240,10	// +10% Hp for 120 Mins on 3rd Day
+				,196,17,240,25	// +25 Flee for 120 Mins on 5th Day
+				,257,18,240,50	// +50% Exp for 240 Mins on 7th Day
+				,198,19,120,10	// +10% Hp for 120 Mins on 9th Day
+				,196,20,120,25	// +25 Flee for 120 Mins on 10th Day
+                ,198,21,240,10	// +10% Hp for 120 Mins on 3rd Day
+				,196,22,240,25	// +25 Flee for 120 Mins on 5th Day
+				,257,23,240,50	// +50% Exp for 240 Mins on 7th Day
+				,198,24,120,10	// +10% Hp for 120 Mins on 9th Day
+				,196,25,120,25	// +25 Flee for 120 Mins on 10th Day
+                ,198,26,240,10	// +10% Hp for 120 Mins on 3rd Day
+				,196,27,240,25	// +25 Flee for 120 Mins on 5th Day
+				,257,28,240,50	// +50% Exp for 240 Mins on 7th Day
+				,198,29,120,10	// +10% Hp for 120 Mins on 9th Day
+				,196,30,120,25	// +25 Flee for 120 Mins on 10th Day
+                ,198,31,300,10	// +10% Hp for 300 Mins on 3rd Day
+				,196,32,300,25;	// +25 Flee for 300 Mins on 5th Day
+
+	// Daily Prize items:
+	//   "<Zeny>,<Points>,<BaseExp>,<JobExp>,<itemID-1>,<amount-1>,<itemID-2>,<amount-2>...etc", // Day 1
+	//   "<Zeny>,<Points>,<BaseExp>,<JobExp>,<itemID-1>,<amount-1>,<itemID-2>,<amount-2>...etc"  // Day 2
+	//   ...;
+	// Total length of any days string must be 255 or shorter
+
+
+//random 100x gifts
+setarray .randbox$, "12103|100", "7606|100", "607|100", "12537|100",  "6240|100" , "6241|100", "6226|100", "6225|100", "25731|100", "25729|100", "14536|100", "14601|100", "12710|100", "7621|100";
+
+
+	setarray .Rewards$[1], "0,0,0,0,6635,5", // dia 01 #Blacksmith Blessing
+        "0,0,0,0,22979,5", // dia 02 #manual and buuble gum
+        "0,0,0,0,17231 ,10", // dia 03 #Refinement Ore Box
+        "0,0,0,0,12103,15", // dia 04 #bloody branch
+        "0,0,0,0,7606,20", // dia 05 #Token of the Ox
+        "0,0,0,0,17502,1", // dia 06 #support package IV
+        "0,0,0,0,14232,2", // dia 07 #yggdrasil berry 10 box 
+        "0,0,0,0,17465,7", // dia 08 #Refinement Ore Box VI
+        "0,0,0,0,12103,25", // dia 09 #bloody branch
+        "0,0,0,0,7606,20", // dia 10 # Token of the Ox
+        "0,0,0,0,14533,10", // dia 11 # Greater battle manual
+        "0,0,0,0,6635,10", // dia 12 #Blacksmith Blessing
+        "0,0,0,0,14522,75", // dia 13 #Big Bun 
+        "0,0,0,0,16268,2", // dia 14 #bubble gum box
+        "0,0,0,0,7606,20", // dia 15 # Token of the Ox
+        "0,0,0,0,23926,2", // dia 16 #+9 Shadow Refine Hammer
+        "0,0,0,0,12103,35", // dia 17 #bloody branch
+        "0,0,0,0,17491,3", // dia 18 #Refinement Ore Box VII
+        "0,0,0,0,12246,3", // dia 19 #Mystical card album
+        "0,0,0,0,7606,20", // dia 20 # Token of the Ox
+        "0,0,0,0,12545,5", // dia 21 #luck egg sair
+        "0,0,0,0,16268,3", // dia 22 #bubble gum box
+        "0,0,0,0,6635,15", // dia 28 #Blacksmith Blessing
+        rand(100000,3000000) + "", // dia 24 # Omiyague envelope
+        "0,0,0,0,12103,50", // dia 50 #bloody branch
+        "0,0,0,0,14232,3", // dia 26 #yggdrasil berry 10 box 
+        "0,0,0,0,14522,100", // dia 27 #Big Bun 
+        "0,0,0,0,6635,30", // dia 28 #Blacksmith Blessing
+        "0,0,0,0,12246,10", // dia 29 #Mystical card album
+        "0,0,0,0,7606,20", // dia 30 # Token of the Ox
+        "0,0,0,0,22510,1", // dia 31 #King_Wolf_Scroll
+        "0,0,0,0," + .randbox$[rand(getarraysize(.randbox$))]; // dia 32 #x100 mysterious gift
+
+
+
+
+
+	// VIP Prize items:
+	//   "<Zeny>,<Points>,<BaseExp>,<JobExp>,<itemID-1>,<amount-1>,<itemID-2>,<amount-2>...etc", // Day 1
+	//   "<Zeny>,<Points>,<BaseExp>,<JobExp>,<itemID-1>,<amount-1>,<itemID-2>,<amount-2>...etc"  // Day 2
+	//   ...;
+	// Total length of any days string must be 255 or shorter
+	//
+	// Note VIPs Collect both VIP and Normal Player rewards
+	setarray .VIPRewards$[1],
+		"1000",				// Day 1: 1000 Zeny
+		"0,0,0,0,501,5",		// Day 2: 5 Red Potion
+
+		"0,0,0,0,503,5,506,3",		// Day 26: 5 White Potion + 3 Green Potion
+		"2500",				// Day 27: 2500 Zeny
+		"2500";				// Day 28: 2500 Zeny
+
+        
+
+	// Cutin Array
+	//	Shows a cutin before collecting for each date
+	//	Start at 0 if showing next day
+	setarray .Cutins$,
+		"Daily_00", //pic with day1 highlighted
+        "Daily_01", //pic with day1 highlighted
+        "Daily_02", //pic with day2 highlighted
+        "Daily_03", //pic with day3 highlighted
+        "Daily_04", //pic with day4 highlighted
+        "Daily_05", //pic with day5 highlighted
+        "Daily_06", //pic with day6 highlighted
+        "Daily_07", //pic with day7 highlighted
+        "Daily_08", //pic with day8 highlighted
+        "Daily_09", //pic with day8 highlighted
+        "Daily_10", //pic with day8 highlighted
+        "Daily_11", //pic with day8 highlighted
+        "Daily_12", //pic with day8 highlighted
+        "Daily_13", //pic with day8 highlighted
+        "Daily_14", //pic with day8 highlighted
+        "Daily_15", //pic with day8 highlighted
+        "Daily_16", //pic with day8 highlighted
+        "Daily_17", //pic with day8 highlighted
+        "Daily_18", //pic with day8 highlighted
+        "Daily_19", //pic with day8 highlighted
+        "Daily_20", //pic with day8 highlighted
+        "Daily_21", //pic with day8 highlighted
+        "Daily_22", //pic with day8 highlighted
+        "Daily_23", //pic with day8 highlighted
+        "Daily_24", //pic with day8 highlighted
+        "Daily_25", //pic with day8 highlighted
+        "Daily_26", //pic with day8 highlighted
+        "Daily_27", //pic with day8 highlighted
+        "Daily_28", //pic with day8 highlighted
+        "Daily_29", //pic with day8 highlighted
+        "Daily_30", //pic with day8 highlighted
+        "Daily_31"; //pic with day8 highlighted
+
+	// Cutin Array
+	//	Shows a cutin on collecting for each date
+	setarray .VIPCutins$,
+			"Daily_00", //pic with day1 highlighted
+            "Daily_01", //pic with day1 highlighted
+            "Daily_02", //pic with day2 highlighted
+            "Daily_03", //pic with day3 highlighted
+            "Daily_04", //pic with day4 highlighted
+            "Daily_05", //pic with day5 highlighted
+            "Daily_06", //pic with day6 highlighted
+            "Daily_07", //pic with day7 highlighted
+            "Daily_08", //pic with day8 highlighted
+            "Daily_09", //pic with day8 highlighted
+            "Daily_10", //pic with day8 highlighted
+            "Daily_11", //pic with day8 highlighted
+            "Daily_12", //pic with day8 highlighted
+            "Daily_13", //pic with day8 highlighted
+            "Daily_14", //pic with day8 highlighted
+            "Daily_15", //pic with day8 highlighted
+            "Daily_16", //pic with day8 highlighted
+            "Daily_17", //pic with day8 highlighted
+            "Daily_18", //pic with day8 highlighted
+            "Daily_19", //pic with day8 highlighted
+            "Daily_20", //pic with day8 highlighted
+            "Daily_21", //pic with day8 highlighted
+            "Daily_22", //pic with day8 highlighted
+            "Daily_23", //pic with day8 highlighted
+            "Daily_24", //pic with day8 highlighted
+            "Daily_25", //pic with day8 highlighted
+            "Daily_26", //pic with day8 highlighted
+            "Daily_27", //pic with day8 highlighted
+            "Daily_28", //pic with day8 highlighted
+            "Daily_29", //pic with day8 highlighted
+            "Daily_30", //pic with day8 highlighted
+            "Daily_31"; //pic with day8 highlighted
+end;
+}

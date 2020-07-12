@@ -1,0 +1,149 @@
+-	script	Tester	FAKE_NPC,{
+OnPCLoginEvent:
+set LoginCount,LoginCount+1;
+if (LoginCount <2) {
+
+if (BaseClass == Job_Summoner) {
+//DORAM
+
+specialeffect(EF_ITEM_ZZZ, AREA, playerattached()); 
+mes "[Nyuang]";
+mes "Hey you.. wake up! Enough sleeping Nyan!";
+mes "Dorams usually sleep too much. But you...argh!";
+soundeffect("wldrm_001.wav", 0); 
+cutin "nyuang_1",2;
+
+next;
+specialeffect(EF_ITEM_ZZZ, AREA, playerattached()); 
+mes "["+strcharinfo(0)+"]";
+mes "ZzZZZzzzzZz..pffff...";
+specialeffect2 EF_WATERBALL;
+soundeffect("wldrm_002.wav", 0); 
+cutin "",255;
+next;
+
+mes "[Nyuang]";
+mes "Hey, you two, Fill this bucket with water now!";
+cutin "nyuang_4",2;
+next;
+
+mes "[Curious Cats]";
+cutin "mal_homnya_s",2;
+specialeffect2 EF_ITEM_ZZZ;
+mes "Yes Ma'am..";
+next;
+
+mes "[Nyuang]";
+mes "Wake......UuuPPPpppppppp!!!!";
+mes "*slap* *slap* *slap*";
+
+
+specialeffect2 EF_SCREEN_QUAKE;
+specialeffect2 EF_KICKEDBODY; 
+
+cutin "nyuang_4",2;
+next;
+
+mes "[Nyuang]";
+mes "Aww... finally you woke up! I slapped you, sorry...";
+mes "Lasagna King sent me here to carry some gifts for you.";
+mes "And give you the summoner protection blessing.";
+cutin "nyuang_2",2;
+next;
+
+mes "[Nyuang]";
+mes "Nyan, blessing first...By the poooowerr...";
+mes "of the seven aaaancient caaaats!";
+mes "I bless you "+ strcharinfo(0)+" !";
+specialeffect2 EF_READYPORTAL2;
+specialeffect2 EF_GLASSWALL3;
+
+sc_start SC_INCREASEAGI,720000,10;
+sc_start SC_BLESSING,720000,10;
+sc_start SC_ARCLOUSEDASH,720000,5;
+sc_start SC_ANGELUS,720000,10;
+cutin "nyuang_3",2;
+next;
+
+mes "[Nyuang]";
+mes "Here, these are your gifts.";
+mes "See nya!";
+
+//getitem 1681,1;
+
+}else{
+
+//HUMAN
+
+specialeffect(EF_ITEM_ZZZ, AREA, playerattached()); 
+mes "[Fruit]";
+mes "Are you Ok, " + strcharinfo(0)+"?";
+mes "You slept almost the entire trip.";
+mes "Wake up. We arrived.";
+soundeffect("wlhmn_001.wav", 0); 
+cutin "ep15_2_fru_3",2;
+
+next;
+specialeffect(EF_ITEM_ZZZ, AREA, playerattached()); 
+mes "["+strcharinfo(0)+"]";
+mes "I was very tired, sorry. Thank you for the help, Fruce.";
+cutin "",255;
+next;
+
+mes "[Fruit]";
+mes "It's Fruit. You re'welcome.";
+mes "I will bring these parts back to Verus.";
+mes "Can you take care of yourself?";
+cutin "ep15_2_fru_1",2;
+next;
+
+mes "[Fruit]";
+mes "Well, technology can grant your extra strength for a period";
+mes "It's kinda noisy. But don't worry.";
+mes " ";
+mes "Just er...dd..don't move!";
+cutin "ep15_2_fru_3",2;
+specialeffect2 EF_TRACKING;
+specialeffect2 EF_GRADIUS_LASER;
+soundeffect("wlhmn_002.wav", 0); 
+next;
+
+mes "[Fruit]";
+mes "RPX400 Activate!";
+mes "*laser beam*";
+specialeffect2 EF_SCREEN_QUAKE;
+specialeffect2 EF_INFRAREDSCAN; 
+specialeffect2 EF_READYPORTAL2;
+specialeffect2 EF_GLASSWALL3;
+
+sc_start SC_INCREASEAGI,720000,10;
+sc_start SC_BLESSING,720000,10;
+sc_start SC_CONCENTRATE,360000,10;
+sc_start SC_ANGELUS,720000,10;
+
+next;
+
+mes "[Fruit]";
+mes "Good luck kid";
+mes "Take these items with you.";
+mes "Bye!";
+cutin "ep15_2_fru_2",2;
+}
+
+//COMMON
+getitem 22777,1;
+getitem 14545,5;
+getitem 14592,5;
+getitem 13710,1;
+getitem2 5388,1,1,7,0,0,0,0,0;
+getitem2 2576,1,1,7,0,0,0,0,0;
+specialeffect2 EF_FORESTLIGHT5; 
+
+close2;
+cutin "",255;
+soundeffect("rotar_zairo_stand.wav", 0); 
+
+end;
+}
+
+}

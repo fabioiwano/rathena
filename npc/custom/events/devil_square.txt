@@ -13,7 +13,8 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,156,185,5	script	Devil Square Guardian#1	406,{
+//prontera,156,185,5	script	Devil Square Guardian#1	406,{
+prt_monk,86,215,5	script	Devil Square Guardian#1	10191,{
 	set .@gm_level, 99; // GM level required to start/stop the event
 
 	mes "[Devil Square Guardian]";
@@ -121,17 +122,74 @@ OnClock2200:
 	announce "Devil Square will begin in 1 minute.", bc_all;
 	sleep 60000;
 	announce "Devil Square has STARTED!", bc_all;
+
+	// Generate monsters loop //////
+
+//mes "wave one";
+
+	for (.@i = getarraysize(.waveOne$) - 1; .@i > 0; .@i--) {
+		.@j = rand(.@i + 1);
+		
+		.@temp = .waveOne$[.@i];
+		.waveOne$[.@i] = .waveOne$[.@j];
+		.waveOne$[.@j] = .@temp;
+
+		//mes strmobinfo(1, .waveOne$[.@i]);
+	}
+
+//mes "wave two";
+
+		// Shuffle the array
+	for (.@i = getarraysize(.waveTwo$) - 1; .@i > 0; .@i--) {
+		.@j = rand(.@i + 1);
+		
+		.@temp = .waveOne$[.@i];
+		.waveTwo$[.@i] = .waveTwo$[.@j];
+		.waveTwo$[.@j] = .@temp;
+
+		//mes strmobinfo(1, .waveTwo$[.@i]);
+	}
+
+//mes "wave specials";
+
+		// Shuffle the array
+	for (.@i = getarraysize(.specials$) - 1; .@i > 0; .@i--) {
+		.@j = rand(.@i + 1);
+		
+		.@temp = .specials$[.@i];
+		.specials$[.@i] = .specials$[.@j];
+		.specials$[.@j] = .@temp;
+
+		//mes strmobinfo(1, .specials$[.@i]);
+	}
+
+//mes "wave mvp";
+
+		for (.@i = getarraysize(.waveThreeMVP$) - 1; .@i > 0; .@i--) {
+		.@j = rand(.@i + 1);
+		
+		.@temp = .waveThreeMVP$[.@i];
+		.waveThreeMVP$[.@i] = .waveThreeMVP$[.@j];
+		.waveThreeMVP$[.@j] = .@temp;
+
+		//mes strmobinfo(1, .waveThreeMVP$[.@i]);
+	}
+
+
+
+	// End Generate monsters loop ////
+
 	if ( !getmapusers("ordeal_1-1") )
 		goto OnStopEvent;
 	.start = 2;
 	.round = 1;
 	.mob = 75;
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] SOLDIER SKELETON",1028,10,strnpcinfo(0)+"::OnDevilDead";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] ORC ARCHER",1189,15,strnpcinfo(0)+"::OnDevilDead";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] SANDMAN",1165,10,strnpcinfo(0)+"::OnDevilDead";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] ARCHER SKELETON",1016,15,strnpcinfo(0)+"::OnDevilDead";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] MINOROUS",1149,15,strnpcinfo(0)+"::OnDevilDead";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] REQUIEM",1164,10,strnpcinfo(0)+"::OnDevilDead";
+	areamonster "ordeal_1-1",183,182,246,244, "1st Wave Minion", .waveOne$[0],15,strnpcinfo(0)+"::OnDevilDead";
+	areamonster "ordeal_1-1",183,182,246,244, "1st Wave Minion", .waveOne$[1],20,strnpcinfo(0)+"::OnDevilDead";
+	areamonster "ordeal_1-1",183,182,246,244, "1st Wave Minion", .waveOne$[2],20,strnpcinfo(0)+"::OnDevilDead";
+	areamonster "ordeal_1-1",183,182,246,244, "1st Wave Minion", .waveOne$[3],16,strnpcinfo(0)+"::OnDevilDead";
+	areamonster "ordeal_1-1",183,182,246,244, "1st Wave Devil", .specials$[0],2,strnpcinfo(0)+"::OnDevilDead";
+	areamonster "ordeal_1-1",183,182,246,244, "1st Wave Devil", .specials$[1],2,strnpcinfo(0)+"::OnDevilDead";
 	end;
 
 OnDevilDead:
@@ -141,18 +199,19 @@ OnDevilDead:
 	else if ( .mob <= 0 ) {
 		announce "Devil Square is entering round 2...", bc_map;
 		goto OnDevil2;
+		getitem 7606, 1;
 	}
 	end;
 
 OnDevil2:
 	.round = 2;
 	.mob = 70;
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] GARGOYLE",1253,15,strnpcinfo(0)+"::OnDevilDead2";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] ALARM",1193,10,strnpcinfo(0)+"::OnDevilDead2";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] HIGH ORC",1213,10,strnpcinfo(0)+"::OnDevilDead2";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] INJUSTICE",1257,10,strnpcinfo(0)+"::OnDevilDead2";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] MIMIC",1191,15,strnpcinfo(0)+"::OnDevilDead2";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] WRAITH",1192,10,strnpcinfo(0)+"::OnDevilDead2";
+	areamonster "ordeal_1-1",183,182,246,244, "2nd Wave Minion", .waveTwo$[0],15,strnpcinfo(0)+"::OnDevilDead2";
+	areamonster "ordeal_1-1",183,182,246,244, "2nd Wave Minion", .waveTwo$[1],15,strnpcinfo(0)+"::OnDevilDead2";
+	areamonster "ordeal_1-1",183,182,246,244, "2nd Wave Minion", .waveTwo$[2],10,strnpcinfo(0)+"::OnDevilDead2";
+	areamonster "ordeal_1-1",183,182,246,244, "2nd Wave Minion", .waveTwo$[3],10,strnpcinfo(0)+"::OnDevilDead2";
+	areamonster "ordeal_1-1",183,182,246,244, "2nd Wave Devil", .specials$[2],10,strnpcinfo(0)+"::OnDevilDead2";
+	areamonster "ordeal_1-1",183,182,246,244, "2nd Wave Devil", .specials$[3],10,strnpcinfo(0)+"::OnDevilDead2";
 	end;
 
 OnDevilDead2:
@@ -162,18 +221,24 @@ OnDevilDead2:
 	else if ( .mob <= 0 ) {
 		announce "Devil Square is entering round 3...", bc_map;
 		goto OnDevil3;
+		getitem 7606, 2;
 	}
 	end;
 
 OnDevil3:
 	.round = 3;
 	.mob = 58;
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] ANOLIAN",1206,15,strnpcinfo(0)+"::OnDevilDead3";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] WANDERER",1208,15,strnpcinfo(0)+"::OnDevilDead3";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] DEVIRUCHI",1109,10,strnpcinfo(0)+"::OnDevilDead3";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] JOKER",1131,15,strnpcinfo(0)+"::OnDevilDead3";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] MOONLIGHT",1150,2,strnpcinfo(0)+"::OnDevilDead3";
-	areamonster "ordeal_1-1",183,182,246,244,"[DS] DARK ILLUSION",1302,1,strnpcinfo(0)+"::OnDevilDead3";
+	
+	areamonster "ordeal_1-1",183,182,246,244, "3rd Wave Minion", .specials$[4],15,strnpcinfo(0)+"::OnDevilDead3";
+	areamonster "ordeal_1-1",183,182,246,244, "3rd Wave Minion", .specials$[5],15,strnpcinfo(0)+"::OnDevilDead3";
+	areamonster "ordeal_1-1",183,182,246,244, "3rd Wave Minion", .specials$[6],10,strnpcinfo(0)+"::OnDevilDead3";
+	areamonster "ordeal_1-1",183,182,246,244, "3rd Wave Minion", .specials$[7],15,strnpcinfo(0)+"::OnDevilDead3";
+	
+	//MVP
+	areamonster "ordeal_1-1",183,182,246,244, "Devil Master", .waveThreeMVP$[0],1,strnpcinfo(0)+"::OnDevilDead3";
+	areamonster "ordeal_1-1",183,182,246,244, "Devil Master", .waveThreeMVP$[1],1,strnpcinfo(0)+"::OnDevilDead3";
+	areamonster "ordeal_1-1",183,182,246,244, "Devil Master", .waveThreeMVP$[2],1,strnpcinfo(0)+"::OnDevilDead3";
+	
 	end;
 
 OnDevilDead3:
@@ -181,29 +246,30 @@ OnDevilDead3:
 	if ( .mob == 25 || .mob == 5 )
 		announce "Devil Square : "+ .mob +" monsters remaining in the final round.", bc_map;
 	else if ( .mob <= 0 ) {
-		announce "Devil Square : CONGRATULATIONS. These 10 Treasure Chests are yours.", bc_map;
+		announce "Devil Square : CONGRATULATIONS. These 10 Rewards are yours.", bc_map;
 		goto OnDevil4;
+		getitem 7606, 3;
 	}
 	end;
 
 OnDevil4:
 	.round = 4;
 	.mob = 10;
-	monster "ordeal_1-1",231,250,"Treasure Chest",1324,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",234,247,"Treasure Chest",1328,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",237,244,"Treasure Chest",1332,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",240,241,"Treasure Chest",1336,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",243,238,"Treasure Chest",1340,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",246,235,"Treasure Chest",1344,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",249,232,"Treasure Chest",1348,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",252,229,"Treasure Chest",1352,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",249,241,"Treasure Chest",1356,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",240,249,"Treasure Chest",1360,1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",231,250,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",234,247,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",237,244,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",240,241,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",243,238,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",246,235,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",249,232,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",252,229,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",249,241,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
+	monster "ordeal_1-1",240,249,"Hidden Reward",.boxes$[rand(0,getarraysize(.boxes$))],1,strnpcinfo(0)+"::OnTreasureDead";
 	end;
 
 OnTreasureDead:
 	.mob--;
-	announce "Devil Square : "+ strcharinfo(0) +" has opened the Treasure Chest at Devil Square.", bc_all;
+	announce "Devil Square : "+ strcharinfo(0) +" has broken a mysterious element summoned from the Devil Square.", bc_all;
 	if ( .mob <= 0 )
 		goto OnStopEvent;
 	end;
@@ -214,11 +280,21 @@ OnStopEvent:
 	enablenpc "Devil Square Guardian#2";
 	.start = .round = .mob = 0;
 	end;
+
+OnInit:
+	setarray .waveOne$[0], 1028, 1189, 1165, 1016, 1149, 1164, 1253, 1193, 1213, 1257, 1191, 1192, 1206, 1208, 1109;
+	setarray .waveTwo$[0], 2092, 2161, 2310, 2309, 2201, 2312, 2026, 2252, 2221, 1890, 2164, 2018, 2017, 2078, 2338, 1634;
+	setarray .specials$[0], 2254, 1302, 2256, 2321, 2474, 2473, 1990, 1991, 2188, 1644, 1765, 1919, 1920, 2194, 1720, 1960, 1705, 1626, 1839, 1829, 1706, 1289, 1701, 2371, 2281, 2227, 2226, 2252;
+	setarray .waveThreeMVP$[0], 2476, 2319, 2165, 1492, 1734, 2202, 1150, 2362, 2475, 1583, 1648, 1647, 1399, 1839;
+	setarray .boxes$[0], 1324, 1328, 1332, 1336, 1344, 1348, 1352, 1954, 1951, 1952, 1933, 1356, 1360, 1343, 1944, 2288, 1331, 1939, 1327, 1325, 2458, 2335, 1940, 1957, 1688, 1277;
+	setarray .reward$[0], 7606, 607, 6238, 6239, 6232, 6228, 12246;
+end;
 }
 
 ordeal_1-1,246,245,7	script	Devil Square Guardian#2	406,{
 	mes "[Exit]";
-	mes "Farewell.";
+	mes "Farewell Pumapunku.";
+	//getitem .reward$[rand(0,getarraysize(.reward$)-1)], 1;
 	close2;
 	warp "SavePoint",0,0;
 	end;
@@ -233,3 +309,5 @@ ordeal_1-1	mapflag	nomemo
 ordeal_1-1	mapflag	nobranch
 ordeal_1-1	mapflag	nopenalty
 ordeal_1-1	mapflag	noicewall
+
+

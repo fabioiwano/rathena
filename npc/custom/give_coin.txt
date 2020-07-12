@@ -1,0 +1,20 @@
+prontera,29,35,3	script	givecoin#prontera	-1,{	
+	end;
+	
+OnNPCKillEvent:
+        if ( rand( 100 ) <= 5 ) {
+        set .@setLuck, rand(1,5);
+        getitem 671, .@setLuck;
+        if(.@setLuck <= 1){
+            announce strcharinfo(0) + " received " + .@setLuck + " Gold coin.",bc_all,0xFFFF00;
+        }else{
+            announce strcharinfo(0) + " received " + .@setLuck + " Gold coins.",bc_all,0xFFFF00;
+        }
+        
+        }
+	end;
+	
+OnInit:
+    announce "npc loaded",bc_all,0xFFFF00;
+	end;
+}

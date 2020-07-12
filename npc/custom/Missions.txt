@@ -1,0 +1,131 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Dicastes
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+prt_monk,101,203,6	script	Missions 1-20#dc1	10226,{
+	callfunc "F_Bounty_Board", 1, 20, 3, 1,
+		1004,	62722,	 9000,		 6750,	// HORNET
+		1052,	62724,	11025,		 8325,	// ROCKER
+		1167,	62725,	10125,		 7650,	// SAVAGE_BABE
+		1063,	62816,	 5400,		 3900,	// LUNATIC
+		1010,	62644,	 6975,		 5175,	// WILOW
+		1011,	62660,	 4950,		 4050,	// CHONCHON
+		1012,	62661,	10125,		 7650,	// RODA_FROG
+	end;
+}
+
+prt_monk,99,204,6	script	Missions 21-40#dc1	10222,{
+	callfunc "F_Bounty_Board", 21, 40, 4, 1,
+		1019,	62730,	18225,		20475,	// PECOPECO
+		1053,	62733,	20250,		22725,	// THIEF_BUG_
+		1054,	62734,	22275,		25200,	// THIEF_BUG__
+		1031,	62735,	22275,		25200,	// POPORING
+		1055,	62818,	12150,		27337,	// MUKA
+		1060,	62567,	20250,		22725,	// BIGFOOT
+		1056,	62811,	18225,		20475,	// SMOKIE
+	end;
+}
+
+prt_monk,98,206,6	script	Missions 41-60#dc1	10228,{
+	callfunc "F_Bounty_Board", 41, 60, 6, 1,
+		1028,	62561,	24300,		27225,	// SOLDIER_SKELETON
+		1016,	62562,	45450,		51075,	// ARCHER_SKELETON
+		1026,	62646,	55575,		62550,	// MUNAK
+		1188,	62647,	59625,		67050,	// BON_GUN
+		1138,	62819,	49500,		55575,	// MAGNOLIA
+		1023,	62668,	39375,		60750,	// ORK_WARRIOR
+		1273,	62669,	42750,		48825,	// ORC_LADY
+	end;
+}
+
+prt_monk,99,208,6	script	Missions 61-80#dc1	10220,{
+	callfunc "F_Bounty_Board", 61, 81, 6, 1,
+		1040,	62623,	 91125,		102600,	// GOLEM
+		1278,	62624,	113850,		128025,	// STALACTIC_GOLEM
+		1148,	62625,	293062,		219712,	// MEDUSA
+		1372,	62556,	119812,		134662,	// GOAT
+		1376,	62557,	135112,		151762,	// HARPY
+		1386,	62558,	116325,		130500,	// SLEEPER
+		1036,	62672,	65475,		173800,	// GHOUL
+
+	end;
+}
+
+prt_monk,101,209,6	script	Missions 81-100#dc1	10227,{
+	callfunc "F_Bounty_Board", 81, 100, 6, 1,
+		1133,	62750,	255825,		191925,	// KOBOLD_1
+		1134,	62751,	218700,		164025,	// KOBOLD_2
+		1135,	62752,	205425,		154125,	// KOBOLD_3
+		1282,	62753,	243000,		294750,	// KOBOLD_ARCHER
+		1192,	62677,	133875,		133875,	// WRAITH
+		1198,	62678,	273375,		187425,	// DARK_PRIEST
+		1117,	62682,	150525,		144000,	// EVIL_DRUID
+	end;
+}
+
+prt_monk,103,208,1	script	Missions 101-120#dc1	10218,{
+	callfunc "F_Bounty_Board", 101, 120, 12, 1,
+		2070,	62607,	 89850,		153450,	// PIRANHA
+		2069,	62608,	160500,		133500,	// IARA
+		1992,	62599,	702000,		450450,	// CORNUS
+		1993,	62600,	331200,		248850,	// NAGA
+		1699,	62791,	275400,		232650,	// ANCIENT_MIMIC
+		1698,	62792,	288450,		216225,	// DEATHWORD
+		1163,	62688,	311625,		233550, // RAYDRIC
+	end;
+}
+
+prt_monk,104,206,1	script	Missions 121-140#dc1	10225,{
+	callfunc "F_Bounty_Board", 121, 140, 12, 2,
+		2363,	62824,	466875,		461812,	// MENBLATT
+		2364,	62825,	456525,		378112,	// PETAL
+		2366,	62827,	812812,		871650,	// ANTIQUE_BOOK
+		1656,	62759,	573975,		481050,	// KAVAC
+		1652,	62760,	588510,		501750,	// YGNIZEM
+		1752,	62795,	481500,		386775,	// SKOGUL
+		1753,	62796,	513225,		402412,	// FRUS
+	end;
+}
+
+prt_monk,103,204,1	script	Missions 141-175#dc1	10212,{
+	callfunc "F_Bounty_Board", 141, 175, 1, 4,
+		2085,	62802,	712125,		891187,	// ANTLER_SCARABA
+		2086,	62804,	786375,		874437,	// RAKE_SCARABA
+		2137,	62821,	798750,		708750,	// MIMING
+		2136,	62822,	843750,		731250,	// LITTLE_FATUM
+		2368,	62828,	795487,		862762,	// LICHTERN_Y
+		2367,	62829,	808537,		846562,	// LICHTERN_B
+		2369,	62830,	810112,		892800,	// LICHTERN_R
+		2370,	62831,	811575,		847912,	// LICHTERN_G
+	end;
+}
+
+prt_monk,102,206,1	script	Missions 176-200#dc1	10219,{
+	callfunc "F_Bounty_Board", 176, 200, 12, 2,
+		2085,	62802,	712125,		891187,	// ANTLER_SCARABA
+		2086,	62804,	786375,		874437,	// RAKE_SCARABA
+		2137,	62821,	798750,		708750,	// MIMING
+		2136,	62822,	843750,		731250,	// LITTLE_FATUM
+		2368,	62828,	795487,		862762,	// LICHTERN_Y
+		2367,	62829,	808537,		846562,	// LICHTERN_B
+		2369,	62830,	810112,		892800,	// LICHTERN_R
+		2370,	62831,	811575,		847912,	// LICHTERN_G
+	end;
+}
+

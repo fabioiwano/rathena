@@ -1,0 +1,177 @@
+prt_monk,124,202,4	script	Special Storage	4_MIMIC,{
+
+		switch(select(" ~ Storage 1: ~ Storage 2: ~ Storage 3: ~ Storage 4: ~ Storage 5: ~ Storage 6: ~ Storage 7: ~ Storage 8: ~ Storage 9: ~ Storage 10: ~ ^777777Cancel^000000")) {
+		Case 1:
+		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 2:
+		openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 3:
+		openstorage2 3,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 4:
+		openstorage2 4,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 5:
+		openstorage2 5,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 6:
+		openstorage2 6,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+		
+		Case 7:
+		openstorage2 7,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+		
+		Case 8:
+		openstorage2 8,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 9:
+		openstorage2 9,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+		
+		Case 10:
+		
+		openstorage2 10,STOR_MODE_GET|STOR_MODE_PUT;
+		close;
+		break;
+
+		Case 11:
+		mes "Cancel";
+		end;
+		break;
+		
+		};
+
+
+
+end;
+
+}
+
+
+//storage 1
+-	script	storage1	-1,{
+OnInit:
+bindatcmd("storage1","storage1::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 2
+-	script	storage2	-1,{
+OnInit:
+bindatcmd("storage2","storage2::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 3
+-	script	storage3	-1,{
+OnInit:
+bindatcmd("storage3","storage3::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 3,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 4
+-	script	storage4	-1,{
+OnInit:
+bindatcmd("storage4","storage4::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 4,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 5
+-	script	storage5	-1,{
+OnInit:
+bindatcmd("storage5","storage5::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 5,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 6
+-	script	storage6	-1,{
+OnInit:
+bindatcmd("storage6","storage6::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 6,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 7
+-	script	storage7	-1,{
+OnInit:
+bindatcmd("storage7","storage7::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 7,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 8
+-	script	storage8	-1,{
+OnInit:
+bindatcmd("storage8","storage8::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 8,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 9
+-	script	storage9	-1,{
+OnInit:
+bindatcmd("storage9","storage9::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 9,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}
+
+//storage 10
+-	script	storage10	-1,{
+OnInit:
+bindatcmd("storage10","storage10::OnAtcommand");
+end;
+
+OnAtcommand:
+openstorage2 10,STOR_MODE_GET|STOR_MODE_PUT;
+end;
+}

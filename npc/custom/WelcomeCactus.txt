@@ -1,0 +1,28 @@
+//===== rAthena Script ======================================= 
+//Nome do mapa, coordenadas, posição	script	id sprite,{
+//cutin nome_da_ilustra, posição:
+	//0 - bottom left corner 
+    //1 - bottom middle 
+    //2 - bottom right corner 
+    //3 - middle of screen in a movable window with an empty title bar 
+    //4 - middle of screen without the window header, but still movable 
+
+
+poring01,203,114,5	script	#welcome1	10222,{
+		
+cutin "ilust_welcome", 2;
+
+mes "Welcome to JufaRO!";
+mes "Play a lot and have fun!";
+
+close2;
+cutin "", 255;
+
+//255 serve para remover a imagem
+
+OnInit:
+setnpcdisplay(strnpcinfo(0), "welcome2", 10222,2);
+waitingroom "Welcome to JufaRO",0;
+end;
+
+}

@@ -1,4 +1,4 @@
-//======================================================================================
+//======================================================================================mili
 // Map Index
 //======================================================================================
 // Contains the list of maps with their respective IDs for inter-server use.
@@ -58,6 +58,7 @@ gef_tower
 geffen
 geffen_in
 gl_cas01
+gl_cas01_
 gl_cas02
 gl_church
 gl_chyard
@@ -403,6 +404,7 @@ job_monk
 job_sage
 mag_dun01
 mag_dun02
+mag_dun03
 monk_test
 quiz_test
 yuno
@@ -502,6 +504,7 @@ einbech
 einbroch
 ein_dun01
 ein_dun02
+ein_dun03
 ein_fild06
 ein_fild07
 ein_fild08
@@ -1027,6 +1030,7 @@ vis_h03
 vis_h04
 ein_d02_i
 com_d02_i
+prt_mz03_i
 1@soul
 star_frst
 star_in
@@ -1047,7 +1051,29 @@ star_in
 2012rwc_06
 2012rwc_07
 2012rwc_08
+ba_maison
+ba_lib
+ba_bath
+ba_lost
+ba_pw01
+ba_pw02
+ba_pw03
+ba_2whs01
+ba_2whs02
 
 //======================================================================================
-// - Other/Extra maps -
+// - Other/Extra maps JUFARO -
 //======================================================================================
+
+privyard
+novice
+poring01
+poring02
+abyss_04
+madropvp
+sp_rudus
+sp_rudus2
+sp_rudus3
+sp_cor
+sp_os
+odin_past

@@ -1,4 +1,4 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL 
 // For more information, see LICENCE in the main folder
 
 #ifndef MAPINDEX_HPP
@@ -34,9 +34,9 @@
 #define MAP_VEINS "veins"
 #define MAP_JAIL "sec_pri"
 #ifdef RENEWAL
-	#define MAP_NOVICE "iz_int"
+	#define MAP_NOVICE "prt_monk"
 #else
-	#define MAP_NOVICE "new_1-1"
+	#define MAP_NOVICE "prt_monk"
 #endif
 #define MAP_MOSCOVIA "moscovia"
 #define MAP_MIDCAMP "mid_camp"
@@ -51,6 +51,11 @@
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 #define MAP_LASAGNA "lasagna"
+#define MAP_VERUS04 "verus04"
+#define MAP_HARBORO1 "harboro1"
+#define MAP_PORING01 "poring01"
+#define MAP_PRIVYARD "privyard"
+#define MAP_NOOBS "novice"
 
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);

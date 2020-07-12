@@ -1,0 +1,792 @@
+//===== rAthena Script =======================================
+//= Euphy's Quest Shop
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.6c
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A dynamic quest shop based on Lunar's, with easier config.
+//= Includes support for multiple shops & cashpoints.
+//= Item Preview script by ToastOfDoom.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.2 Added category support.
+//= 1.3 More options and fixes.
+//= 1.4 Added debug settings.
+//= 1.5 Replaced categories with shop IDs.
+//= 1.6 Added support for purchasing stackables.
+//= 1.6a Added support for previewing costumes and robes.
+//= 1.6b Added 'disable_items' command.
+//= 1.6c Replaced function 'A_An' with "F_InsertArticle".
+//============================================================
+
+// Shop NPCs -- supplying no argument displays entire menu.
+//	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
+//  ADD YOUR NPC HERE
+//============================================================
+//prontera,80,216,6	script	Quest Shop#2	998,{ callfunc "qshop",1,2; }	// call the shop 1 and 2 defined below
+// etc.. Add your Shop NPCs 'Quest Shop#XXX' here
+
+prt_monk,90,216,6	script	Quest Shop#1	626,{ callfunc "qshop",1,2,3,4; }
+prt_monk,148,208,6	script	Terra Gloria#2	10118,{ callfunc "qshop",5; }
+prt_monk,151,208,6	script	Geffen Magic Tournament#3	664,{ callfunc "qshop",6; }
+prt_monk,154,204,6	script	Banquet of Heroes#4	470,{ callfunc "qshop",7; }
+prt_monk,157,208,6	script	Infinity Space#5	407,{ callfunc "qshop",8; }
+prt_monk,160,208,6	script	Horror Toy Factory#6	4_F_SKULL06GIRL,{ callfunc "qshop",9; }
+prt_monk,166,208,4	script	Illusion#7	3765,{ callfunc "qshop",10; }
+prt_monk,169,208,6	script	Sarah&Fenrir#8	3190,{ callfunc "qshop",11; }
+prt_monk,172,208,6	script	Ghost Pallace#9	1480,{ callfunc "qshop",12; }
+prt_monk,148,204,6	script	Hero Token#10	10304,{ callfunc "qshop",13; }
+prt_monk,151,204,6	script	Nightmarish Jitterbug#11	3069,{ callfunc "qshop",14; }
+prt_monk,154,208,6	script	Last Room#12	3254,{ callfunc "qshop",15; }
+prt_monk,157,204,6	script	Grace Exchanger#13	2444,{ callfunc "qshop",16; }
+prt_monk,160,204,6	script	Imperial Exchanger#14	2446,{ callfunc "qshop",17; }
+prt_monk,163,204,6	script	Noblesse Exchanger#15	2443,{ callfunc "qshop",18; }
+prt_monk,166,204,6	script	Abyss 4#16	1466,{ callfunc "qshop",19; }
+prt_monk,163,208,6	script	OGH#17	1276,{ callfunc "qshop",20; }
+prt_monk,172,204,6	script	Einbroch 3#18	3740,{ callfunc "qshop",21; }
+prt_monk,175,208,5	script	King Schmidt#19	108,{ callfunc "qshop",22; }
+prt_monk,175,204,6	script	Charleston#20	3125,{ callfunc "qshop",23; }
+prt_monk,169,204,6	script	Mora#21	611,{ callfunc "qshop",24; }
+
+//============================================================
+
+
+// Script Core - DO NOT DUPLICATE THIS NPC !!!!!!!!!!!!!
+//============================================================
+-	script	quest_shop	-1,{
+function Add; function Chk; function Slot;
+OnInit:
+	freeloop(1);
+
+// -----------------------------------------------------------
+//  Basic shop settings.
+// -----------------------------------------------------------
+
+	set .Announce,1;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
+	set .ShowID,0;  	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,0;	// Show Zeny cost, if any? (1: yes / 0: no)
+	set .MaxStack,100;	// Max number of quest items purchased at one time.
+
+// -----------------------------------------------------------
+//  Points variable -- optional quest requirement.
+//	setarray .Points$[0],"<variable name>","<display name>";
+// -----------------------------------------------------------
+
+	setarray .Points$[0],
+		"#CASHPOINTS", "Cash Points";
+
+
+//=====================================================================================
+// ------------------- ADD YOUR SHOPS NAME AND ITEMS SHOPS STARTING HERE --------------
+//=====================================================================================
+
+// -----------------------------------------------------------
+//  Shop IDs -- to add shops, copy dummy data at bottom of file.
+//	setarray .Shops$[1],"<Shop 1>","<Shop 2>"{,...};
+// -----------------------------------------------------------
+
+	setarray .Shops$[1],
+
+   "Equipments",	// Shop Named 1
+   "Usables",		// Shop Named 2
+   "Quest items",		// Shop Named 3
+   "Shadow itens",		// Shop Named 4
+   "Exchange Terra Gloria",		// Shop Named 5
+   "Exchange Geffen Magic Tournament",		// Shop Named 6
+   "Exchange Banquet of Heroes",		// Shop Named 7
+   "Exchange Infinity Space",		// Shop Named 8
+   "Exchange Horror Toy Factory",		// Shop Named 9
+   "Exchange Illusion OS",		// Shop Named 10
+   "Exchange Sarah&Fenrir",		// Shop Named 11
+   "Exchange Ghost Pallace",		// Shop Named 12
+   "Exchange Hero Token",		// Shop Named 13
+   "Exchange Nightmarish Jitterbug",		// Shop Named 14
+   "Exchange Last Room",		// Shop Named 15
+   "Exchange Grace Exchanger",		// Shop Named 16
+   "Exchange Imperial Exchanger",		// Shop Named 17
+   "Exchange Noblesse Exchanger",		// Shop Named 18
+   "Exchange Abyss 4",		// Shop Named 19
+   "Exchange Dragon Plate",		// Shop Named 20
+   "Exchange Einbroch 3",		// Shop Named 21
+   "Exchange King Schmidt",		// Shop Named 22
+   "Exchange Charleston",		// Shop Named 23
+   "Exchange Mora";		// Shop Named 24
+
+// -----------------------------------------------------------
+//  Quest items -- do NOT use a reward item more than once!
+//	Add(<shop ID>,<reward ID>,<reward amount>,
+//	    <Zeny cost>,<point cost>,
+//	    <required item ID>,<required item amount>{,...});
+// -----------------------------------------------------------
+
+// Shop 1: Equipments
+   Add(1,35016,1,0,0,2254,1,6405,150,6394,150,7115,50); //Victorious Wing Ears
+   Add(1,35017,1,0,0,35016,1,4031,1,615,1); //Improved Victory Wing Ears
+   Add(1,5462,1,1000000,0,1653,1); // Spiked Scarf
+   Add(1,18526,1,1000000,0,20470,1,530,100,529,100,31322,1); //Delicious Lollipop
+   Add(1,18740,1,0,0,7123,50,1020,20,7446,20); //Costume Hair of the Strong
+   Add(1,18752,1,0,0,7015,50,1097,100); //Cursed Book
+   Add(1,15186,1,0,0,637,10,7047,50); //Nightmare Kafra Uniform
+   Add(1,19095,1,0,0,512,100,515,100,5035,1); //Happy Balloon
+   Add(1,19118,1,0,0,2201,1,9001,1); //Poring Sunglasses
+   Add(1,20499,1,0,0,7206,50,2213,1); //Costume Cat Ears Hat
+   Add(1,20963,1,0,0,6607,10,6608,100,22000,1); //Temporal STR Manteau
+   Add(1,20964,1,0,0,6607,10,6608,100,22002,1); //Temporal AGI Manteau
+   Add(1,20965,1,0,0,6607,10,6608,100,22003,1); //Temporal VIT Manteau
+   Add(1,20966,1,0,0,6607,10,6608,100,22001,1); //Temporal INT Manteau
+   Add(1,20967,1,0,0,6607,10,6608,100,22004,1); //Temporal DEX Manteau
+   Add(1,20968,1,0,0,6607,10,6608,100,22005,1); //Temporal LUK Manteau
+   Add(1,28902,1,1000000,0,740,150,2108,1,12246,1); // Mad Bunny
+   Add(1,28942,1,1500000,0,7109,1,6233,1,25731,10); // Cursed Knight's Shield
+   Add(1,28946,1,3000000,0,7109,5,25731,30,4320,1,28942,1); // Purified Knight's Shield
+
+   
+
+// Shop 2: Usables
+  Add(2,6635,1,500000,0); // Blacksmith Blessing
+  Add(2,6233,1,0,0,985,50,15012,5,615,5); // +8 Armor Refine Ticket
+  Add(2,6229,1,0,0,984,50,1120,5,615,5); // +8 Weapon Refine Ticket
+  Add(2,23436,1,200000,0,615,10,1005,10); // Hollgrehenn's Shadow Refine Hammer
+  Add(2,23926,1,1000000,0,23436,9); // Shadow 9 Refine Hammer 
+  Add(2,17441,1,500000,0); // Boarding Halter
+  Add(2,7776,1,100000,0); // Gym pass
+  Add(2,12887,1,500000,0); // Infinite Fly Wing
+  Add(2,12884,1,500000,0); // Infinite Concentration Potion
+  Add(2,12885,1,500000,0); // Infinite Awakening Potion
+  Add(2,12886,1,500000,0); // Infinite Beserk Potion
+  Add(2,7621,1,500000,0); // Token of siegfried
+  Add(2,12684,1,10000,0); // ASPD Enhanced Potion
+  Add(2,678,1,1500,0); // ASPD Enhanced Potion
+  Add(2,14545,1,150000,0); // Field Manual BASE 300% 
+  Add(2,14592,1,150000,0); // Field Manual JOB 150% 
+  Add(2,6396,1,1000000,0,939,150,732,20); // Auger Of Spirit
+  Add(2,12103,1,500000,0,7024,1,604,150); // Bloody Branch
+  Add(2,40017,1,500000,0,7049,20,6395,20); // Class Stone Box Upper
+  Add(2,40018,1,500000,0,7049,20,6395,20); // Class Stone Box Mid
+  Add(2,40019,1,500000,0,7049,20,6395,20); // Class Stone Box Low
+  Add(2,40020,1,500000,0,7049,20,6395,20); // Class Stone Box Gar
+  Add(2,34995,1,500000,0,7049,20,6395,20); // Status Stone Box Upper
+  Add(2,34996,1,500000,0,7049,20,6395,20); // Status Stone Box Mid
+  Add(2,34997,1,500000,0,7049,20,6395,20); // Status Stone Box Low
+  Add(2,34998,1,500000,0,7049,20,6395,20); // Status Stone Box Gar
+  
+
+// Shop 3: Quest items
+	Add(3,7606,1,0,0,671,7); // Token of the Ox
+	Add(3,25740,1,500000,0,7606,30); // Curse-eroded Gemstone
+	Add(3,25739,1,500000,0,7606,30); // Curse-eroded Crystal
+ 	Add(3,22687,1,500,0); // Energy Fragment
+ 	Add(3,23016,1,500,0); // Cursed Fragment
+
+	
+	
+// Shop 4: Shadow items
+ 	Add(4,24339,1,5000000,0,7606,300); // Almighty Shadow Earring
+	Add(4,24340,1,5000000,0,7606,300); // Almighty Shadow Pendant
+	
+
+// Shop 5: Exchange: Terra Gloria
+ 	Add(5,15163,1,0,0,25155,500); // Agenda Robe
+ 	Add(5,15164,1,0,0,25155,500); // Consultative Robe
+	Add(5,19115,1,0,0,25155,500); // Republic Hat
+ 	Add(5,28425,1,0,0,25155,500); // Mercenary Ring Type A
+ 	Add(5,28426,1,0,0,25155,500); // Mercenary Ring Type B
+	
+// Shop 6: Exchange: Geffen Magic Tournament
+	Add(6,18827,1,0,0,6671,1100); // Valkyrie Circlet
+	Add(6,2185,1,0,0,6671,900); // Magic Reflector
+	Add(6,2186,1,0,0,6671,900); // Revised Encyclopedia
+	Add(6,2963,1,0,0,6671,1350); // Phisical Enhancer Ring
+	Add(6,2964,1,0,0,6671,1350); // Magic Intensifier Ring
+	Add(6,15073,1,0,0,6671,1800); // Anti-Magic Suit
+	Add(6,15074,1,0,0,6671,1800); // Geffen Magic Robe
+	Add(6,23679,1,0,0,6671,100); // Geffen Magic Accessory Form
+	Add(6,23675,1,0,0,6671,100); // Geffen Magic Armor Order Form
+	
+// Shop 7: Exchange: Banquet of Heroes
+ 	Add(7,22899,1,0,0,6919,2); // City Center Map
+	Add(7,11600,1,0,0,6919,6); // Shining Holy Water
+	Add(7,22848,1,0,0,6919,6); // Prison Key
+	Add(7,22847,1,0,0,6919,6); // Prontera Medal
+	Add(7,28354,1,0,0,6919,150); // City Map [1]
+	Add(7,28355,1,0,0,6919,400); // Shining Holy Water
+	Add(7,28900,1,0,0,6919,400); // Royal Guard Shield
+	Add(7,28356,1,0,0,6919,150); // Prontera Badge
+	Add(7,15146,1,0,0,6919,600); // Flattery Robe
+	Add(7,15147,1,0,0,6919,600); // Abusive Robe
+	Add(7,20246,1,0,0,6919,2200); // Costume Decoration Time
+	Add(7,20247,1,0,0,6919,2200); // Costume Fate of Black Hand
+
+// Shop 8: Exchange: Infinity Space
+ 	Add(8,18128,1,0,0,6905,50); // Infinity Bow
+	Add(8,1938,1,0,0,6905,50); // Infinity Violin
+	Add(8,1994,1,0,0,6905,50); // Infinity Wire
+	Add(8,2024,1,0,0,6905,50); // Infinity Staff
+	Add(8,13126,1,0,0,6905,50); // Infinity Handgun
+	Add(8,13323,1,0,0,6905,50); // Infinity Shuriken
+	Add(8,16038,1,0,0,6905,50); // Infinity Mace
+	Add(8,21014,1,0,0,6905,50); // Infinity Two-Handed Sword
+	Add(8,28105,1,0,0,6905,50); // Infinity Two-Handed Axe
+	Add(8,28703,1,0,0,6905,50); // Infinity Dagger
+	Add(8,19033,1,0,0,6905,50); // Ancient Decoration of Rift
+	Add(8,15141,1,0,0,6905,50); // Ancient Armor of Rift
+	Add(8,20779,1,0,0,6905,50); // Rift Manteau
+	Add(8,22075,1,0,0,6905,50); // Shoes of Rift
+
+// Shop 9: Exchange: Horror Toy Factory
+ 	//Add(9,55053,1,0,0,7642,30); // Horror Toy Enchant Box
+	Add(9,22534,1,0,0,7642,100); // Closed Mind Box
+	Add(9,18848,1,0,0,7642,500); // Freshes Roses
+	Add(9,19687,1,0,0,7642,1000); // Costume Freshes Roses
+	Add(9,19686,1,0,0,7642,500); // Costume Santa Doll Headband
+	Add(9,19701,1,0,0,7642,500); // Costume Red Bonnet
+	Add(9,13442,1,0,0,7642,1000); // Old Parasol
+	Add(9,18849,1,0,0,7642,1000,18848,1); // Celine´s Ribbon
+	Add(9,16029,1,0,0,7642,2000,1540,1); // Noble Cross
+	Add(9,2980,1,0,0,7642,1000,2977,1,2978,1,2976,1); // Evil Spirit Glove
+	Add(9,2977,1,0,0,7642,1000); // Hurt Mind
+	Add(9,2978,1,0,0,7642,1000); // Kind Heart
+	Add(9,2976,1,0,0,7642,1000); // Red Lantern
+	Add(9,11563,1,0,0,7642,7); // Hot Tea
+	Add(9,11564,1,0,0,11564,5); // Sweet Pastry
+	Add(9,523,1,0,0,7642,1); // Holy Water
+	Add(9,12020,1,0,0,7642,1); // Cursed Water
+	
+// Shop 10: Exchange: Illusion
+	Add(10,25668,1,0,0,25723,1,25669,1); // Broken Weapon
+ 	Add(10,40021,1,0,0,25723,30,25668,1); // Random OS Weapon Box
+	Add(10,20933,1,0,0,25723,50); // Illusion Engine Wing A-Type
+	Add(10,20934,1,0,0,25723,50); // Illusion Engine Wing B-Type
+	Add(10,15376,1,0,0,25723,50); // Illusion Armor A-Type
+	Add(10,15377,1,0,0,25723,50); // Illusion Armor B-Type
+	Add(10,22196,1,0,0,25723,50); // Illusion Leg A-Type
+	Add(10,22197,1,0,0,25723,50); // Illusion Leg B-Type
+	Add(10,32207,1,0,0,25723,50); // Illusion Booster R
+	Add(10,32208,1,0,0,25723,50); // Illusion Booster L
+	Add(10,32209,1,0,0,25723,50); // Illusion Battle Chip R
+	Add(10,32210,1,0,0,25723,50); // Illusion Battle Chip L	
+	Add(10,15195,1,0,0,15012,1,25271,10,23228,100); // Illusion Puente Robe [1]
+	Add(10,19209,1,0,0,2279,9,25271,10,25257,100); // Illusion Nurse Cap [1]
+	Add(10,19210,1,0,0,2285,9,25271,10,25258,100); // Illusion Apple O' Archer [1]
+	Add(10,20838,1,0,0,2504,9,25271,10,23228,100); // Illusion Muffler [1]
+	Add(10,22133,1,0,0,2404,9,25271,10,23228,100); // Illusion Shoes [1]
+	Add(10,16063,1,0,0,1525,9,25271,10,25256,100); // Illusion Long Mace [2]
+	Add(10,26007,1,0,0,1477,5,25271,30,25256,100); // Illusion Spectral Spear [2]
+	Add(10,26109,1,0,0,1648,5,25271,30,25256,100); // Illusion Staff of Bordeaux [2]
+	Add(10,28725,1,0,0,1234,5,25271,60,25256,100); // Illusion Moonlight Dagger [1] 
+	Add(10,20840,1,0,0,2525,2,25271,50,25263,100); // Illusion Ancient Cape [1]
+	Add(10,28508,1,0,0,2715,1,25271,50,25266,100); // Illusion Skull Ring [1]
+	Add(10,28509,1,0,0,2621,1,25271,50,25267,400); // Illusion Ring [1]
+	Add(10,2039,1,0,0,1473,9,25271,40,25267,100); // Illusion Wizardry Staff [2]
+	Add(10,18149,1,0,0,1727,1,25271,50,25265,100); // Illusion Ballista [2]
+	Add(10,28022,1,0,0,1266,5,25271,80,25261,100); // Illusion Infiltrator [2]
+	Add(10,28023,1,0,0,1260,9,25271,81,25264,100); // Illusion Legbone of Ghoul [2]
+	Add(10,28612,1,0,0,1557,9,25271,50,25262,10); // Illusion Book of The Apocalypse [2]
+	Add(10,19223,1,0,0,2227,9,25271,50,25297,100); // Illusion Illusion Cap [1]
+	Add(10,20847,1,0,0,2509,9,25271,100,25297,200); // Illusion Survivor's Manteau [1]
+	Add(10,28922,1,0,0,2128,5,25271,100,25298,100); // Illusion Sacred Mission [1]
+	Add(10,1846,1,0,0,1822,9,25271,100,25299,100); // Illusion Combo Battle Glove [2]
+	Add(10,13337,1,0,0,13314,9,25271,100,25300,200); // Illusion Huuma Fluttering Snow [2]
+	Add(10,19247,1,0,0,2207,1,25271,50,25312,50); // Illusion Fancy Flower [1]
+	Add(10,1326,1,0,0,1306,9,25271,100,25311,200); // Illusion War Axe [2]
+	Add(10,13338,1,0,0,13300,5,25271,100,25313,200); // Illusion Wing Shuriken [2]
+	Add(10,13469,1,0,0,1141,2,25271,100,25314,50); // Illusion Immaterial Sword [2]
+	Add(10,16065,1,0,0,1529,9,25271,100,25313,200); // Illusion Iron Driver [2]
+	Add(10,32005,1,0,0,1419,5,25271,100,25311,200); // Illusion Pole Axe [2]
+	Add(10,15348,1,0,0,2354,9,25271,80,25641,100,25638,150); // Illusion Goibne's Armor [1]
+	Add(10,20923,1,0,0,2520,9,25271,120,25639,30,25638,150); // Illusion Goibne's Spaulders [1]
+	Add(10,22192,1,0,0,2419,9,25271,80,25633,50,25633,150); // Illusion Goibne's Greaves [1]
+	Add(10,19366,1,0,0,5128,9,25271,120,25634,30,25633,150); // Illusion Goibne's Helm [1]
+	Add(10,18174,1,0,0,1726,9,25271,80,25636,50,25640,50,25637,50); // Illusion Hunter Bow [2]
+	Add(10,28626,1,0,0,13300,9,25271,80,25642,100); // Illusion Tablet [2]
+	Add(10,19344,1,0,0,5070,9,25271,115,25619,5,25617,50,25615,100); // Illusion Hot-blooded Headband [1]
+	Add(10,22190,1,0,0,2406,9,25271,85,25616,50,25618,50); // Illusion Boots [1]
+	Add(10,19428,1,0,0,5126,9,25271,100,25775,100,25783,50); // Illusion Morpheus's Hood [1]
+	Add(10,20948,1,0,0,2518,9,25271,100,25778,100,25782,50); // Illusion Morpheus's Shawl [1]
+	Add(10,32238,1,0,0,2648,9,25271,100,25776,100,25781,50,25780,15); // Illusion Morpheus's Ring [1]
+	Add(10,32239,1,0,0,2649,9,25271,100,25777,100,25784,50,25780,15); // Illusion Morpheus's Bracelet [1]
+	Add(10,28762,1,0,0,1231,2,25271,120,25774,150); // Illusion Bazerald [2]
+	Add(10,21050,1,0,0,1181,1,25271,120,25779,150); // Illusion Tae Goo Lyeon [2]
+	Add(10,32301,1,0,0,13106,9,25271,120,25773,150); // Illusion Gold Lux [2]
+	Add(10,28254,1,0,0,13159,3,25271,120,25772,150); // Illusion Butcher [2]
+
+// Shop 11: Exchange: Sarah&Fenrir
+ 	Add(11,28310,1,0,0,6803,1); // Sarah's Left Earring
+	Add(11,28311,1,0,0,6803,1); // Sarah's Right Earring
+
+// Shop 12: Exchange: Ghost Pallace
+ 	Add(12,27184,1,0,0,6672,5000); // Knight Sakray Card
+	Add(12,23678,1,0,0,6672,50); // Grey Abrasive (Ranged)
+	Add(12,23677,1,0,0,6672,50); // Grey Abrasive (Magic)
+	Add(12,23676,1,0,0,6672,50); // Grey Abrasive (Physical)
+	Add(12,1438,1,0,0,6672,100); // Thanatos Spear
+	Add(12,1496,1,0,0,6672,100); // Thanatos Long Spear
+	Add(12,1669,1,0,0,6672,100); // Thanatos Staff
+	Add(12,1836,1,0,0,6672,100); // Thanatos Knuckles
+	Add(12,1933,1,0,0,6672,100); // Thanatos Violin
+	Add(12,1968,1,0,0,6672,100); // Thanatos Whip
+	Add(12,2023,1,0,0,6672,100); // Thanatos Two-Handed Staff
+	Add(12,13093,1,0,0,6672,100); // Thanatos Dagger
+	Add(12,13441,1,0,0,6672,100); // Thanatos Sword
+	Add(12,16028,1,0,0,6672,100); // Thanatos Hammer
+	Add(12,18119,1,0,0,6672,100); // Thanatos Bow
+	Add(12,21009,1,0,0,6672,100); // Thanatos Great Sword
+	Add(12,28000,1,0,0,6672,100); // Thanatos Katar
+	Add(12,28100,1,0,0,6672,100); // Thanatos Axe
+	Add(12,2187,1,0,0,6672,100); // Gray Shield
+	Add(12,15090,1,0,0,6672,100); // Gray Armor
+	Add(12,15091,1,0,0,6672,100); // Gray Robe
+	Add(12,18820,1,0,0,6672,100); // Gray Helmet
+	Add(12,20721,1,0,0,6672,100); // Gray Cloack
+	Add(12,22033,1,0,0,6672,100); // Boots of Gray
+
+// Shop 13: Exchange: Ancient Hero
+ 	Add(13,2981,1,0,0,6684,30); // Warrior's Ring
+	Add(13,22171,1,0,0,7606,30,984,100); // Ancient Hero Boots [1]
+	Add(13,18170,1,0,0,7606,30,984,100); // Narcissus Bow [2]
+	Add(13,28130,1,0,0,7606,30,984,100); // Avenger [2]
+	Add(13,28744,1,0,0,7606,30,984,100); // Madogum [2]
+	Add(13,1847,1,0,0,7606,30,984,100); // Iron Nail [2]
+	Add(13,18164,1,0,0,7606,30,984,100); // Royal Bow [2]
+	Add(13,26118,1,0,0,7606,30,984,100); // Shadow Staff [2]
+	Add(13,2048,1,0,0,7606,30,984,100); // Aeon Staff [2]
+	Add(13,13485,1,0,0,7606,30,984,100); // Red Lotus Sword [2]
+	Add(13,21038,1,0,0,7606,30,984,100); // Oriental Sword [2]
+	Add(13,28039,1,0,0,7606,30,984,100); // Shiver Katar [2]
+	Add(13,28630,1,0,0,7606,30,984,100); // Exorcist's Bible [2]
+	Add(13,32018,1,0,0,7606,30,984,100); // Aquatic Spear [2]
+	Add(13,28631,1,0,0,7606,30,984,100); // One Sky One Sun [2]
+	Add(13,26154,1,0,0,7606,30,984,100); // Spirit Pendulum [2]
+	Add(13,26155,1,0,0,7606,30,984,100); // Meowmeow Foxtail [2]
+	Add(13,32302,1,0,0,7606,30,984,100); // Crimson Rose [2]
+	Add(13,28255,1,0,0,7606,30,984,100); // Master Soul Rifle [2]
+	Add(13,28256,1,0,0,7606,30,984,100); // Demon Slayer Shot [2]
+	Add(13,28257,1,0,0,7606,30,984,100); // Golden Lord Launcher [2]
+	Add(13,28258,1,0,0,7606,30,984,100); // The Black [2]
+	Add(13,13345,1,0,0,7606,30,984,100); // Huuma Shuriken Clearness [2]
+	Add(13,28763,1,0,0,7606,30,984,100); // Surudoi Kaze [2]
+	Add(13,28764,1,0,0,7606,30,984,100); // Kiri no Tsuyu [2]
+	Add(13,35019,1,0,0,7606,30,984,100); // Light Blade [2]
+	Add(13,35020,1,0,0,7606,30,984,100); // Slate Sword [2]
+	Add(13,35031,1,0,0,7606,30,984,100); // Trumpet Shell [2]
+	Add(13,35021,1,0,0,7606,30,984,100); // Barbed Wire Whip [2]
+	Add(13,35022,1,0,0,7606,30,984,100); // Meteor Striker [2]
+	Add(13,35023,1,0,0,7606,30,984,100); // Dragonic Slayer [2]
+	Add(13,35024,1,0,0,7606,30,984,100); // Fatalist [2]
+	Add(13,35025,1,0,0,7606,30,984,100); // Ray Knuckle [2]
+	Add(13,35026,1,0,0,7606,30,984,100); // Saint Scepter [2]
+	Add(13,35027,1,0,0,7606,30,984,100); // Blade Katar [2]
+	Add(13,35028,1,0,0,7606,30,984,100); // Scarlet Dragon Leather Bow [2]
+	Add(13,35029,1,0,0,7606,30,984,100); // Chilling Cane [2]
+	Add(13,35030,1,0,0,7606,30,984,100); // Blue Crystal Staff [2]
+
+// Shop 14: Exchange: Nightmarish Jitterbug
+ 	Add(14,2990,1,0,0,6719,50); // Pendant of Harmony
+	Add(14,2991,1,0,0,6719,50); // Pendant of Chaos
+	Add(14,2992,1,0,0,6719,50); // Pendant of Maelstrom
+	
+// Shop 15: Exchange: Last Room
+ 	Add(15,18997,1,0,0,6034,10); // Runaway Chip
+	Add(15,28326,1,0,0,6034,10); // Broken Chip 1
+	Add(15,28327,1,0,0,6034,10); // Broken Chip 2
+	
+// Shop 16: Exchange: Grace Exchanger
+ 	Add(16,40026,1,0,0,25723,20); // Grace Refine Ticket
+ 	Add(16,40022,1,0,0,25669,10); // Grace Physical Modification Permit (Garment)
+ 	Add(16,40023,1,0,0,25669,10); // Grace Magical Modification Permit (Garment)
+ 	Add(16,40024,1,0,0,25669,10); // Grace Physical Modification Permit (Armor)
+ 	Add(16,40025,1,0,0,25669,10); // Grace Magical Modification Permit (Armor)
+ 	Add(16,45080,1,0,0,25723,20); // Grace Breath Armor
+ 	Add(16,45081,1,0,0,25723,20); // Grace Knight Armor
+ 	Add(16,45082,1,0,0,25723,20); // Grace Spear Armor
+ 	Add(16,45083,1,0,0,25723,20); // Grace Genesis Armor
+ 	Add(16,45084,1,0,0,25723,20); // Grace Sharp Suit
+ 	Add(16,45085,1,0,0,25723,20); // Grace Aimed Suit
+ 	Add(16,45086,1,0,0,25723,20); // Grace Severe Suit
+ 	Add(16,45087,1,0,0,25723,20); // Grace Reverb Suit
+ 	Add(16,45088,1,0,0,25723,20); // Grace Adora Robe
+ 	Add(16,45089,1,0,0,25723,20); // Grace Duple Robe
+ 	Add(16,45090,1,0,0,25723,20); // Grace Knuckle Suit
+ 	Add(16,45091,1,0,0,25723,20); // Grace Tiger Suit
+ 	Add(16,45092,1,0,0,25723,20); // Grace Tornado Armor
+ 	Add(16,45093,1,0,0,25723,20); // Grace Vulcan Armor
+ 	Add(16,45094,1,0,0,25723,20); // Grace Cart Cannon Suit
+ 	Add(16,45095,1,0,0,25723,20); // Grace Cart Tornado Suit
+ 	Add(16,45096,1,0,0,25723,20); // Grace Rolling Suit
+ 	Add(16,45097,1,0,0,25723,20); // Grace Assassin Suit
+ 	Add(16,45098,1,0,0,25723,20); // Grace Fatal Suit
+ 	Add(16,45099,1,0,0,25723,20); // Grace Stalker Suit
+ 	Add(16,45100,1,0,0,25723,20); // Grace Picky Robe
+ 	Add(16,45101,1,0,0,25723,20); // Grace Catnip Robe
+ 	Add(16,45102,1,0,0,25723,20); // Grace Trip Suit
+ 	Add(16,45103,1,0,0,25723,20); // Grace Fire Rain Suit
+ 	Add(16,45104,1,0,0,25723,20); // Grace Crimson Robe
+ 	Add(16,45105,1,0,0,25723,20); // Grace Frost Robe
+ 	Add(16,45106,1,0,0,25723,20); // Grace Psychic Robe
+ 	Add(16,45107,1,0,0,25723,20); // Grace Dust Robe
+ 	Add(16,45108,1,0,0,25723,20); // Grace Sun Suit
+ 	Add(16,45109,1,0,0,25723,20); // Grace Moon Suit
+ 	Add(16,45110,1,0,0,25723,20); // Grace Ninja Suit
+ 	Add(16,45111,1,0,0,25723,20); // Grace Kunai Suit
+ 	Add(16,45112,1,0,0,25723,20); // Grace Eswhoo Robe
+ 	Add(16,45113,1,0,0,25723,20); // Grace Explosion Robe
+ 	Add(16,45119,1,0,0,25723,20); // Grace Super Novice Suit
+ 	Add(16,45120,1,0,0,25723,20); // Grace Super Novice Robe
+ 	Add(16,45125,1,0,0,25723,20); // Grace Attack Boots
+ 	Add(16,45126,1,0,0,25723,20); // Grace Magic Boots
+ 	Add(16,45131,1,0,0,25723,20); // Grace Attack Manteau
+ 	Add(16,45132,1,0,0,25723,20); // Grace Magic Manteau
+ 	Add(16,45137,1,0,0,25723,20); // Grace Attack Ring
+ 	Add(16,45138,1,0,0,25723,20); // Grace Magic Ring
+	
+// Shop 17: Exchange: Imperial Exchanger
+	Add(17,45046,1,0,0,25723,20); // Imperial Breath Armor
+	Add(17,45047,1,0,0,25723,20); // Imperial Knight Armor
+	Add(17,45048,1,0,0,25723,20); // Imperial Spear Armor
+	Add(17,45049,1,0,0,25723,20); // Imperial Genesis Armor
+	Add(17,45050,1,0,0,25723,20); // Imperial Sharp Suit
+	Add(17,45051,1,0,0,25723,20); // Imperial Aimed Suit
+	Add(17,45052,1,0,0,25723,20); // Imperial Severe Suit
+	Add(17,45053,1,0,0,25723,20); // Imperial Reverb Suit
+	Add(17,45054,1,0,0,25723,20); // Imperial Adora Robe
+	Add(17,45055,1,0,0,25723,20); // Imperial Duple Robe
+	Add(17,45056,1,0,0,25723,20); // Imperial Knuckle Suit
+	Add(17,45057,1,0,0,25723,20); // Imperial Tiger Suit
+	Add(17,45058,1,0,0,25723,20); // Imperial Tornado Armor
+	Add(17,45059,1,0,0,25723,20); // Imperial Vulcan Armor
+	Add(17,45060,1,0,0,25723,20); // Imperial Cart Cannon Suit
+	Add(17,45061,1,0,0,25723,20); // Imperial Cart Tornado Suit
+	Add(17,45062,1,0,0,25723,20); // Imperial Rolling Suit
+	Add(17,45063,1,0,0,25723,20); // Imperial Assassin Suit
+	Add(17,45064,1,0,0,25723,20); // Imperial Fatal Suit
+	Add(17,45065,1,0,0,25723,20); // Imperial Stalker Suit
+	Add(17,45066,1,0,0,25723,20); // Imperial Picky Robe
+	Add(17,45067,1,0,0,25723,20); // Imperial Catnip Robe
+	Add(17,45068,1,0,0,25723,20); // Imperial Trip Suit
+	Add(17,45069,1,0,0,25723,20); // Imperial Fire Rain Suit
+	Add(17,45070,1,0,0,25723,20); // Imperial Crimson Robe
+	Add(17,45071,1,0,0,25723,20); // Imperial Frost Robe
+	Add(17,45072,1,0,0,25723,20); // Imperial Psychic Robe
+	Add(17,45073,1,0,0,25723,20); // Imperial Dust Robe
+	Add(17,45074,1,0,0,25723,20); // Imperial Sun Suit
+	Add(17,45075,1,0,0,25723,20); // Imperial Moon Suit
+	Add(17,45076,1,0,0,25723,20); // Imperial Ninja Suit
+	Add(17,45077,1,0,0,25723,20); // Imperial Kunai Suit
+	Add(17,45078,1,0,0,25723,20); //  Imperial Eswhoo Robe
+	Add(17,45079,1,0,0,25723,20); // Imperial Explosion Robe
+	Add(17,45117,1,0,0,25723,20); // Imperial Super Novice Suit
+	Add(17,45118,1,0,0,25723,20); // Imperial Super Novice Robe
+	Add(17,45123,1,0,0,25723,20); // Imperial Attack Boots
+	Add(17,45124,1,0,0,25723,20); // Imperial Magic Boots
+	Add(17,45129,1,0,0,25723,20); // Imperial Attack Manteau
+	Add(17,45130,1,0,0,25723,20); // Imperial Magic Manteau
+	Add(17,45135,1,0,0,25723,20); // Imperial Attack Ring
+	Add(17,45136,1,0,0,25723,20); // Imperial Magic Ring
+	
+// Shop 18: Exchange: Noblesse Exchanger
+	Add(18,45012,1,0,0,25723,20); // Noblesse Breath Armor
+	Add(18,45013,1,0,0,25723,20); // Noblesse Knight Armor
+	Add(18,45014,1,0,0,25723,20); // Noblesse Spear Armor
+	Add(18,45015,1,0,0,25723,20); // Noblesse Genesis Armor
+	Add(18,45016,1,0,0,25723,20); // Noblesse Sharp Suit
+	Add(18,45017,1,0,0,25723,20); // Noblesse Aimed Suit
+	Add(18,45018,1,0,0,25723,20); // Noblesse Severe Suit
+	Add(18,45019,1,0,0,25723,20); // Noblesse Reverb Suit
+	Add(18,45020,1,0,0,25723,20); // Noblesse Adora Robe
+	Add(18,45021,1,0,0,25723,20); // Noblesse Duple Robe
+	Add(18,45022,1,0,0,25723,20); // Noblesse_Tornado_Armor
+	Add(18,45023,1,0,0,25723,20); // Noblesse Vulcan Armor
+	Add(18,45024,1,0,0,25723,20); // Noblesse Cart Cannon Suit
+	Add(18,45025,1,0,0,25723,20); // Noblesse Cart Tornado Suit
+	Add(18,45026,1,0,0,25723,20); // Noblesse Rolling Suit
+	Add(18,45027,1,0,0,25723,20); // Noblesse Assassin Suit
+	Add(18,45028,1,0,0,25723,20); // Noblesse Fatal Suit
+	Add(18,45029,1,0,0,25723,20); // Noblesse Stalker Suit
+	Add(18,45030,1,0,0,25723,20); // Noblesse Picky Robe
+	Add(18,45031,1,0,0,25723,20); // Noblesse Catnip Robe
+	Add(18,45032,1,0,0,25723,20); // Noblesse Trip Suit
+	Add(18,45033,1,0,0,25723,20); // Noblesse Fire Rain Suit
+	Add(18,45034,1,0,0,25723,20); // Noblesse Crimson Robe
+	Add(18,45035,1,0,0,25723,20); // Noblesse Frost Robe
+	Add(18,45036,1,0,0,25723,20); // Noblesse Psychic Robe
+	Add(18,45037,1,0,0,25723,20); // Noblesse Dust Robe
+	Add(18,45038,1,0,0,25723,20); // Noblesse Sun Suit
+	Add(18,45039,1,0,0,25723,20); // Noblesse Moon Suit
+	Add(18,45040,1,0,0,25723,20); // Noblesse Ninja Suit
+	Add(18,45041,1,0,0,25723,20); // Noblesse Kunai Suit
+	Add(18,45042,1,0,0,25723,20); // Noblesse Eswhoo Robe
+	Add(18,45043,1,0,0,25723,20); // Noblesse Explosion Robe
+	Add(18,45044,1,0,0,25723,20); // Noblesse Knuckle Suit
+	Add(18,45045,1,0,0,25723,20); // Noblesse Tiger Suit
+	Add(18,45115,1,0,0,25723,20); // Noblesse Super Novice Suit
+	Add(18,45116,1,0,0,25723,20); // Noblesse Super Novice Robe
+	Add(18,45121,1,0,0,25723,20); // Noblesse Attack Boots
+	Add(18,45122,1,0,0,25723,20); // Noblesse Magic Boots
+	Add(18,45127,1,0,0,25723,20); // Noblesse Attack Manteau
+	Add(18,45128,1,0,0,25723,20); // Noblesse Magic Manteau
+	Add(18,45133,1,0,0,25723,20); // Noblesse Attack Ring
+	Add(18,45134,1,0,0,25723,20); // Noblesse Magic Ring
+
+// Shop 19: Exchange: Abyss 4
+ 	Add(19,15391,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); //	Red Dragon Plate
+	Add(19,15392,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); //	Green Dragon Plate
+	Add(19,15393,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); //	Gold Dragon Plate
+	Add(19,15394,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); //	Purple Dragon Plate
+	Add(19,15395,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); //	Blue Dragon Plate
+	Add(19,15396,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); // Silver Dragon Plate
+	Add(19,20946,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); // Dragon Scale Hood
+	Add(19,22208,1,0,0,25761,50,1035,75,1036,100,1037,50,7123,100,7445,35,7446,35,7447,35,7448,35,25766,15,25765,3); // Dragon Scale Boots 
+
+// Shop 20: Exchange: OGH
+	Add(20,6608,1,0,0,6755,1); // Coagulated Spell
+	Add(20,6755,1,0,0,6608,1); // Contaminated Magic
+	Add(20,2499,1,0,0,6607,1); // Temporal Boots
+	Add(20,22000,1,0,0,2499,1,6607,5); // Temporal_STR_Boots
+	Add(20,22001,1,0,0,2499,1,6607,5); // Temporal_INT_Boots
+	Add(20,22002,1,0,0,2499,1,6607,5); // Temporal_AGI_Boots
+	Add(20,22003,1,0,0,2499,1,6607,5); // Temporal_VIT_Boots
+	Add(20,22004,1,0,0,2499,1,6607,5); // Temporal_DEX_Boots
+	Add(20,22005,1,0,0,2499,1,6607,5); // Temporal_LUK_Boots
+	Add(20,22006,1,0,0,22000,1,6607,5); // Temporal Boots Of Strength [1]
+	Add(20,22009,1,0,0,22001,1,6607,5); // Temporal Boots Of Intelligence [1]
+	Add(20,22010,1,0,0,22002,1,6607,5); // Temporal Boots Of Agility [1]
+	Add(20,22007,1,0,0,22003,1,6607,5); // Temporal Boots Of Vitality [1]
+	Add(20,22008,1,0,0,22004,1,6607,5); // Temporal Boots Of Dexterity [1]
+	Add(20,22011,1,0,0,22005,1,6607,5); // Temporal Boots Of Luck [1]
+	
+	
+// Shop 21: Exchange: Einbroch 3
+	Add(21,25814,1,0,0,25809,1,25810,1,25811,1,25812,1,25813,1); // Dynite
+	Add(21,34999,1,0,0,25814,5); // Einbroch 3 Equipment Box
+	Add(21,32248,1,0,0,25814,5); // Safety Pendant R [1]
+	Add(21,32249,1,0,0,25814,5); // Safety Pendant B [1]
+	Add(21,32250,1,0,0,25814,5); // Safety Epaulet R [1]
+	Add(21,32251,1,0,0,25814,5); //Safety Epaulet B [1]
+	
+// Shop 22: Exchange: King Schmidt
+	Add(22,15388,1,0,0,25739,5,6607,10); // King Schmidt's Suit[1]
+	Add(22,15388,1,0,0,25739,5,6607,10); // King Schmidt's Suit[1]
+	Add(22,15389,1,0,0,25739,5,6607,10); // King Schmidt's Manteau[1]
+	Add(22,32228,1,0,0,25740,5,6755,5); // King Schmidt's Strong Insignia[1]
+	Add(22,32229,1,0,0,25740,5,6755,5); // King Schmidt's Divine Power Insignia[1]
+	Add(22,32230,1,0,0,25740,5,6755,5); // King Schmidt's Hundred Lucks Insignia[1]
+	Add(22,32231,1,0,0,25740,5,6755,5); // King Schmidt's Rigid Insignia[1]
+	Add(22,32232,1,0,0,25740,5,6755,5); // King Schmidt's Flash Insignia[1]
+	Add(22,32233,1,0,0,25740,5,6755,5); // King Schmidt's Celestial Insignia[1]
+	
+// Shop 23: Exchange: Charleston
+ 	Add(23,20733,1,0,0,6752,10); // Reinforced Parts - Engine [1]
+	Add(23,22044,1,0,0,6752,10); // Reinforced Parts - Booster [1]
+	Add(23,2996,1,0,0,6752,10); // Reinforced Parts - Gun Barrel [1]
+	Add(23,20732,1,0,0,6752,10); // Supplement Part Con [1]
+	Add(23,22043,1,0,0,6752,10); // Supplement Part Agi [1]
+	Add(23,2995,1,0,0,6752,10); // Supplement Part Dex [1]
+	Add(23,20773,1,0,0,6961,10,6962,1); // Excellion Wing
+	Add(23,15128,1,0,0,6961,10,6962,1); // Excellion Suit
+
+// Shop 24: Exchange: Mora
+ 	Add(24,6380,1,0,0,671,3); // Mora Coin
+	Add(24,2471,1,0,0,6380,10); // Shoes of Affection
+	Add(24,2472,1,0,0,6380,10); // Shoes of Judgement
+	Add(24,2569,1,0,0,6380,10); // Shawl of Affection
+	Add(24,2570,1,0,0,6380,10); // Shawl of Judgement
+	Add(24,1657,1,0,0,6380,10); // Wand of Affection [2]
+	Add(24,16013,1,0,0,6380,10); // Mace of Judgement [2]
+	Add(24,2156,1,0,0,6380,10); // Bible of Promise(1st Vol.)[1]
+	Add(24,2467,1,0,0,6380,10); // 	Golden Rod Shoes
+	Add(24,2468,1,0,0,6380,10); // Aqua Shoes
+	Add(24,2469,1,0,0,6380,10); // Crimson Shoes
+	Add(24,2470,1,0,0,6380,10); // Forest Shoes
+	Add(24,2007,1,0,0,6380,10); // Golden Rod Staff [2]
+	Add(24,2008,1,0,0,6380,10); // Aqua Staff [2]
+	Add(24,2009,1,0,0,6380,10); // Crimson Staff [2]
+	Add(24,2010,1,0,0,6380,10); // Forest Staff [2]
+	Add(24,2475,1,0,0,6380,10); // Ur's Greaves[1]
+	Add(24,2476,1,0,0,6380,10); // Peuz's Greaves[1]
+	Add(24,2574,1,0,0,6380,10); // Ur's Manteau
+	Add(24,2575,1,0,0,6380,10); // Peuz's Manteau
+	Add(24,2477,1,0,0,6380,10); // Sapha Shoes[1]
+	Add(24,2478,1,0,0,6380,10); // Nab Shoes[1]
+	Add(24,2577,1,0,0,6380,10); // Sapha Hood
+	Add(24,2578,1,0,0,6380,10); // Nab Hood
+	Add(24,2479,1,0,0,6380,10); // White Wing Boots[1]
+	Add(24,2480,1,0,0,6380,10); // Black Wing Boots[1]
+	Add(24,2580,1,0,0,6380,10); // White Wing Manteau
+	Add(24,2581,1,0,0,6380,10); // Black Wing Manteau	
+
+// -----------------------------------------------------------
+
+//=====================================================================================
+// ------------------- YOUR SHOPS AND ITEMS SHOPS HAVE BEEN ADDED ---------------------
+//=====================================================================================
+
+	freeloop(0);
+	set .menu$,"";
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1) {
+		set .menu$, .menu$+.Shops$[.@i]+":";
+		npcshopdelitem "qshop"+.@i,909;
+	}
+	end;
+
+OnMenu:
+	set .@size, getarraysize(@i);
+	if (!.@size) set @shop_index, select(.menu$);
+	else if (.@size == 1) set @shop_index, @i[0];
+	else {
+		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
+			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
+		set @shop_index, @i[select(.@menu$)-1];
+	}
+	deletearray @i[0],getarraysize(@i);
+	if (.Shops$[@shop_index] == "") {
+		message strcharinfo(0),"An error has occurred.";
+		end;
+	}
+	dispbottom "Select one item at a time.";
+	callshop "qshop"+@shop_index,1;
+	npcshopattach "qshop"+@shop_index;
+	end;
+
+OnBuyItem:
+	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
+	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
+	copyarray .@q[3],getd(".q_"+@shop_index+"_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+@shop_index+"_"+.@q[0]));
+	set .@q[2],.@q[1]*.@q[3];
+	if (!.@q[2] || .@q[2] > 30000) {
+		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
+		end;
+	}
+	mes "[Quest Shop]";
+	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Requirements:";
+	disable_items;
+	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
+	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
+	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
+	next;
+	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
+	if (@qe[2] > 0 && ((@qe[1] & EQP_HEAD_LOW) || (@qe[1] & EQP_HEAD_TOP) || (@qe[1] & EQP_HEAD_MID) || (@qe[1] & EQP_COSTUME_HEAD_TOP) || (@qe[1] & EQP_COSTUME_HEAD_MID) || (@qe[1] & EQP_COSTUME_HEAD_LOW) || (@qe[1] & EQP_GARMENT) || (@qe[1] & EQP_COSTUME_GARMENT)))
+		set .@preview,1;
+	addtimer 1000, strnpcinfo(0)+"::OnEnd";
+	while(1) {
+		switch(select(" ~ Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[7])?" ~ Preview...":"")+": ~ ^777777Cancel^000000")) {
+		case 1:
+			if (@qe[0]) {
+				mes "[Quest Shop]";
+				mes "You're missing one or more quest requirements.";
+				close;
+			}
+			if (!checkweight(.@q[0],.@q[2])) {
+				mes "[Quest Shop]";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				close;
+			}
+			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
+			if (.@q[5]) setd .Points$[0], getd(.Points$[0])-(.@q[5]*.@q[1]);
+			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
+			getitem .@q[0],.@q[2];
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):callfunc("F_InsertArticle",getitemname(.@q[0])))+"!",0;
+			specialeffect2 EF_FLOWERLEAF;
+			close;
+		case 2:
+			setarray @qe[3], getlook(LOOK_HEAD_BOTTOM), getlook(LOOK_HEAD_TOP), getlook(LOOK_HEAD_MID), getlook(LOOK_ROBE), 1;
+			if ((@qe[1] & 1) || (@qe[1] & 4096)) changelook LOOK_HEAD_BOTTOM, @qe[2];
+			else if ((@qe[1] & 256) || (@qe[1] & 1024)) changelook LOOK_HEAD_TOP, @qe[2];
+			else if ((@qe[1] & 512) || (@qe[1] & 2048)) changelook LOOK_HEAD_MID, @qe[2];
+			else if ((@qe[1] & 4) || (@qe[1] & 8192)) changelook LOOK_ROBE, @qe[2];
+			break;
+		case 3:
+			close;
+			cutin "", 255;
+		}
+	}
+
+OnEnd:
+	if (@qe[7]) {
+		changelook LOOK_HEAD_BOTTOM, @qe[3];
+		changelook LOOK_HEAD_TOP, @qe[4];
+		changelook LOOK_HEAD_MID, @qe[5];
+		changelook LOOK_ROBE, @qe[6];
+	}
+	deletearray @qe[0],8;
+	end;
+
+function Add {
+	if (getitemname(getarg(1)) == "null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped).";
+		return;
+	}
+	setarray .@j[0],getarg(2),getarg(3),getarg(4);
+	for(set .@i,5; .@i<getargcount(); set .@i,.@i+2) {
+		if (getitemname(getarg(.@i)) == "null") {
+			debugmes "Quest requirement #"+getarg(.@i)+" invalid (skipped).";
+			return;
+		} else
+			setarray .@j[.@i-2],getarg(.@i),getarg(.@i+1);
+	}
+	copyarray getd(".q_"+getarg(0)+"_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
+	npcshopadditem "qshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	return;
+}
+
+function Chk {
+	if (getarg(0) < getarg(1)) {
+		set @qe[0],1;
+		return "^FF0000";
+	} else
+		return "^00FF00";
+}
+
+function Slot {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot) {
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$;
+	}
+}
+}
+
+function	script	qshop	{
+	cutin "ep172_barmund_b03", 2;
+	deletearray @i[0],getarraysize(@i);
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+		set @i[.@i],getarg(.@i);
+	doevent "quest_shop::OnMenu";
+	
+	end;
+}
+
+
+// Dummy shop data -- copy as needed.
+//============================================================
+-	shop	qshop1	-1,909:-1
+-	shop	qshop2	-1,909:-1
+-	shop	qshop3	-1,909:-1
+-	shop	qshop4	-1,909:-1
+-	shop	qshop5	-1,909:-1
+-	shop	qshop6	-1,909:-1
+-	shop	qshop7	-1,909:-1
+-	shop	qshop8	-1,909:-1
+-	shop	qshop9	-1,909:-1
+-	shop	qshop10	-1,909:-1
+-	shop	qshop11	-1,909:-1
+-	shop	qshop12	-1,909:-1
+-	shop	qshop13	-1,909:-1
+-	shop	qshop14	-1,909:-1
+-	shop	qshop15	-1,909:-1
+-	shop	qshop16	-1,909:-1
+-	shop	qshop17	-1,909:-1
+-	shop	qshop18	-1,909:-1
+-	shop	qshop19	-1,909:-1
+-	shop	qshop20	-1,909:-1
+-	shop	qshop21	-1,909:-1
+-	shop	qshop22	-1,909:-1
+-	shop	qshop23	-1,909:-1
+-	shop	qshop24	-1,909:-1

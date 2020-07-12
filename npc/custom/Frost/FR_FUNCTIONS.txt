@@ -1,0 +1,190 @@
+prt_monk	mapflag	sakura
+
+/*
+-	script	itemdescs	-1,{
+end;
+
+OnInit:
+	bindatcmd "ii2",strnpcinfo(3)+"::OnAtcommand";
+	bindatcmd "itemdesc",strnpcinfo(3)+"::OnAtcommand";
+	end;
+	
+OnAtcommand:
+  dispbottom "^3355FF[ Item Description Search ]^000000";
+  .@item = atoi(.@atcmd_parameters$[0]);
+  dispbottom ""+itemlink(.@item)+"";
+ // dispbottom "Item:"+itemlink+""+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEML>";
+  dispbottom "Click on the name of the item above.";
+  end;
+
+}
+
+//dispbottom "RECOMPENSA: "+itemlink(.@ip[.@i])+" ID: "+.@ip[.@i]+"";
+//"+itemlink(.@i1[.@i])+"
+*/
+
+function	script	dispell_frost	{
+	while ( .@STATUS < 297 ) {
+		if (	
+			.@STATUS != SC_WEIGHT50 &&
+			.@STATUS != SC_WEIGHT90 &&
+			.@STATUS != SC_NOCHAT &&
+			.@STATUS != SC_XMAS &&
+			.@STATUS != SC_SUMMER &&
+			.@STATUS != SC_JAILED &&
+			.@STATUS != SC_STRFOOD &&
+			.@STATUS != SC_AGIFOOD &&
+			.@STATUS != SC_VITFOOD &&
+			.@STATUS != SC_INTFOOD &&
+			.@STATUS != SC_DEXFOOD &&
+			.@STATUS != SC_LUKFOOD &&
+			.@STATUS != SC_FLEEFOOD &&
+			.@STATUS != SC_BATKFOOD &&
+			.@STATUS != SC_WATKFOOD &&
+			.@STATUS != SC_MATKFOOD &&
+			.@STATUS != SC_SCRESIST &&
+			.@STATUS != SC_EXPBOOST &&
+			.@STATUS != SC_ITEMBOOST &&
+			.@STATUS != SC_BOSSMAPINFO &&
+			.@STATUS != SC_LIFEINSURANCE &&
+			.@STATUS != SC_BLESSING &&
+			.@STATUS != SC_INCREASEAGI &&
+			.@STATUS != SC_JEXPBOOST
+		)
+		sc_end .@STATUS;
+		set .@STATUS, .@STATUS+1;
+	}
+return;
+}
+
+prt_monk,116,212,5	script	Alternate Outfit	470,{
+
+callfunc "F_DRESSROOM";
+end;
+OnPCLoginEvent:
+	if(newstyle == 0){
+	setlook LOOK_BODY2,0;
+	set newstyle,0;	
+	}else if(newstyle == 1){
+	setlook LOOK_BODY2,1;
+	set newstyle,1;	
+}
+	end;
+}
+
+function	script	F_DRESSROOM	{
+
+	if((Class >= 0 && Class <= 4052) || (Class >= 4190 && Class <=4244)){ // Job ID check so only 3rd Class chars can change costume.
+		mes "[Stylist]";
+		mes "I can't do anything for you, come back when you're stronger!";
+		close;
+	}
+	if(zeny < 10000){ //Edit the amount of zeny it needs to change costume here. Default = 10k Zeny.
+		mes "[Stylist]";
+		mes "I'm sorry, you don't have enough zeny with you!";
+		close;
+	}
+
+	mes "[Stylist]";
+	mes "I can change your appearance to another class of your classline at a cost of ^FF0000" + 10000 + "^000000z!";
+	mes "Which class do you want to change your appearance to?";
+	next;
+	if(select("Restore costume:New jRO costume") == 1) {
+		set newstyle,0;
+		setlook LOOK_BODY2,0;
+		close;
+	}
+	setlook LOOK_BODY2,1;
+	set newstyle,1;
+	close;
+		
+	end;
+}
+prt_monk,120,212,3	script	Homunculus S	971,{
+	
+	set	.@nomenpc$,"^ff0000[Homunculus S]^000000";
+	if(checkhomcall() == -1){
+	mes .@nomenpc$;
+	mes "você não tem um Homunculo.";
+	end;
+	}
+	mes .@nomenpc$;
+	mes "Nome: "+gethominfo(2)+".";
+	mes "Amizade: "+gethominfo(3)+".";
+	mes "Fome: "+gethominfo(4)+".";
+	mes "Level: "+gethominfo(6)+".";
+	switch(select("Pegar Embrião Estranho:Transformar em Homunculo S:Cancelar")){
+		
+		case 1: morphembryo; end;
+		case 2: hommutate;
+		case 3: end;
+	}
+}
+
+prt_monk,110,215,5	script	+20 Refiner	685,{
+	
+//=== Configurações
+	set .@nomenpc$,"[Refinador]";
+	set .@refinemax,20; //maximo que pode refinar
+	set .@itemquest,7606; // item solicitado
+	set .@qtd_item_quest,50;
+	//======================
+	
+	if(countitem(.@itemquest) < .@qtd_item_quest){ 
+	mes .@nomenpc$; 
+	mes "Você não possui x"+.@qtd_item_quest+" do item "+getitemname(.@itemquest)+"";
+	end;
+	}
+	
+	disable_items;
+	mes .@nomenpc$;
+	mes "Escolha o equipamento para refinar até +"+.@refinemax+"!";
+	
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+		for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
+			if( getequipisequiped(.@indices[.@i]) )
+				set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			set .@menu$, .@menu$ + ":";
+		}
+		set .@part, .@indices[ select(.@menu$) ];
+		
+		if(getequiprefinerycnt(.@part) < 8){
+			next;
+			mes .@nomenpc$; mes "Esse item não é 8+"; end;
+		}
+			
+		//Verifica se ja é refinado + X (x = quantidade)
+		if(getequiprefinerycnt(.@part) >= .@refinemax){
+			next;
+			mes .@nomenpc$;
+			mes "você não pode refinar itens +"+.@refinemax+", você ja está no limite. ";
+			close;
+		}
+		//
+		set .@item_name$,getequipname(.@part); // Grava o nome do item selecionado.    
+	//
+	next;
+	mes .@nomenpc$;
+	mes "o item a ser refinado é o ^ff0000"+.@item_name$+"^000000?";
+	mes "";
+	if(select("Sim! Ele mesmo.:Não quero mais.") == 2) {
+		next;
+			mes .@nomenpc$;
+			mes "Utilize-me quando precisar";
+			close;
+		}
+	//========= 
+	delitem .@itemquest,.@qtd_item_quest;
+	successrefitem .@part;
+	end;
+}
+
+-	script	comandos_iniciais	-1,{
+
+OnPcLoginEvent:
+	
+	if(getgroupid() == 99){
+	atcommand "@speed 0"; //coloca velocidade 200
+	}
+	end;
+}

@@ -1,0 +1,362 @@
+prt_monk,122,198,4	script	Pool	4_F_SURA,{
+	specialeffect 563;
+
+	
+
+
+		if(getequipcardid(2,2) == 4879) {
+		mes "Hmm, I don't think you have anything equipped there.";
+		
+		}
+	close;
+	
+	}
+
+
+
+
+/*
+prt_monk,122,200,4	script	Mirror	4_ED_ORB,{
+
+//upgradeui(23100,getcharid(0));
+	// +9 Crimson Dagger [2]
+    mes "Using " + getitemname(getequipid(EQI_HAND_R));
+	mes "slot 1 " + getequipcardid(8,1);
+    mes "slot 1 " + getequipcardid(8,2);
+    mes "slot 1 " + getequipcardid(8,3);
+    mes "slot 1 " + getequipcardid(8,4);
+    mes "refine " + getequiprefinerycnt(EQI_HAND_R);
+    end;
+}
+
+
+EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script)
+EQI_ACC_L (0)             - Accessory 1
+EQI_ACC_R (1)             - Accessory 2
+EQI_SHOES (2)             - Footgear (shoes, boots)
+EQI_GARMENT (3)           - Garment (mufflers, hoods, manteaux)
+EQI_HEAD_LOW (4)          - Lower Headgear (beards, some masks)
+EQI_HEAD_MID (5)          - Middle Headgear (masks, glasses)
+EQI_HEAD_TOP (6)          - Upper Headgear
+EQI_ARMOR (7)             - Armor (jackets, robes)
+EQI_HAND_L (8)            - Left hand (weapons, shields)
+EQI_HAND_R (9)            - Right hand (weapons)
+EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
+EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
+EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
+EQI_COSTUME_GARMENT (13)  - Costume Garment
+EQI_AMMO (14)    		  - Arrow/Ammunition
+EQI_SHADOW_ARMOR (15)     - Shadow Armor
+EQI_SHADOW_WEAPON (16)    - Shadow Weapon
+EQI_SHADOW_SHIELD (17)    - Shadow Shield
+EQI_SHADOW_SHOES (18)     - Shadow Shoes
+EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
+EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
+*/
+
+
+prt_monk,122,200,4	script	Shadow Enchanter Erik	4_M_MD_HARWORD_H,{
+
+
+//mes getitemname(getequipid(.eqptype$[1]));
+//mes "lero lero";
+
+	mes .npc$;
+	mes "That's not a task for a common blacksmith.";
+	mes "I can enchant your items,";
+	mes "for a small fee of "+.pric+"z.";
+	mes "I also need human...blood...";
+	emotion e_no1,0; next;
+	if(select("Yes:No")&2) { mes .npc$; mes "Alright, thanks anyways..."; close; }
+	if(Zeny<.pric) { mes .npc$; mes "You don't have enough Zeny, please come back later."; close; }
+	
+	mes .npc$;
+	mes "Which item would you like to enchant?"; next;
+	while(set(.@a,.@a+1)<=.e_len) {
+		if(getequipid(.eqptype$[.@a-1])>-1)
+			set .@menu$, .@menu$+.eqp$[.@a-1]+"- [^0000FF"+getitemname(getequipid(.eqptype$[.@a-1]))+"^000000]:";
+		else set .@menu$, .@menu$+"^adb4be"+.eqp$[.@a-1]+"- [Empty]^000000:";
+	}
+	
+	
+	//
+	select(.@menu$);
+    
+    //set .@eq_loc, @menu;
+	set .@eq_loc, .eqptype$[@menu-1];
+	//mes .eqptype$[@menu-1];
+	//mes getequipid(.@eq_loc);
+    
+	set .@eq_itm, getequipid(.@eq_loc);
+	if(.@eq_itm<0) {
+		mes .npc$;
+		mes "Hmm, I don't think you have anything equipped there.";
+		close;
+	}
+	set .@positionToRefine, @menu;
+	.en_orb = getd(".en_orb" + .@positionToRefine);
+	set .@menu$, "";
+	set .@a, .en_orb[0];
+
+	/*
+	//while((set(.@a,.@a+1)-1)<=.en_orb[1])
+	while((set(.@a,.@a+1)-1)<= getd(".en_orb" + .@positionToRefine + "[1]"))
+	//while((set(.@a,.@a+1)-1)<= getd(getarraysize(".en_orb" + .@positionToRefine)- 1))	
+		if(getiteminfo(.@a-1,2)>-1)
+			if(set(.@c,countitem(.@a-1))) {
+				set .@menu$, .@menu$+getitemname(.@a-1)+" x"+.@c+":";
+				set .@b,.@b+1; set .@item[.@b], .@a-1;
+			}
+	*/
+
+		for ( .@i = 0; .@i < getarraysize(getd(".en_orb" + .@positionToRefine)); ++.@i ) {
+			//mes getd(".en_orb" + .@positionToRefine + "[" + .@i + "]");
+			//mes  .@i;
+			if(countitem(getd(".en_orb" + .@positionToRefine + "[" + .@i + "]")) > 0){
+				//mes getitemname(getd(".en_orb" + .@positionToRefine + "[" + .@i + "]")) + " x" + countitem(getd(".en_orb" + .@positionToRefine + "[" + .@i + "]"));
+				set .@menu$, .@menu$ + getitemname(getd(".en_orb" + .@positionToRefine + "[" + .@i + "]")) + " x" + countitem(getd(".en_orb" + .@positionToRefine + "[" + .@i + "]")) + ":";
+				set .@b,.@b+1; set .@item[.@b], getd(".en_orb" + .@positionToRefine + "[" + .@i + "]");
+				mes .@b + " " + getd(".en_orb" + .@positionToRefine + "[" + .@i + "]");
+			}
+	}
+
+
+	if(.@menu$=="") {
+		mes .npc$;
+		mes "Hmm, you don't seem to have any enchantment orbs.";
+		close;
+	}
+
+	mes .npc$;
+	mes "Please, select an enchantment from the menu."; next;
+	select(.@menu$);
+	set .@itm, .@item[@menu];
+
+	set .@menu$, ""; set .@a, .firstEnchantmentPosition -1 ;
+	while((set(.@a,.@a+1)-1)< .lastEnchantmentPosition) {
+		setd(".@crd"+.@a, getequipcardid(.@eq_loc,.@a-1));
+		if(getequipcardid(.@eq_loc,.@a-1))
+			set .@menu$, .@menu$+.@a+.crd_c$[.@a-1]+" Slot- [^a92435"+getitemname(getequipcardid(.@eq_loc,.@a-1))+"^000000]:";
+		else set .@menu$, .@menu$+.@a+.crd_c$[.@a-1]+" Slot- [^30ad25Empty^000000]:";
+	}
+	
+	mes .npc$;
+	mes "Select a slot."; next;
+	select(.@menu$);
+	set .@eqrf,	getequiprefinerycnt(.@eq_loc);
+	//if(getequipcardid(.@eq_loc,@menu-1)) {
+		if(getequipcardid(.@eq_loc,@menu-1)) {
+		mes .npc$;
+		mes "Would you like me to remove this card?"; next;
+		if(select("Yes:No")&2) { mes .npc$; mes "Alright, thanks anyways!"; close; }
+		getitem getequipcardid(.@eq_loc,@menu-1),1;
+		delitem2 .@eq_itm, 1, 1, .@eqrf, 0, .@crd1, .@crd2, .@crd3, .@crd4;
+		setd(".@crd"+@menu, 0);
+		getitem2 .@eq_itm, 1, 1, .@eqrf, 0, .@crd1, .@crd2, .@crd3, .@crd4;
+	}
+
+	if(rand(100)>.perc) {
+		mes .npc$;
+		mes "I'm sorry but I've failed you!";
+		misceffect 155; emotion e_sob,0;
+		set Zeny,Zeny-.pric;
+		close;
+	}
+	
+	set Zeny,Zeny-.pric;
+	delitem .@itm,1;
+	delitem2 .@eq_itm, 1, 1, .@eqrf, 0, .@crd1, .@crd2, .@crd3, .@crd4;
+	setd(".@crd"+@menu, .@itm);
+	getitem2 .@eq_itm, 1, 1, .@eqrf, 0, .@crd1, .@crd2, .@crd3, .@crd4;
+	misceffect .efet;
+	emotion e_no1,0;
+	mes .npc$;
+	mes "All done..";
+
+	//sc_start SC_CURSE,3000,10;
+	set hp, hp - (hp-1);
+	pushpc DIR_WEST, 15;
+	specialeffect2 EF_PRESSURE;
+	specialeffect2 452;
+	equip .@eq_itm;
+	close;
+
+//NPC Constants
+	OnInit:
+		//=-=-=-=-=-=-=Configuration=-=-=-=-=-=-=
+		set      .npc$  ,	"[^0000FFEnchant Expert^000000]"; // NPC Name
+		set      .pric  ,	1;                          // Price
+		set      .efet  ,	154;                        // Effect Number
+		set      .perc  ,	100;                        // Percent
+		setarray .crd_c$,	"st", "nd", "rd", "th";     // Count
+
+		setarray .firstEnchantmentPosition, 1;
+		setarray .lastEnchantmentPosition, 4;
+
+        // Upper Costume Headgear
+		setarray .en_orb1,					25494,
+											6636, //str +1					
+											6637, //int +1
+											6638, //agi +1
+											6639, //dex +1
+											6640, //vit +1
+											6641, //luk +1
+											6716, //crit +1
+											6790, //largesize +1%
+											6791, //medsize +1%
+											6792, //smallsize +1%
+											6943, //atk +1%
+											6944, //matk +1%
+											25000, //spdrain +1%
+											25068, //aspd +1
+											25445,
+											25494,
+											6740,
+											6741,
+											25490,
+											25808,
+											25846,
+											25843,
+											25413,
+											25417,
+											25804,
+											25710,
+											40007,
+											25850,
+											6999,
+											25453,
+											25706,
+											40000,
+											40003,
+											25855,
+											25859,
+											25450,
+											25409,
+											25498,
+											25800,
+											40014,  
+											25714,
+											40011;
+ 
+        // Middle Costume Headgear                    
+		setarray .en_orb2,					6945, //str +1					
+											6946, //int +1
+											6947, //agi +1
+											6948, //dex +1
+											6949, //vit +1
+											6950, //luk +1
+											6642, //atk +1%
+											6643, //matk +1%
+											6717, //hp +50
+											6742, //recoverhp +10 10s
+											6743, //maxhp +1%
+											6744, //maxsp +1%  
+											25446, 
+											25495,
+											25491,
+											25807,
+											25847,
+											25844,
+											25414,
+											25418,
+											25803,
+											25711,
+											40008,
+											25851,
+											25454,
+											25707,
+											40004,
+											45009,
+											25856,
+											25860,
+											25451,
+											25410,
+											25499,
+											25799,
+											40015,
+											25715,
+											40012;
+
+        // Lower Costume Headgear               
+        setarray .en_orb3,					6644, //hit +1					
+											6645, //flee +1
+											6718, //sp +10
+											6951, //hp +1%
+											25447,
+											25496,
+											25492,
+											25806,
+											25848,
+											25845,
+											25415,
+											6745,
+											25419,
+											25802,
+											25712,
+											40009,
+											25852,
+											25455,
+											25708,
+											40005,
+											45010,
+											25857,
+											25861,
+											25452,
+											25411,
+											25500,
+											25798,
+											40016,
+											25716,
+											40013;
+
+        // Costume Garment         
+		setarray .en_orb4,	6908, //aspd +1
+											6963, //hpdrain 1%
+											6964, //spdrain 1%
+											25853,
+											25456,
+											25501,
+											40002,
+											25412,
+											25797,
+											25849,
+											25842,
+											25420,
+											25801,
+											25493,
+											25805,
+											25448,
+											25713,
+											40006,
+											25858,
+											25416,
+											25854,
+											25497,
+											25717,
+											40010,
+											25449,
+											25862,
+											40001,
+											25711;
+                                                                   
+    	setarray .eqp$  ,	"Upper Headgear", "Middle Headgear", "Lower Headgear", "Garment";
+		setarray .eqptype$,   EQI_COSTUME_HEAD_TOP,EQI_COSTUME_HEAD_MID,EQI_COSTUME_HEAD_LOW,EQI_COSTUME_GARMENT;
+		set      .e_len ,	getarraysize(.eqp$);
+       
+		//=-=-=-=-=-=-=-=-Skorm-=-=-=-=-=-=-=-=-=
+		//+++++++++++++++ JufaRO - add many functionalities and removed bugs +++++++++++++++
+}
+
+/* LEGENDA
+EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
+EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
+EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
+EQI_COSTUME_GARMENT (13)  - Costume Garment
+EQI_AMMO (14)    		  - Arrow/Ammunition
+EQI_SHADOW_ARMOR (15)     - Shadow Armor
+EQI_SHADOW_WEAPON (16)    - Shadow Weapon
+EQI_SHADOW_SHIELD (17)    - Shadow Shield
+EQI_SHADOW_SHOES (18)     - Shadow Shoes
+EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
+EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
+*/
