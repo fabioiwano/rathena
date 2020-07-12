@@ -198,18 +198,18 @@ Body:
       Map: 1@glast
       X: 367
       Y: 304
-#  - Id: 22
-#    Name: Wave Mode - Forest
-#    Enter:
-#      Map: 1@def01
-#      X: 50
-#      Y: 21
-#  - Id: 23
-#    Name: Wave Mode - Sky
-#    Enter:
-#      Map: 1@def02
-#      X: 29
-#      Y: 35
+  - Id: 22
+    Name: Wave Mode - Forest
+    Enter:
+      Map: 1@def01
+      X: 50
+      Y: 21
+  - Id: 23
+    Name: Wave Mode - Sky
+    Enter:
+      Map: 1@def02
+      X: 29
+      Y: 35
   - Id: 24
     Name: Nightmarish Jitterbug
     Enter:
@@ -231,12 +231,12 @@ Body:
       Map: 1@rev
       X: 26
       Y: 181
-#  - Id: 27
-#    Name: Temple of the Demon God
-#    Enter:
-#      Map: 1@eom
-#      X: 101
-#      Y: 16
+  - Id: 27
+    Name: Temple of the Demon God
+    Enter:
+      Map: 1@eom
+      X: 101
+      Y: 16
   - Id: 28
     Name: Central Laboratory
     Enter:
@@ -249,12 +249,12 @@ Body:
       Map: 1@uns
       X: 145
       Y: 35
-#  - Id: 30
-#    Name: Charleston in Distress
-#    Enter:
-#      Map: 1@mcd
-#      X: 127
-#      Y: 282
+  - Id: 30
+    Name: Charleston in Distress
+    Enter:
+      Map: 1@mcd
+      X: 127
+      Y: 282
   - Id: 31
     Name: Ritual of Blessing
     Enter:
@@ -267,12 +267,40 @@ Body:
       Map: 1@mir
       X: 101
       Y: 10
-#  - Id: 33
-#    Name: Sky Fortress Invasion
-#    Enter:
-#      Map: 1@sthb
-#      X: 54
-#      Y: 67
-#    AdditionalMaps:
-#      1@sthc: true
-#      1@sthd: true
+  - Id: 33
+    Name: Sky Fortress Invasion
+    Enter:
+      Map: 1@sthb
+      X: 54
+      Y: 67
+    AdditionalMaps:
+      1@sthc: true
+      1@sthd: true
+  - Id: 34
+    Name: Heart Hunter War Base 1
+    TimeLimit: 3600
+    Enter:
+        Map: 1@swat
+        X: 35
+        Y: 35
+  - Id: 35
+    Name: Heart Hunter War Base 2
+    TimeLimit: 3600
+    Enter:
+        Map: 1@swat
+        X: 73
+        Y: 118
+  - Id: 36
+    Name: Werner Laboratory central room#1
+    TimeLimit: 3600
+    Enter:
+        Map: 1@slw
+        X: 187
+        Y: 24
+  - Id: 37
+     Name: Werner Laboratory central room#2
+     TimeLimit: 3600
+     Enter:
+        Map: 1@slw
+        X: 187
+        Y: 24

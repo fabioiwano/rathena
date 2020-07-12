@@ -483,3 +483,4 @@ MOBG_Branch_Of_Dead_Tree,2090,Antler Scaraba Egg,71428
 MOBG_Branch_Of_Dead_Tree,2091,Rake Scaraba Egg,71428
 MOBG_Branch_Of_Dead_Tree,2092,Dolomedes,71428
 MOBG_Branch_Of_Dead_Tree,2093,Botaring,142857
+MOBG_Branch_Of_Dead_Tree,1388,Arc Angeling,142857
