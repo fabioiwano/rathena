@@ -11686,7 +11686,7 @@
 23678,Gray_Abrasive_(Ranged),Gray Abrasive (Ranged),3,0,,,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 23679,Geffen_Magic_Accessory_Order_Form,Geffen Magic Accessory Order Form,3,0,,1,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 23926,9_Shadow_Refine_Hammer,+9 Shadow Refine Hammer,2,20,,1,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-23981,Turbulence_Dragons_Power,Turbulence Dragons Power,3,6,,1,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23981; },{},{}
+23981,Turbulence_Dragons_Power,Turbulence Dragons Power,3,6,,1,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 23682,Enchant_Stone_Box15,Costume Enchantment Stone Box 15,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box15); },{},{}
 23985,Dragons_Treasure,Dragon's Treasure,2,1000,,1,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(630); },{},{}
 23986,Odin_Relic,Odin Relic,2,1000,,1,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",15397,15398,15399,15400,15401,15402,20947,22209,25767,7511,7063),1; },{},{}
@@ -13215,10 +13215,10 @@
 29584,Racing_SL_3,Racing (Soul Linker) 3Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29587,Flash_GH,Flash ( Enchant ),3,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4877) { bonus bCritAtkRate,30;} },{},{}
 29588,Strong_GH,Strong ( Enchant),3,100,,,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4875) { bonus2 bAddSize,Size_All,25; } },{},{}
-29589,Thousand_Bow_GH,Thousand Bow (enchant),3,100,,,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4879) { bonus bAtkRate,10 } },{},{}
+29589,Thousand_Bow_GH,Thousand Bow (enchant),3,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4879) { bonus bAtkRate,10; } },{},{}
 29590,Divine_Power_GH,Divine Power ( Enchant ),3,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4876) { bonus2 bMagicAtkEle,Ele_All,15; } },{},{}
-29591,Rigid_GH,Rigid ( Enchant ),3,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4878) { bonus bDelayRate,-10 } },{},{}
-29592,Hundred_Luck_GH,Hundred Luck ( Enchant ),,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4880) { bonus bAspd,2 } },{},{}
+29591,Rigid_GH,Rigid ( Enchant ),3,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4878) { bonus bDelayRate,-10; } },{},{}
+29592,Hundred_Luck_GH,Hundred Luck ( Enchant ),,100,,0,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ if(getequipcardid(2,2) == 4880) { bonus bAspd,2; } },{},{}
 29594,Seyren_Memory,Seyren's Memory,6,20,,0,,,,,,,,,,,,,{},{},{}
 29595,Howard_Memory,Howard's Memory,6,20,,0,,,,,,,,,,,,,{},{},{}
 29596,Eremes_Memory,Eremes's Memory,6,20,,0,,,,,,,,,,,,,{},{},{}
@@ -14145,7 +14145,7 @@
 45140,Angelgolt_Card,Angelgolt Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,2,,,,0,{ bonus2 bMagicAddRace,RC_Demon,10; },{},{}
 45141,Arch_Plasma_Card,Arch Plasma Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); if (.@r>=14) { .@dmg += 40; } else if (.@r>=10) { .@dmg += 20; } .@i = getiteminfo(getequipid(EQI_HAND_R),11); if(.@i==W_STAFF || .@i==W_2HSTAFF) { .@dmg += 20; } bonus2 bMagicAtkEle,Ele_Wind,.@dmg; },{},{}
 45142,Spectrum_Plasma_Card,Spectrum Plasma Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); if (.@r>=14) { .@dmg += 40; } else if (.@r>=10) { .@dmg += 20; } .@i = getiteminfo(getequipid(EQI_HAND_R),11); if(.@i==W_STAFF || .@i==W_2HSTAFF) { .@dmg += 20; } bonus2 bMagicAtkEle,Ele_Ghost,.@dmg; },{},{}
-45143,Holy_Frus_Card,Holy Frus Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); if (.@r>=14) { .@dmg += 40; } else if (.@r>=10) { .@dmg += 20; } .@i = getiteminfo(getequipid(EQI_HAND_R),11); if(.@i==W_STAFF || .@i==W_2HSTAFF) { .@dmg += 20; } bonus2 bMagicAtkEle,Ele_Holy,.@dmg; },,
+45143,Holy_Frus_Card,Holy Frus Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); if (.@r>=14) { .@dmg += 40; } else if (.@r>=10) { .@dmg += 20; } .@i = getiteminfo(getequipid(EQI_HAND_R),11); if(.@i==W_STAFF || .@i==W_2HSTAFF) { .@dmg += 20; } bonus2 bMagicAtkEle,Ele_Holy,.@dmg; },{},{}
 45144,Holy_Skogul_Card,Holy Skogul Card,6,20,,10,0,0,0,0,0xFFFFFFFF,63,2,64,,,,,{ .@r = getrefine(); bonus bHealPower,(.@r>=9)?10:(.@r>=7)?8:5; },{},{}
 45145,Reginleif_Card,Reginleif Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,16,,,,,{ bonus bUnbreakableArmor,1; bonus bMaxHPrate,-15; bonus2 bAddClass,Class_All,30; },{},{}
 45146,Ingrid_Card,Ingrid Card,6,20,,1,0,0,0,0,0xFFFFFFFF,63,2,16,,,,,{ bonus bMaxHPrate,40; bonus2 bAddClass,Class_All,-15; bonus bUnbreakableArmor,1; bonus2 bHPLossRate,1000,4000; },{},{}
@@ -14172,3 +14172,5 @@
 45167,Int_blessing,Int blessing,3,50,,1,0,0,0,0,0xFFFFFFFF,63,2,16,,,,,{ bonus bInt,10; bonus bMatkRate,10; bonus bMdef,3; bonus bDef,25; },{},{}
 45168,Luk_blessing,Luk blessing,3,50,,1,0,0,0,0,0xFFFFFFFF,63,2,,,,,,{ bonus bLuk,10; bonus bCritAtkRate,15; bonus bDef,25; bonus bMdef,3; },{},{}
 45169,Broken_Guard_Beta_Card,Broken Guard Beta Card,6,0,,,0,0,0,0,0xFFFFFFFF,63,2,136,,,,,{ bonus bVit,3; bonus bMaxHPrate,10; bonus2 bSkillAtk,"LG_CANNONSPEAR",10; bonus2 bSkillAtk,"LG_BANISHINGPOINT",10; },{},{}
+440000,Shark_Head,Shark Head,4,10,,0,0,0,0,0,0xFFFFFFFF,63,2,1024,,1,0,1919,{},{},{}
+440002,C_Happy_Cat,Costume Happy Cat,4,10,,1,0,0,0,0,0xFFFFFFFF,63,2,769,,1,0,,{},{},{}

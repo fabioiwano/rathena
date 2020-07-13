@@ -28829,7 +28829,7 @@ Body:
       Weapon:
         Grenade: true
       ItemCost:
-        - Item: Shooting_Mine
+        - Item: Mine_Projectile
           Amount: 1
   - Id: 2563
     Name: RL_P_ALTER
