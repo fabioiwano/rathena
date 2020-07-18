@@ -1,0 +1,108 @@
+//===== rAthena Script =======================================
+//= Magma Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 fixed 2,3,4 tabs instead of 1... and wrong mob names [Lupus]
+//= 1.2 Official jRO 10.3 spawns [Playtester]
+//= 1.3 More accurate spawns [Playtester]
+//============================================================
+
+//==================================================
+// ein_d02_i - Illusion Teddy Bear Nasarian Empire
+//==================================================
+ein_d02_i,0,0	monster	Red Teddy Bear	20255,15,5000
+ein_d02_i,0,0	monster	Yellow Teddy Bear	20256,15,5000
+ein_d02_i,0,0	monster	Green Teddy Bear	20257,15,5000
+ein_d02_i,0,0	monster	White Teddy Bear	20258,15,5000
+ein_d02_i,0,0	monster	Blue Teddy	20259,15,5000
+ein_d02_i,0,0	monster	Hardworking	Pitman	20261,15,5000
+ein_d02_i,0,0	monster	Soul Fragment	20262,15,5000
+ein_d02_i,0,0	monster	Haunted Obsidian	20263,10,5000
+
+ein_d02_i,0,0,0,0	boss_monster	Shining Teddy Bear	20260,1,7500000,600000,0
+
+//==================================================
+// com_d02_i - Illusion Luanda
+//==================================================
+com_d02_i,0,0	monster	Ancient Megalith	20272,46,5000
+com_d02_i,0,0	monster	Ancient Stalactic Golem	20271,40,5000
+com_d02_i,0,0	monster	Ancient Stone Shooter	20274,38,5000
+com_d02_i,0,0	monster	Ancient Wootan Shooter	20275,20,5000
+com_d02_i,0,0	monster	Ancient Wootan Fighter	20276,15,5000
+com_d02_i,0,0	monster	Ancient Tri Joint	20270,10,5000
+
+com_d02_i,0,0,0,0	boss_monster	Ancient Wootan Defender	20277,1,7500000,600000,0
+com_d02_i,0,0,0,0	boss_monster	Ancient Tao Gunka	20273,1,7500000,600000,0
+
+//==================================================
+// prt_mz03_i - Illusion Labyrinth
+//==================================================
+prt_mz03_i,0,0	monster	Chaotic Andrea	20521,20,5000
+prt_mz03_i,0,0	monster	Chaotic Anes	20522,20,5000
+prt_mz03_i,0,0	monster	Chaotic Silvano	20523,20,5000
+prt_mz03_i,0,0	monster	Chaotic Cecilia	20524,20,5000
+prt_mz03_i,0,0	monster	Chaotic Baphomet Jr	20525,15,5000
+prt_mz03_i,0,0	monster	Chaotic Side Winder	20526,10,5000
+prt_mz03_i,0,0	monster	Chaotic Hunter Fly	20527,10,5000
+prt_mz03_i,0,0	monster	Chaotic Mantis	20528,15,5000
+prt_mz03_i,0,0	monster	Chaotic Ghostring	20529,1,5000
+prt_mz03_i,0,0	monster	Chaotic Killer Mantis	20530,15,5000
+prt_mz03_i,0,0	monster	Chaotic Poporing	20531,10,5000
+prt_mz03_i,0,0	monster	Chaotic Stem Worm	20532,10,5000
+
+prt_mz03_i,0,0,0,0	boss_monster	Chaotic Baphomet	20520,1,7500000,600000,0
+
+//==================================================
+// pay_d03_i - Illusion Payon (Moonlight)
+//==================================================
+pay_d03_i,0,0	monster	Furious Nine Tail	3759,10,5000
+pay_d03_i,0,0	monster	Resentful Munak	3760,15,5000
+pay_d03_i,0,0	monster	Resentful Bongun	3761,15,5000
+pay_d03_i,0,0	monster	Resentful Sohee	3762,25,5000
+pay_d03_i,0,0	monster	Resentful Archer Skeleton	3763,20,5000
+pay_d03_i,0,0	monster	Truthful Wizard	3765,1,5000
+pay_d03_i,0,0	monster	Furious Hero	3765,1,5000
+
+pay_d03_i,0,0,0,0	boss_monster	Furious Moonlight	3758,1,7500000,600000,0
+
+//==================================================
+// gef_d01_i - Illusion Geffen (Vampire)
+//==================================================
+gef_d01_i,0,0	monster	Matt Drainliar	3750,10,5000
+gef_d01_i,0,0	monster	Restless Zombie	3752,20,5000
+gef_d01_i,0,0	monster	Restless Ghoul	3753,20,5000
+gef_d01_i,0,0	monster	Sweet Nightmare	3754,35,5000
+gef_d01_i,0,0	monster	Ghastly Black Mushroom	3755,15,5000
+gef_d01_i,0,0	monster	Bomi	3756,1,5000
+
+gef_d01_i,0,0,0,0	boss_monster	Furious Dracula	3757,1,7500000,600000,0
+
+//==================================================
+// ice_d03_i - Illusion Ice (Frozen)
+//==================================================
+ice_d03_i,0,0	monster	Furious Snowier	3793,30,5000
+ice_d03_i,0,0	monster	Furious Gazeti	3792,20,5000
+ice_d03_i,0,0	monster	Furious Ice Titan	3794,30,5000
+ice_d03_i,0,0	monster	Solid Iceicle	3795,25,5000
+
+ice_d03_i,0,0,0,0	boss_monster	Awakened Ktullanux	3796,1,7500000,600000,0
+
+//==================================================
+// tur_d03_i - Illusion Turtle island (Archery)
+//==================================================
+tur_d03_i,0,0	monster	Ominous Permeter	3800,10,5000
+tur_d03_i,0,0	monster	Ominous Freezer	3801,20,5000
+tur_d03_i,0,0	monster	Ominous Solider	3802,10,5000
+
+//==================================================
+// tur_d04_i - Illusion Turtle island (Archery)
+//==================================================
+tur_d04_i,0,0	monster	Ominous Assulter	3799,10,5000
+tur_d04_i,0,0	monster	Ominous Heater	3803,20,5000
+
+tur_d04_i,0,0,0,0	boss_monster	Ominous Turtle General	3804,1,7500000,600000,0

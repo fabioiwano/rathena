@@ -1,0 +1,85 @@
+//===== rAthena Script =======================================
+//= poring01 Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+
+//==================================================
+// poring01 - poring01
+//==================================================
+
+//MOB RANDOMICO
+//monster <"map name">, <x>, <y>, <"display name"> <mob id>, <amount> , <???> , <???>
+// Exemplo: poring01,0,0	monster	Orc Zombie	1153,80,5000
+
+//MOB EM UM RAIO PRECISO
+//monster <"map name">, <x>, <y>, <raio que sera exibido>,<raio que sera exibido> <"display name"> <mob id>, <amount> , <???> , <???>
+// Exemplo: poring01,99,193,10,10	monster	White Plant	1082,3,180000,90000
+/*
+190,260 ----------------------------------------210,260
+
+      |                                            |
+
+      |                                            |
+
+      |                200,250                     |
+
+      |                                            |
+
+      |                                            |
+
+190,240 ----------------------------------------210,240
+*/
+
+//
+//
+//
+
+poring01,134,208,3,3	monster	King Poring	25052,1,180000,90000
+poring01,259,208	monster	Hallowring	25032,1,180000,90000
+
+poring01,0,0	monster	Whiteporing	25020,15,5000
+poring01,0,0	monster	Whispering	25021,20,5000
+poring01,0,0	monster	Sprouring	25022,35,5000
+poring01,0,0	monster	Redappleporing	25023,35,5000
+poring01,0,0	monster	Purplenekoring	25024,35,5000
+poring01,0,0	monster	Pumpkinring	25025,35,5000
+poring01,0,0	monster	Poringking	25026,35,5000
+poring01,0,0	monster	Pinknekoring	25027,35,5000
+poring01,0,0	monster	Pandaring	25028,45,5000
+poring01,0,0	monster	Orcporing	25029,35,5000
+poring01,0,0	monster	Nekoring	25030,35,5000
+poring01,0,0	monster	Loveporing	25031,35,5000
+poring01,0,0	monster	Greynekoring	25033,35,5000
+poring01,0,0	monster	Greennekoring	25034,35,5000
+poring01,0,0	monster	Greenappleporing	25035,35,5000
+poring01,0,0	monster	Gloomring	25036,15,5000
+poring01,0,0	monster	Ghostporing	25037,20,5000
+poring01,0,0	monster	Demonring	25038,35,5000
+poring01,0,0	monster	Creamring	25039,35,5000
+poring01,0,0	monster	Cowring	25040,35,5000
+poring01,0,0	monster	Bluenekoring	25041,35,5000
+poring01,0,0	monster	Bloodring	25042,20,5000
+poring01,0,0	monster	Blacknekoring	25043,35,5000
+poring01,0,0	monster	Black Blockring	25044,35,5000
+poring01,0,0	monster	Blockring	25045,35,5000
+poring01,0,0	monster	Blue Blockring	25046,25,5000
+poring01,0,0	monster	Brown Blockring	25047,25,5000
+poring01,0,0	monster	Cyan Blockring	25048,25,5000
+poring01,0,0	monster	Garling	20695,35,5000
+poring01,0,0	monster	Bunnyring	25050,35,5000
+poring01,0,0	monster	Sprouting	25051,35,5000
+poring01,0,0	monster	Bombring	25053,25,5000
+poring01,0,0	monster	Aquaring	25019,35,5000
+
+
+
+poring01,0,0	monster	Poring	1002,10,5000
+poring01,0,0	monster	Drops	1113,10,5000
+poring01,0,0	monster	Poporing	1031,10,5000
+poring01,0,0	monster	Marin	1242,10,5000
+poring01,0,0	monster	Santa Poring	1062,10,5000
+

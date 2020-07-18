@@ -1,0 +1,47 @@
+//===== rAthena Script =======================================
+//= madropvp Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+
+//==================================================
+// madropvp
+//==================================================
+
+//MOB RANDOMICO
+//monster <"map name">, <x>, <y>, <"display name"> <mob id>, <amount> , <???> , <???>
+// Exemplo: poring01,0,0	monster	Orc Zombie	1153,80,5000
+
+//MOB EM UM RAIO PRECISO
+//monster <"map name">, <x>, <y>, <raio que sera exibido>,<raio que sera exibido> <"display name"> <mob id>, <amount> , <???> , <???>
+// Exemplo: poring01,99,193,10,10	monster	White Plant	1082,3,180000,90000
+/*
+190,260 ----------------------------------------210,260
+
+      |                                            |
+
+      |                                            |
+
+      |                200,250                     |
+
+      |                                            |
+
+      |                                            |
+
+190,240 ----------------------------------------210,240
+*/
+
+//
+//
+//
+
+madropvp,93,130,3,3	boss_monster	Priest Mummy	25058,1,180000,90000
+
+madropvp,93,85,15,15	monster	Curse Straw	25054,8,5000
+madropvp,93,85,15,15	monster	Dark Hollow	25055,4,5000
+madropvp,93,85,15,15	monster	Chibi Mummy	25056,8,5000
+madropvp,93,85,15,15	monster	Queen Mummy	25061,6,5000
+madropvp,93,85,15,15	monster	Inky Muck	25062,6,5000

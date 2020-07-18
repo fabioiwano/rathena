@@ -432,7 +432,7 @@ D50: Restrict("RE",7,8);
 
 D51: Restrict("RE",7,8);
 	 setarray @c[2],197,275,159,19,160,19,162,42,12,116,275,21,15,116,157,29,27,25;
-	 Disp("Mansion:Library Corridor:Meditations Large Bath:Time-forgotten Vivarium:1st Floor – Power Plant:2st Floor – Power Plant:3rd Floor – Power Plant:Warehouse – Upper Floor:Warehouse – Lower Floor");
+	 Disp("Mansion:Library Corridor:Meditations Large Bath:Time-forgotten Vivarium:1st Floor-Power Plant:2st Floor-Power Plant:3rd Floor-Power Plant:Warehouse-Upper Floor:Warehouse-Lower Floor");
 	 Pick("","ba_maison","ba_lib","ba_bath","ba_lost","ba_pw01","ba_pw02","ba_pw03","ba_2whs01","ba_2whs02");
 
 // --------------------------------------------------

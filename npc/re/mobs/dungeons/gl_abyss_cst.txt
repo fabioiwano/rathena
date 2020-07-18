@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= Glastheim Abyss Castle Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+//==================================================
+// gl_cas01_ - Glastheim Abyss Castle
+//==================================================
+gl_cas01_,0,0	monster	Frozen Gargoyle	20369,10,5000
+gl_cas01_,0,0	monster	Prison Breaker	20371,10,5000
+gl_cas01_,0,0	monster	Contaminated Raydric	20367,10,5000
+gl_cas01_,0,0	monster	Contaminated Raydric Archer	20368,10,5000
+gl_cas01_,0,0	monster	Contaminated Wanderer	20420,10,5000
+gl_cas01_,0,0	monster	Contaminated Sting	20370,10,5000
+gl_cas01_,0,0	monster	Flame Ghost	20380,10,5000
+gl_cas01_,0,0	monster	Ice Ghost	20379,10,5000
+
+gl_cas01_,0,0,0,0	boss_monster	Contaminated Dark Lord	20422,1,7500000,600000,0
+
+gl_cas01_,0,0,0,0	boss_monster	Contaminated Spider Queen	20421,1,7500000,600000,0

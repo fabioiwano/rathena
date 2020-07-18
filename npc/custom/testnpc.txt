@@ -1,9 +1,7 @@
-prt_monk,122,198,4	script	Pool	4_F_SURA,{
+/*prt_monk,122,198,4	script	Pool	4_F_SURA,{
 	specialeffect 563;
 
 	
-
-
 		if(getequipcardid(2,2) == 4879) {
 		mes "Hmm, I don't think you have anything equipped there.";
 		
@@ -12,7 +10,7 @@ prt_monk,122,198,4	script	Pool	4_F_SURA,{
 	
 	}
 
-
+*/
 
 
 /*
@@ -55,7 +53,21 @@ EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
 */
 
 
-prt_monk,122,200,4	script	Shadow Enchanter Erik	4_M_MD_HARWORD_H,{
+/* LEGENDA
+EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
+EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
+EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
+EQI_COSTUME_GARMENT (13)  - Costume Garment
+EQI_AMMO (14)    		  - Arrow/Ammunition
+EQI_SHADOW_ARMOR (15)     - Shadow Armor
+EQI_SHADOW_WEAPON (16)    - Shadow Weapon
+EQI_SHADOW_SHIELD (17)    - Shadow Shield
+EQI_SHADOW_SHOES (18)     - Shadow Shoes
+EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
+EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
+*/
+
+prt_monk,122,198,4	script	Enchanter-OS 	4_M_SCIENCE,{
 
 
 //mes getitemname(getequipid(.eqptype$[1]));
@@ -346,17 +358,3 @@ prt_monk,122,200,4	script	Shadow Enchanter Erik	4_M_MD_HARWORD_H,{
 		//=-=-=-=-=-=-=-=-Skorm-=-=-=-=-=-=-=-=-=
 		//+++++++++++++++ JufaRO - add many functionalities and removed bugs +++++++++++++++
 }
-
-/* LEGENDA
-EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
-EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
-EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
-EQI_COSTUME_GARMENT (13)  - Costume Garment
-EQI_AMMO (14)    		  - Arrow/Ammunition
-EQI_SHADOW_ARMOR (15)     - Shadow Armor
-EQI_SHADOW_WEAPON (16)    - Shadow Weapon
-EQI_SHADOW_SHIELD (17)    - Shadow Shield
-EQI_SHADOW_SHOES (18)     - Shadow Shoes
-EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
-EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
-*/

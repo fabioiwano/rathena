@@ -1,0 +1,97 @@
+//===== rAthena Script =======================================
+//= sp OS Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// ba_maison - Barmund Mansion Garden
+//==================================================
+ba_maison,0,0	monster	Cleaning Robot	20640,5,5000
+ba_maison,0,0	monster	Guardian Parts	20679,15,5000
+ba_maison,0,0	monster	Bookworm	20683,80,5000
+ba_maison,0,0	monster	Roaming Spellbook	20684,70,5000
+ba_maison,0,0	monster	Broken Beta	20630,15,5000
+
+
+//==================================================
+// ba_2whs01 - Barmund Warehouse Tartarus 1F
+//==================================================
+ba_2whs01,0,0	monster	Broken Cleaning Robot	20641,35,5000
+ba_2whs01,0,0	monster	Heart Hunter Skirmisher	20682,35,5000
+ba_2whs01,0,0	monster	Broken Security Beta	20639,35,5000
+
+
+//==================================================
+// ba_2whs02 - Barmund Warehouse Tartarus 2F
+//==================================================
+ba_2whs02,0,0	monster	Broken Cleaning Robot	20641,35,5000
+ba_2whs02,0,0	monster	Broken Warehouse Manager	20637,40,5000
+ba_2whs01,0,0	monster	Broken Security Beta	20639,35,5000
+
+//==================================================
+// ba_bath - Barmund Bath
+//==================================================
+ba_bath,0,0	monster	Boiled Water Marc	20644,25,5000
+ba_bath,0,0	monster	Boiled Water Swordfish	20645,25,5000
+ba_bath,0,0	monster	Boiled Water Piranha	20646,20,5000
+ba_bath,0,0	monster	Boiled Water Phen	20643,20,5000
+ba_bath,0,0	monster	Broken Beta Boomerang	20633,30,5000
+ba_bath,0,0	monster	Broken Cleaner Beta	20634,20,5000
+
+
+//==================================================
+// ba_lib - Barmund Library memory corridor
+//==================================================
+ba_lib,0,0	monster	Heart Hunter Skirmisher	20680,35,5000
+ba_lib,0,0	monster	Bookworm	20683,30,5000
+ba_lib,0,0	monster	Roaming Spellbook	20690,50,5000
+ba_lib,0,0	monster	Broken Beta	20630,10,5000
+
+//==================================================
+// ba_pw01 - Barmund Mansion 1st Power Plant
+//==================================================
+ba_pw01,0,0	monster	Heart Hunter Skirmisher	20680,15,5000
+ba_pw01,0,0	monster	Elite Bellare	20688,90,5000
+ba_pw01,0,0	monster	Unleashed Magic	20684,25,5000
+ba_pw01,0,0	monster	Broken Beta	20630,15,5000
+ba_pw01,0,0	monster	Magical Dolor	20689,80,5000
+
+//==================================================
+// ba_pw02 - Barmund Mansion 2nd Power Plant
+//==================================================
+ba_pw02,0,0	monster	Heart Hunter Skirmisher	20680,15,5000
+ba_pw01,0,0	monster	Savage Clamp	20686,80,5000
+ba_pw02,0,0	monster	Savage Waterfall	20687,60,5000
+ba_pw02,0,0	monster	Savage Venenum	20685,60,5000
+ba_pw02,0,0	monster	Elite Bellare	20688,60,5000
+
+//==================================================
+// ba_pw03 - Barmund Mansion 3rd Power Plant
+//==================================================
+ba_pw03,0,0	monster	Magic Poison Plaga	20691,80,5000
+ba_pw03,0,0	monster	Powerful Horsepower	20693,70,5000
+ba_pw03,0,0	monster	Sharp Horsepower	20694,70,5000
+ba_pw03,0,0	monster	Magic Poison Sanare	20692,80,5000
+
+//==================================================
+// ba_lost - Barmund Lost
+//==================================================
+ba_lost,0,0	monster	Red Pitaya	20649,50,5000
+ba_lost,0,0	monster	Yellow Pitaya	20650,50,5000
+ba_lost,0,0	monster	Blue Pitaya	20651,50,5000
+ba_lost,0,0	monster	Violet Pitaya	20652,50,5000
+ba_lost,0,0	monster	Green Pitaya	20653,50,5000
+
+ba_lost,266,245,3,3	boss_monster	Boss Meow	20648,1,3600000,600000,1
+
+
+
+
+
