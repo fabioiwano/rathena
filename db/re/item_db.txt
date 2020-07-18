@@ -14238,4 +14238,4 @@
 45231,Pride_Steel,Pride Steel,5,500,,300,250,0,1,2,0x00000400,63,2,2,4,150,1,6,{ .@r = getrefine(); bonus bUnbreakableWeapon,1; bonus2 bSkillAtk,"NC_POWERSWING",(.@r>=11)?50:(.@r>=7)?25:10; bonus bBaseAtk,12*.@r/3; if (.@r>=9) { bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; } },{},{}
 45232,Gluttony_Stick,Gluttony Stick,5,150,,200,190:200,0,3,2,0x00004000,63,2,2,4,,1,4,{ .@r = getrefine(); bonus bMatk,12*.@r/3; bonus2 bSkillAtk,"LG_RAYOFGENESIS",(.@r>=11)?35:(.@r>=7)?20:10; if (.@r>=9) { bonus bVariableCastrate,-10; } },{},{}
 440000,Shark_Head,Shark Head,4,10,,0,0,0,0,0,0xFFFFFFFF,63,2,1024,,1,0,1919,{},{},{}
-440002,C_Happy_Cat,Costume Happy Cat,4,10,,1,0,0,0,0,0xFFFFFFFF,63,2,769,,1,0,,{},{},{}
+440002,C_Happy_Cat,Costume Happy Cat,4,10,,1,0,0,0,0,0xFFFFFFFF,63,2,1024,,1,0,1980,{},{},{}
