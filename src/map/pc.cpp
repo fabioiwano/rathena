@@ -204,14 +204,14 @@ uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			if( this->nodeExists( rewardNode, "ItemId" ) ){
-				uint16 item_id;
+				uint32 item_id;
 
-				if( !this->asUInt16( rewardNode, "ItemId", item_id ) ){
+				if( !this->asUInt32( rewardNode, "ItemId", item_id ) ){
 					continue;
 				}
 
 				if( item_id == 0 || !itemdb_exists( item_id ) ){
-					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day + 1 );
+					ShowError( "pc_attendance_load: Unknown item ID %u for day %d.\n", item_id, day + 1 );
 					continue;
 				}
 
@@ -321,7 +321,7 @@ void pc_set_reg_load( bool val ){
 DBMap* itemcd_db = NULL; // char_id -> struct item_cd
 struct item_cd {
 	t_tick tick[MAX_ITEMDELAYS]; //tick
-	unsigned short nameid[MAX_ITEMDELAYS]; //item id
+	uint32 nameid[MAX_ITEMDELAYS]; //item id
 };
 
 /**
@@ -1009,7 +1009,7 @@ void pc_setinventorydata(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	for(i = 0; i < MAX_INVENTORY; i++) {
-		unsigned short id = sd->inventory.u.items_inventory[i].nameid;
+		uint32 id = sd->inventory.u.items_inventory[i].nameid;
 		sd->inventory_data[i] = id?itemdb_search(id):NULL;
 	}
 }
@@ -1135,7 +1135,7 @@ void pc_setequipindex(struct map_session_data *sd)
  * @param nameid : itemid
  * @return 1:yes, 0:no
  */
-bool pc_isequipped(struct map_session_data *sd, unsigned short nameid)
+bool pc_isequipped(struct map_session_data *sd, uint32 nameid)
 {
 	uint8 i;
 
@@ -2588,14 +2588,14 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
  * @param race: target race. if < 0, means monster_id
  * @param rate: rate value: 1 ~ 10000. If < 0, it will be multiplied with mob level/10
  */
-static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nameid, uint16 group, int class_, short race, int rate)
+static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, uint32 nameid, uint16 group, int class_, short race, int rate)
 {
 	if (!nameid && !group) {
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
 		return;
 	}
 	if (nameid && !itemdb_exists(nameid)) {
-		ShowWarning("pc_bonus_item_drop: Invalid item id %hu\n",nameid);
+		ShowWarning("pc_bonus_item_drop: Invalid item id %u\n",nameid);
 		return;
 	}
 	if (group && !itemdb_group_exists(group)) {
@@ -2604,7 +2604,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 	}
 
 	if (drop.size() == MAX_PC_BONUS) {
-		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid: %hu group: %d class_: %d race: %d rate: %d)\n", MAX_PC_BONUS, nameid, group, class_, race, rate);
+		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid: %u group: %d class_: %d race: %d rate: %d)\n", MAX_PC_BONUS, nameid, group, class_, race, rate);
 		return;
 	}
 
@@ -3654,10 +3654,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		default:
 			if (current_equip_combo_pos > 0) {
-				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%d\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%u\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 			}
 			else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
-				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%d\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%u\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 			}
 			else {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in unknown usage. Report this!\n", type, val);
@@ -4243,10 +4243,10 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	default:
 		if (current_equip_combo_pos > 0) {
-			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%u\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		} 
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
-			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%u\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
 		else {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in unknown usage. Report this!\n", type, type2, val);
@@ -4383,10 +4383,10 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	default:
 		if (current_equip_combo_pos > 0) {
-			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in a combo with item #%d\n", type, type2, type3, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in a combo with item #%u\n", type, type2, type3, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
-			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in item #%d\n", type, type2, type3, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in item #%u\n", type, type2, type3, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
 		else {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, val);
@@ -4466,10 +4466,10 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 
 	default:
 		if (current_equip_combo_pos > 0) {
-			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in a combo with item #%u\n", type, type2, type3, type4, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
-			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in item #%d\n", type, type2, type3, type4, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in item #%u\n", type, type2, type3, type4, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
 		else {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, type4, val);
@@ -4515,10 +4515,10 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 
 	default:
 		if (current_equip_combo_pos > 0) {
-			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, type5, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in a combo with item #%u\n", type, type2, type3, type4, type5, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
-			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in item #%d\n", type, type2, type3, type4, type5, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in item #%u\n", type, type2, type3, type4, type5, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
 		else {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, type4, type5, val);
@@ -4622,9 +4622,9 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	}
 
 	int i;
-	unsigned short nameid;
 	struct item_data* item_eq = sd->inventory_data[idx_equip];
 	struct item_data* item_card = sd->inventory_data[idx_card];
+	uint32 nameid;
 
 	if(item_eq == nullptr)
 		return 0; //Invalid item index.
@@ -4743,7 +4743,7 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
  * @param amount
  * @return e_chkitem_result
  *------------------------------------------*/
-char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amount)
+char pc_checkadditem(struct map_session_data *sd, uint32 nameid, int amount)
 {
 	int i;
 	struct item_data* data;
@@ -4979,7 +4979,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
  * @param nameid Find this Item!
  * @return Stored index in inventory, or -1 if not found.
  **/
-short pc_search_inventory(struct map_session_data *sd, unsigned short nameid) {
+short pc_search_inventory(struct map_session_data *sd, uint32 nameid) {
 	short i;
 	nullpo_retr(-1, sd);
 
@@ -5267,7 +5267,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 bool pc_isUseitem(struct map_session_data *sd,int n)
 {
 	struct item_data *item;
-	unsigned short nameid;
+	uint32 nameid;
 
 	nullpo_ret(sd);
 
@@ -5440,7 +5440,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 {
 	t_tick tick = gettick();
 	int amount;
-	unsigned short nameid;
+	uint32 nameid;
 	struct script_code *script;
 	struct item item;
 	struct item_data *id;
@@ -5746,7 +5746,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist)
 int pc_show_steal(struct block_list *bl,va_list ap)
 {
 	struct map_session_data *sd;
-	int itemid;
+	uint32 itemid;
 
 	struct item_data *item=NULL;
 	char output[100];
@@ -5755,7 +5755,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	itemid=va_arg(ap,int);
 
 	if((item=itemdb_exists(itemid))==NULL)
-		sprintf(output,"%s stole an Unknown Item (id: %i).",sd->status.name, itemid);
+		sprintf(output,"%s stole an Unknown Item (id: %u).",sd->status.name, itemid);
 	else
 		sprintf(output,"%s stole %s.",sd->status.name,item->jname);
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
@@ -5772,7 +5772,8 @@ int pc_show_steal(struct block_list *bl,va_list ap)
  */
 bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
-	int i,itemid;
+	int i;
+	uint32 itemid;
 	double rate;
 	unsigned char flag = 0;
 	struct status_data *sd_status, *md_status;
@@ -6377,7 +6378,7 @@ short pc_checkequip(struct map_session_data *sd,int pos, bool checkall)
  * @max : see pc.hpp enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
-bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max)
+bool pc_checkequip2(struct map_session_data *sd, uint32 nameid, int min, int max)
 {
 	int i;
 
@@ -9058,7 +9059,7 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
  * @param sp: SP to heal
  * @return Amount healed to an object
  */
-int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
+int pc_itemheal(struct map_session_data *sd, uint32 itemid, int hp, int sp)
 {
 	int bonus, tmp, penalty = 0;
 
@@ -10196,8 +10197,8 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	for( i = 0; i < data->combos_count; i++ ) {
 		struct itemchk {
 			int idx;
-			unsigned short nameid;
-			short card[MAX_SLOTS];
+			uint32 nameid;
+			uint32 card[MAX_SLOTS];
 		} *combo_idx;
 		int idx, j;
 		int nb_itemCombo;
@@ -10218,11 +10219,12 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		for(j=0; j < nb_itemCombo; j++){
 			combo_idx[j].idx=-1;
 			combo_idx[j].nameid=-1;
-			memset(combo_idx[j].card,-1,MAX_SLOTS);
+			memset(combo_idx[j].card,-1,MAX_SLOTS*sizeof(uint32));
 		}
 			
 		for( j = 0; j < nb_itemCombo; j++ ) {
-			uint16 id = data->combos[i]->nameid[j], k;
+			uint32 id = data->combos[i]->nameid[j];
+			uint16 k;
 			bool found = false;
 			
 			for( k = 0; k < EQI_MAX; k++ ) {
@@ -10433,7 +10435,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 
 	if(battle_config.battle_log && !equipswitch)
-		ShowInfo("equip %hu (%d) %x:%x\n",sd->inventory.u.items_inventory[n].nameid,n,id?id->equip:0,req_pos);
+		ShowInfo("equip %u (%d) %x:%x\n",sd->inventory.u.items_inventory[n].nameid,n,id?id->equip:0,req_pos);
 
 	if((res = pc_isequip(sd,n))) {
 		if( equipswitch ){
@@ -11039,7 +11041,7 @@ void pc_checkitem(struct map_session_data *sd) {
 void pc_check_available_item(struct map_session_data *sd, uint8 type)
 {
 	int i;
-	unsigned short nameid;
+	uint32 nameid;
 	char output[256];
 
 	nullpo_retv(sd);
@@ -11051,9 +11053,9 @@ void pc_check_available_item(struct map_session_data *sd, uint8 type)
 			if (!nameid)
 				continue;
 			if (!itemdb_available(nameid)) {
-				sprintf(output, msg_txt(sd, 709), nameid); // Item %hu has been removed from your inventory.
+				sprintf(output, msg_txt(sd, 709), nameid); // Item %u has been removed from your inventory.
 				clif_displaymessage(sd->fd, output);
-				ShowWarning("Removed invalid/disabled item (ID: %hu, amount: %d) from inventory (char_id: %d).\n", nameid, sd->inventory.u.items_inventory[i].amount, sd->status.char_id);
+				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from inventory (char_id: %d).\n", nameid, sd->inventory.u.items_inventory[i].amount, sd->status.char_id);
 				pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 4, 0, LOG_TYPE_OTHER);
 				continue;
 			}
@@ -11069,9 +11071,9 @@ void pc_check_available_item(struct map_session_data *sd, uint8 type)
 			if (!nameid)
 				continue;
 			if (!itemdb_available(nameid)) {
-				sprintf(output, msg_txt(sd, 710), nameid); // Item %hu has been removed from your cart.
+				sprintf(output, msg_txt(sd, 710), nameid); // Item %u has been removed from your cart.
 				clif_displaymessage(sd->fd, output);
-				ShowWarning("Removed invalid/disabled item (ID: %hu, amount: %d) from cart (char_id: %d).\n", nameid, sd->cart.u.items_cart[i].amount, sd->status.char_id);
+				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from cart (char_id: %d).\n", nameid, sd->cart.u.items_cart[i].amount, sd->status.char_id);
 				pc_cart_delitem(sd, i, sd->cart.u.items_cart[i].amount, 0, LOG_TYPE_OTHER);
 				continue;
 			}
@@ -11087,9 +11089,9 @@ void pc_check_available_item(struct map_session_data *sd, uint8 type)
 			if (!nameid)
 				continue;
 			if (!itemdb_available(nameid)) {
-				sprintf(output, msg_txt(sd, 711), nameid); // Item %hu has been removed from your storage.
+				sprintf(output, msg_txt(sd, 711), nameid); // Item %u has been removed from your storage.
 				clif_displaymessage(sd->fd, output);
-				ShowWarning("Removed invalid/disabled item (ID: %hu, amount: %d) from storage (char_id: %d).\n", nameid, sd->storage.u.items_storage[i].amount, sd->status.char_id);
+				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from storage (char_id: %d).\n", nameid, sd->storage.u.items_storage[i].amount, sd->status.char_id);
 				storage_delitem(sd, &sd->storage, i, sd->storage.u.items_storage[i].amount);
 				continue;
 			}
@@ -11513,7 +11515,7 @@ void pc_overheat(struct map_session_data *sd, int16 heat) {
 /**
  * Check if player is autolooting given itemID.
  */
-bool pc_isautolooting(struct map_session_data *sd, unsigned short nameid)
+bool pc_isautolooting(struct map_session_data *sd, uint32 nameid)
 {
 	uint8 i = 0;
 
@@ -12462,7 +12464,7 @@ uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick ti
 		if( !(id->nameid == ITEMID_REINS_OF_MOUNT && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR)) )
 			sd->item_delay[i].tick = tick + sd->inventory_data[n]->delay;
 	} else {// should not happen
-		ShowError("pc_itemcd_add: Exceeded item delay array capacity! (nameid=%hu, char_id=%d)\n", id->nameid, sd->status.char_id);
+		ShowError("pc_itemcd_add: Exceeded item delay array capacity! (nameid=%u, char_id=%d)\n", id->nameid, sd->status.char_id);
 	}
 	//clean up used delays so we can give room for more
 	for(i = 0; i < MAX_ITEMDELAYS; i++) {
@@ -13095,7 +13097,7 @@ short pc_maxaspd(struct map_session_data *sd) {
 * @param nameid Item ID
 * @return Heal rate
 **/
-short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid) {
+short pc_get_itemgroup_bonus(struct map_session_data* sd, uint32 nameid) {
 	if (sd->itemgrouphealrate.empty())
 		return 0;
 

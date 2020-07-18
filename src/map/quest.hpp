@@ -15,7 +15,7 @@
 struct map_session_data;
 
 struct s_quest_dropitem {
-	nameid_t nameid;
+	uint32 nameid;
 	uint16 count;
 	uint16 rate;
 	uint16 mob_id;
