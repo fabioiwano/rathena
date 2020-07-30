@@ -1,0 +1,45 @@
+//==== rAthena Script ========================================
+//= Barmund Mansion Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Barmund Mansion
+//============================================================
+
+//Beggining
+1@herbs,122,82,0	warp	barm01	1,1,1@herbs,149,82
+1@herbs,147,82,0	warp	barm02	1,1,1@herbs,120,82
+
+//Square Garden
+1@herbs,223,82,0	warp	barm03	1,1,1@herbs,243,81
+1@herbs,241,81,0	warp	barm04	1,1,1@herbs,220,82
+1@herbs,188,123,0	warp	barm05	1,1,1@herbs,203,192
+
+//Middle Island
+1@herbs,258,213,0	warp	barm06	1,1,1@herbs,272,213
+1@herbs,270,213,0	warp	barm07	1,1,1@herbs,255,213
+1@herbs,192,200,0	warp	barm08	1,1,1@herbs,170,200
+1@herbs,174,200,0	warp	barm09	1,1,1@herbs,195,200
+
+//Statue Island
+1@herbs,203,190,0	warp	barm09	1,1,1@herbs,185,123
+
+//West Island
+1@herbs,60,227,0	warp	barm09	1,1,1@herbs,77,266
+1@herbs,86,197,0	warp	barm09	1,1,1@herbs,98,232
+
+//Ruin Island
+1@herbs,95,232,0	warp	barm09	1,1,1@herbs,84,197
+1@herbs,180,230,0	warp	barm09	1,1,1@herbs,201,249
+
+//Flowers Island
+1@herbs,201,245,0	warp	barm09	1,1,1@herbs,176,230
+1@herbs,170,267,0	warp	barm09	1,1,1@herbs,146,277
+1@herbs,216,256,0	warp	barm09	1,1,1@herbs,236,251
+
+1@herbs,233,252,0	warp	barm09	1,1,1@herbs,214,256
+1@herbs,74,263,0	warp	barm09	1,1,1@herbs,60,224

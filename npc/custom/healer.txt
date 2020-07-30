@@ -201,4 +201,4 @@ payon,149,229,4	duplicate(Healer)	Healer#payo	465
 lasagna,185,183,4	duplicate(Healer)	Healer#lasa	465
 harboro1,287,217,4	duplicate(Healer)	Healer#harb	465
 poring01,209,108,4	duplicate(Healer)	Healer#porl	465
-novice,53,60,4	duplicate(Healer)	Healer#nov	465
+privyard,138,168,6	duplicate(Healer)	Healer#priv	465

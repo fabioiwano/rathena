@@ -50,6 +50,10 @@ prt_monk,172,204,6	script	Einbroch 3#18	3740,{ callfunc "qshop",21; }
 prt_monk,175,208,5	script	King Schmidt#19	108,{ callfunc "qshop",22; }
 prt_monk,175,204,6	script	Charleston#20	3125,{ callfunc "qshop",23; }
 prt_monk,169,204,6	script	Mora#21	611,{ callfunc "qshop",24; }
+prt_monk,178,208,6	script	Thanatos#22	10008,{ callfunc "qshop",25; }
+prt_monk,178,204,6	script	Automatic Illusion OS#23	10356,{ callfunc "qshop",26; }
+prt_monk,185,208,6	script	Patent Equipment#24	691,{ callfunc "qshop",27; }
+prt_monk,188,208,4	script	Boost Equipment#25	10301,{ callfunc "qshop",28; }
 
 //============================================================
 
@@ -114,8 +118,12 @@ OnInit:
    "Exchange Einbroch 3",		// Shop Named 21
    "Exchange King Schmidt",		// Shop Named 22
    "Exchange Charleston",		// Shop Named 23
-   "Exchange Mora";		// Shop Named 24
-
+   "Exchange Mora",		// Shop Named 24
+   "Exchange Thanatos",		// Shop Named 25
+   "Exchange Automatic Illusion OS",		// Shop Named 26
+   "Exchange Patent Equipment",		// Shop Named 27
+   "Exchange Boost Equipment";		// Shop Named 28
+   
 // -----------------------------------------------------------
 //  Quest items -- do NOT use a reward item more than once!
 //	Add(<shop ID>,<reward ID>,<reward amount>,
@@ -213,7 +221,7 @@ OnInit:
 	Add(7,22848,1,0,0,6919,6); // Prison Key
 	Add(7,22847,1,0,0,6919,6); // Prontera Medal
 	Add(7,28354,1,0,0,6919,150); // City Map [1]
-	Add(7,28355,1,0,0,6919,400); // Shining Holy Water
+	Add(7,28355,1,0,0,6919,400); // Sacred Water
 	Add(7,28900,1,0,0,6919,400); // Royal Guard Shield
 	Add(7,28356,1,0,0,6919,150); // Prontera Badge
 	Add(7,15146,1,0,0,6919,600); // Flattery Robe
@@ -345,49 +353,50 @@ OnInit:
 	Add(12,22033,1,0,0,6672,100); // Boots of Gray
 
 // Shop 13: Exchange: Ancient Hero
- 	Add(13,2981,1,0,0,6684,30); // Warrior's Ring
-	Add(13,22171,1,0,0,7606,30,984,100); // Ancient Hero Boots [1]
-	Add(13,18170,1,0,0,7606,30,984,100); // Narcissus Bow [2]
-	Add(13,28130,1,0,0,7606,30,984,100); // Avenger [2]
-	Add(13,28744,1,0,0,7606,30,984,100); // Madogum [2]
-	Add(13,1847,1,0,0,7606,30,984,100); // Iron Nail [2]
-	Add(13,18164,1,0,0,7606,30,984,100); // Royal Bow [2]
-	Add(13,26118,1,0,0,7606,30,984,100); // Shadow Staff [2]
-	Add(13,2048,1,0,0,7606,30,984,100); // Aeon Staff [2]
-	Add(13,13485,1,0,0,7606,30,984,100); // Red Lotus Sword [2]
-	Add(13,21038,1,0,0,7606,30,984,100); // Oriental Sword [2]
-	Add(13,28039,1,0,0,7606,30,984,100); // Shiver Katar [2]
-	Add(13,28630,1,0,0,7606,30,984,100); // Exorcist's Bible [2]
-	Add(13,32018,1,0,0,7606,30,984,100); // Aquatic Spear [2]
-	Add(13,28631,1,0,0,7606,30,984,100); // One Sky One Sun [2]
-	Add(13,26154,1,0,0,7606,30,984,100); // Spirit Pendulum [2]
-	Add(13,26155,1,0,0,7606,30,984,100); // Meowmeow Foxtail [2]
-	Add(13,32302,1,0,0,7606,30,984,100); // Crimson Rose [2]
-	Add(13,28255,1,0,0,7606,30,984,100); // Master Soul Rifle [2]
-	Add(13,28256,1,0,0,7606,30,984,100); // Demon Slayer Shot [2]
-	Add(13,28257,1,0,0,7606,30,984,100); // Golden Lord Launcher [2]
-	Add(13,28258,1,0,0,7606,30,984,100); // The Black [2]
-	Add(13,13345,1,0,0,7606,30,984,100); // Huuma Shuriken Clearness [2]
-	Add(13,28763,1,0,0,7606,30,984,100); // Surudoi Kaze [2]
-	Add(13,28764,1,0,0,7606,30,984,100); // Kiri no Tsuyu [2]
-	Add(13,35019,1,0,0,7606,30,984,100); // Light Blade [2]
-	Add(13,35020,1,0,0,7606,30,984,100); // Slate Sword [2]
-	Add(13,35031,1,0,0,7606,30,984,100); // Trumpet Shell [2]
-	Add(13,35021,1,0,0,7606,30,984,100); // Barbed Wire Whip [2]
-	Add(13,35022,1,0,0,7606,30,984,100); // Meteor Striker [2]
-	Add(13,35023,1,0,0,7606,30,984,100); // Dragonic Slayer [2]
-	Add(13,35024,1,0,0,7606,30,984,100); // Fatalist [2]
-	Add(13,35025,1,0,0,7606,30,984,100); // Ray Knuckle [2]
-	Add(13,35026,1,0,0,7606,30,984,100); // Saint Scepter [2]
-	Add(13,35027,1,0,0,7606,30,984,100); // Blade Katar [2]
-	Add(13,35028,1,0,0,7606,30,984,100); // Scarlet Dragon Leather Bow [2]
-	Add(13,35029,1,0,0,7606,30,984,100); // Chilling Cane [2]
-	Add(13,35030,1,0,0,7606,30,984,100); // Blue Crystal Staff [2]
+	Add(13,6684,1,50000,0,0,0); // Heroic Token
+ 	Add(13,2981,1,0,0,6684,5); // Warrior's Ring
+	Add(13,22171,1,0,0,7606,5,984,10,6684,5); // Ancient Hero Boots [1]
+	Add(13,18170,1,0,0,7606,5,984,10,6684,5); // Narcissus Bow [2]
+	Add(13,28130,1,0,0,7606,5,984,10,6684,5); // Avenger [2]
+	Add(13,28744,1,0,0,7606,5,984,10,6684,5); // Madogum [2]
+	Add(13,1847,1,0,0,7606,5,984,10,6684,5); // Iron Nail [2]
+	Add(13,18164,1,0,0,7606,5,984,10,6684,5); // Royal Bow [2]
+	Add(13,26118,1,0,0,7606,5,984,10,6684,5); // Shadow Staff [2]
+	Add(13,2048,1,0,0,7606,5,984,10,6684,5); // Aeon Staff [2]
+	Add(13,13485,1,0,0,7606,5,984,10,6684,5); // Red Lotus Sword [2]
+	Add(13,21038,1,0,0,7606,5,984,10,6684,5); // Oriental Sword [2]
+	Add(13,28039,1,0,0,7606,5,984,10,6684,5); // Shiver Katar [2]
+	Add(13,28630,1,0,0,7606,5,984,10,6684,5); // Exorcist's Bible [2]
+	Add(13,32018,1,0,0,7606,5,984,10,6684,5); // Aquatic Spear [2]
+	Add(13,28631,1,0,0,7606,5,984,10,6684,5); // One Sky One Sun [2]
+	Add(13,26154,1,0,0,7606,5,984,10,6684,5); // Spirit Pendulum [2]
+	Add(13,26155,1,0,0,7606,5,984,10,6684,5); // Meowmeow Foxtail [2]
+	Add(13,32302,1,0,0,7606,5,984,10,6684,5); // Crimson Rose [2]
+	Add(13,28255,1,0,0,7606,5,984,10,6684,5); // Master Soul Rifle [2]
+	Add(13,28256,1,0,0,7606,5,984,10,6684,5); // Demon Slayer Shot [2]
+	Add(13,28257,1,0,0,7606,5,984,10,6684,5); // Golden Lord Launcher [2]
+	Add(13,28258,1,0,0,7606,5,984,10,6684,5); // The Black [2]
+	Add(13,13345,1,0,0,7606,5,984,10,6684,5); // Huuma Shuriken Clearness [2]
+	Add(13,28763,1,0,0,7606,5,984,10,6684,5); // Surudoi Kaze [2]
+	Add(13,28764,1,0,0,7606,5,984,10,6684,5); // Kiri no Tsuyu [2]
+	Add(13,35019,1,0,0,7606,5,984,10,6684,5); // Light Blade [2]
+	Add(13,35020,1,0,0,7606,5,984,10,6684,5); // Slate Sword [2]
+	Add(13,35031,1,0,0,7606,5,984,10,6684,5); // Trumpet Shell [2]
+	Add(13,35021,1,0,0,7606,5,984,10,6684,5); // Barbed Wire Whip [2]
+	Add(13,35022,1,0,0,7606,5,984,10,6684,5); // Meteor Striker [2]
+	Add(13,35023,1,0,0,7606,5,984,10,6684,5); // Dragonic Slayer [2]
+	Add(13,35024,1,0,0,7606,5,984,10,6684,5); // Fatalist [2]
+	Add(13,35025,1,0,0,7606,5,984,10,6684,5); // Ray Knuckle [2]
+	Add(13,35026,1,0,0,7606,5,984,10,6684,5); // Saint Scepter [2]
+	Add(13,35027,1,0,0,7606,5,984,10,6684,5); // Blade Katar [2]
+	Add(13,35028,1,0,0,7606,5,984,10,6684,5); // Scarlet Dragon Leather Bow [2]
+	Add(13,35029,1,0,0,7606,5,984,10,6684,5); // Chilling Cane [2]
+	Add(13,35030,1,0,0,7606,5,984,10,6684,5); // Blue Crystal Staff [2]
 
 // Shop 14: Exchange: Nightmarish Jitterbug
  	Add(14,2990,1,0,0,6719,50); // Pendant of Harmony
 	Add(14,2991,1,0,0,6719,50); // Pendant of Chaos
-	Add(14,2992,1,0,0,6719,50); // Pendant of Maelstrom
+	Add(14,2992,1,0,0,2990,1,2991,1); // Pendant of Maelstrom
 	
 // Shop 15: Exchange: Last Room
  	Add(15,18997,1,0,0,6034,10); // Runaway Chip
@@ -558,7 +567,6 @@ OnInit:
 	Add(20,22008,1,0,0,22004,1,6607,5); // Temporal Boots Of Dexterity [1]
 	Add(20,22011,1,0,0,22005,1,6607,5); // Temporal Boots Of Luck [1]
 	
-	
 // Shop 21: Exchange: Einbroch 3
 	Add(21,25814,1,0,0,25809,1,25810,1,25811,1,25812,1,25813,1); // Dynite
 	Add(21,34999,1,0,0,25814,5); // Einbroch 3 Equipment Box
@@ -568,7 +576,6 @@ OnInit:
 	Add(21,32251,1,0,0,25814,5); //Safety Epaulet B [1]
 	
 // Shop 22: Exchange: King Schmidt
-	Add(22,15388,1,0,0,25739,5,6607,10); // King Schmidt's Suit[1]
 	Add(22,15388,1,0,0,25739,5,6607,10); // King Schmidt's Suit[1]
 	Add(22,15389,1,0,0,25739,5,6607,10); // King Schmidt's Manteau[1]
 	Add(22,32228,1,0,0,25740,5,6755,5); // King Schmidt's Strong Insignia[1]
@@ -616,8 +623,119 @@ OnInit:
 	Add(24,2479,1,0,0,6380,10); // White Wing Boots[1]
 	Add(24,2480,1,0,0,6380,10); // Black Wing Boots[1]
 	Add(24,2580,1,0,0,6380,10); // White Wing Manteau
-	Add(24,2581,1,0,0,6380,10); // Black Wing Manteau	
+	Add(24,2581,1,0,0,6380,10); // Black Wing Manteau
+	
+// Shop 25: Thanatos
+	Add(25,1000257,1,0,0,1000244,5); // Fragment of Sin
+	Add(25,1000263,1,0,0,1000261,5); // Fragment of Goodwill
+	Add(25,490044,1,0,0,1000257,30); // Sinful Ruby Ring
+	Add(25,490045,1,0,0,1000257,30); // Sinful Ruby Necklace
+	Add(25,490046,1,0,0,1000257,30); // Sinful Emerald Ring
+	Add(25,490047,1,0,0,1000257,30); // Sinful Emerald Necklace
+	Add(25,490048,1,0,0,1000257,30); // Sinful Topaz Ring
+	Add(25,490049,1,0,0,1000257,30); // Sinful Topaz Necklace
+	Add(25,490050,1,0,0,1000257,30); // Sinful Amethyst Ring
+	Add(25,490051,1,0,0,1000257,30); // Sinful Amethyst Necklace
+	Add(25,490052,1,0,0,1000257,30); // Sinful Sapphire Ring
+	Add(25,490053,1,0,0,1000257,30); // Sinful Sapphire Necklace
+	Add(25,490054,1,0,0,1000257,30); // Sinful Opal Ring
+	Add(25,490055,1,0,0,1000257,30); // Sinful Opal Necklace
+	Add(25,490056,1,0,0,1000263,30); // Brilliant Light Ruby Ring
+	Add(25,490057,1,0,0,1000263,30); // Brilliant Light Ruby Necklace
+	Add(25,490058,1,0,0,1000263,30); // Brilliant Light Amethyst Ring
+	Add(25,490059,1,0,0,1000263,30); // Brilliant Light Amethyst Necklace
+	Add(25,490060,1,0,0,1000263,30); // Brilliant Light Emerald Ring
+	Add(25,490061,1,0,0,1000263,30); // Brilliant Light Emerald Necklace
+	Add(25,490062,1,0,0,1000263,30); // Brilliant Light Zircon Ring
+	Add(25,490063,1,0,0,1000263,30); // Brilliant Light Zircon Necklace
+	Add(25,490064,1,0,0,1000263,30); // Brilliant Light Sapphire Ring
+	Add(25,490065,1,0,0,1000263,30); // Brilliant Light Sapphire Necklace
+	Add(25,490066,1,0,0,1000263,30); // Brilliant Light Aquamarine Ring
+	Add(25,490067,1,0,0,1000263,30); // Brilliant Light Aquamarine Necklace	
 
+// Shop 26: Automatic Illusion OS
+	Add(26,45234,1,0,0,1000103,35); // Normal Automatic Mod. Module Box
+	Add(26,45235,1,0,0,1000103,35); // Rare Automatic Mod. Module Box
+	Add(26,45236,1,0,0,1000103,35); // Unique Automatic Mod. Module Box
+	Add(26,45237,1,0,0,1000103,35); // Legendary Automatic Mod. Module Box
+	Add(26,45238,1,0,0,1000103,35); // Epic Automatic Mod. Module Box
+	
+	Add(26,450127,1,0,0,1000103,350,15376,5); // Automatic Armor A-type
+	Add(26,450128,1,0,0,1000103,350,15377,5); // Automatic Armor B-type
+	Add(26,470022,1,0,0,1000103,350,22196,5); // Automatic Leg A-type
+	Add(26,470023,1,0,0,1000103,350,22197,5); // Automatic Leg B-type
+	Add(26,480020,1,0,0,1000103,350,20933,5); // Automatic Engine wing A-type
+	Add(26,480021,1,0,0,1000103,350,20934,5); // Automatic Engine wing B-type
+	Add(26,490024,1,0,0,1000103,350,32207,5); // Automatic Booster R
+	Add(26,490025,1,0,0,1000103,350,32208,5); // Automatic Booster L
+	Add(26,490026,1,0,0,1000103,350,32209,5); // Automatic Battle chip R
+	Add(26,490027,1,0,0,1000103,350,32210,5); // Automatic Battle chip L
+		
+// Shop 27: Patent Equipments	
+	Add(27,22238,1,0,0,7606,5,984,10,6684,5); // Great Hero Boots
+	Add(27,21058,1,0,0,7606,5,984,10,6684,5); // Patent Dragonic Slayer
+	Add(27,500014,1,0,0,7606,5,984,10,6684,5); // Patent Slate Sword
+	Add(27,500017,1,0,0,7606,5,984,10,6684,5); // Patent Light Blade
+	Add(27,510019,1,0,0,7606,5,984,10,6684,5); // Patent Madogum
+	Add(27,510020,1,0,0,7606,5,984,10,6684,5); // Patent Fatalist
+	Add(27,510022,1,0,0,7606,5,984,10,6684,5); // Patent Kiri no Tsuyu
+	Add(27,540011,1,0,0,7606,5,984,10,6684,5); // Patent Exorcist's Bible
+	Add(27,550012,1,0,0,7606,5,984,10,6684,5); // Patent Shadow Staff
+	Add(27,550013,1,0,0,7606,5,984,10,6684,5); // Patent Chilling Cane
+	Add(27,550014,1,0,0,7606,5,984,10,6684,5); // Patent Meowmeow Foxtail
+	Add(27,560008,1,0,0,7606,5,984,10,6684,5); // Patent Iron Nail
+	Add(27,560009,1,0,0,7606,5,984,10,6684,5); // Patent Ray Knuckle
+	Add(27,570009,1,0,0,7606,5,984,10,6684,5); // Patent Trumpet Shell
+	Add(27,580009,1,0,0,7606,5,984,10,6684,5); // Patent Barbed Wire Whip
+	Add(27,590011,1,0,0,7606,5,984,10,6684,5); // Patent Meteor Striker
+	Add(27,590012,1,0,0,7606,5,984,10,6684,5); // Patent Saint Hall
+	Add(27,600009,1,0,0,7606,5,984,10,6684,5); // Patent Oriental Sword
+	Add(27,610008,1,0,0,7606,5,984,10,6684,5); // Patent Shiver Katar
+	Add(27,610009,1,0,0,7606,5,984,10,6684,5); // Patent Blade Katar
+	Add(27,620004,1,0,0,7606,5,984,10,6684,5); // Patent Avenger
+	Add(27,640011,1,0,0,7606,5,984,10,6684,5); // Patent Aeon Staff
+	Add(27,640012,1,0,0,7606,5,984,10,6684,5); // Patent Blue Crystal Staff
+	Add(27,650004,1,0,0,7606,5,984,10,6684,5); // Patent Huuma Shuriken Clearness
+	Add(27,700013,1,0,0,7606,5,984,10,6684,5); // Patent Narcissus Bow
+	Add(27,700018,1,0,0,7606,5,984,10,6684,5); // Patent Royal Bow
+	Add(27,700019,1,0,0,7606,5,984,10,6684,5); // Patent Scarlet Dragon Leather Bow
+
+// Shop 28: Booster Equipments	
+	Add(28,490004,1,0,0,7606,5,984,10,6684,5); // Attacker Booster Ring
+	Add(28,490007,1,0,0,7606,5,984,10,6684,5); // Range Booster Brooch
+	Add(28,490005,1,0,0,7606,5,984,10,6684,5); // Elemental Booster Earring
+	Add(28,490006,1,0,0,7606,5,984,10,6684,5); // Defunct Booster Earring
+	Add(28,450001,1,0,0,7606,5,984,10,6684,5); // Attacker Booster Plate
+	Add(28,450002,1,0,0,7606,5,984,10,6684,5); // Elemental Booster Robe
+	Add(28,450003,1,0,0,7606,5,984,10,6684,5); // Defunct Booster Robe
+	Add(28,450004,1,0,0,7606,5,984,10,6684,5); // Range Booster Suit
+	Add(28,480000,1,0,0,7606,5,984,10,6684,5); // Attacker Booster Manteau
+	Add(28,480001,1,0,0,7606,5,984,10,6684,5); // Elemental Booster Muffler
+	Add(28,480002,1,0,0,7606,5,984,10,6684,5); // Defunct Booster Muffler
+	Add(28,480003,1,0,0,7606,5,984,10,6684,5); // Range Booster Manteau
+	Add(28,470000,1,0,0,7606,5,984,10,6684,5); // Attacker Booster Greaves
+	Add(28,470001,1,0,0,7606,5,984,10,6684,5); // Elemental Booster Shoes
+	Add(28,470002,1,0,0,7606,5,984,10,6684,5); // Defunct Booster Shoes
+	Add(28,470003,1,0,0,7606,5,984,10,6684,5); // Range Booster Boots
+	Add(28,500001,1,0,0,7606,5,984,10,6684,5); // Boosting Sword
+	Add(28,510001,1,0,0,7606,5,984,10,6684,5); // Boosting Dagger
+	Add(28,510002,1,0,0,7606,5,984,10,6684,5); // Boosting Nindo
+	Add(28,520000,1,0,0,7606,5,984,10,6684,5); // Boosting Axe
+	Add(28,530000,1,0,0,7606,5,984,10,6684,5); // Boosting Spear
+	Add(28,540000,1,0,0,7606,5,984,10,6684,5); // Boosting Spellbook
+	Add(28,540001,1,0,0,7606,5,984,10,6684,5); // Boosting Text
+	Add(28,550001,1,0,0,7606,5,984,10,6684,5); // Boosting Soul Rod
+	Add(28,550002,1,0,0,7606,5,984,10,6684,5); // Boosting Foxtail
+	Add(28,560000,1,0,0,7606,5,984,10,6684,5); // Boosting Knuckle
+	Add(28,570000,1,0,0,7606,5,984,10,6684,5); // Boosting Guitar
+	Add(28,580000,1,0,0,7606,5,984,10,6684,5); // Boosting Whip
+	Add(28,590000,1,0,0,7606,5,984,10,6684,5); // Boosting Mace
+	Add(28,600001,1,0,0,7606,5,984,10,6684,5); // FullForce
+	Add(28,610000,1,0,0,7606,5,984,10,6684,5); // Boosting Katar
+	Add(28,640000,1,0,0,7606,5,984,10,6684,5); // Boosting Staff
+	Add(28,700001,1,0,0,7606,5,984,10,6684,5); // Boosting Bow
+	Add(28,830000,1,0,0,7606,5,984,10,6684,5); // Boosting Gatling
+	
 // -----------------------------------------------------------
 
 //=====================================================================================
@@ -790,3 +908,7 @@ function	script	qshop	{
 -	shop	qshop22	-1,909:-1
 -	shop	qshop23	-1,909:-1
 -	shop	qshop24	-1,909:-1
+-	shop	qshop25	-1,909:-1
+-	shop	qshop26	-1,909:-1
+-	shop	qshop27	-1,909:-1
+-	shop	qshop28	-1,909:-1

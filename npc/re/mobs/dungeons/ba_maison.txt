@@ -32,8 +32,9 @@ ba_2whs01,0,0	monster	Broken Security Beta	20639,35,5000
 // ba_2whs02 - Barmund Warehouse Tartarus 2F
 //==================================================
 ba_2whs02,0,0	monster	Broken Cleaning Robot	20641,35,5000
-ba_2whs02,0,0	monster	Broken Warehouse Manager	20637,40,5000
-ba_2whs01,0,0	monster	Broken Security Beta	20639,35,5000
+ba_2whs02,0,0	monster	Broken Warehouse Manager	20637,80,5000
+ba_2whs01,0,0	monster	Broken Security Beta	20638,25,5000
+ba_2whs01,0,0	monster	Broken Blue Guard	20639,25,5000
 
 //==================================================
 // ba_bath - Barmund Bath
@@ -44,7 +45,7 @@ ba_bath,0,0	monster	Boiled Water Piranha	20646,20,5000
 ba_bath,0,0	monster	Boiled Water Phen	20643,20,5000
 ba_bath,0,0	monster	Broken Beta Boomerang	20633,30,5000
 ba_bath,0,0	monster	Broken Cleaner Beta	20634,20,5000
-
+ba_bath,0,0	monster	Lapis Lazuli	20647,10,5000
 
 //==================================================
 // ba_lib - Barmund Library memory corridor
@@ -91,7 +92,34 @@ ba_lost,0,0	monster	Green Pitaya	20653,50,5000
 
 ba_lost,266,245,3,3	boss_monster	Boss Meow	20648,1,3600000,600000,1
 
+//==================================================
+// 1@herbs - Barmund Garden
+//==================================================
 
+1@herbs,206,70,30,30	monster	Broken Hose Beta	20636,15,5000
+1@herbs,87,77,40,30	monster	Broken Brush Beta	20635,15,5000
+1@herbs,275,81,30,30	monster	Greater Broken Gardener Beta	20632,15,5000
+1@herbs,275,81,30,30	monster	Broken Gardener Beta	20631,15,5000
+1@herbs,0,0	monster	Child Admin Alpha	20697,15,5000
+1@herbs,0,0	monster	Child Admin Beta	20696,15,5000
 
+1@herbs,86,109,1,1	boss_monster	Sweetie	20642,1,3600000,600000,1
 
+1@herbs,0,0	monster	Greater Special Alnoldi	20627,15,5000
+1@herbs,0,0	monster	Special Alnoldi	20626,15,5000
+1@herbs,0,0	monster	Greater Dry Rafflesia	20625,15,5000
+1@herbs,0,0	monster	Dry Rafflesia	20624,15,5000
 
+1@herbs,216,204,10,10	boss_monster	Red Pepper	20620,1,3600000,600000,1
+1@herbs,300,233,5,5	boss_monster	Greater Red Pepper	20621,1,3600000,600000,1
+
+1@herbs,69,285,10,10	monster	Greater Aries	20678,15,5000
+1@herbs,62,209,10,10	monster	Aries	20677,15,5000
+1@herbs,211,291,15,15	monster	Blue Papila	20674,15,5000
+1@herbs,200,263,15,15	monster	Papila Ruba	20671,15,5000
+1@herbs,251,264,10,10	monster	papila	20669,15,5000
+1@herbs,162,210,10,10	monster	Verporte	20666,15,5000
+1@herbs,118,227,10,10	monster	Verporta	20665,15,5000
+
+1@herbs,133,278,1,1	boss_monster	Silva Papilla	20667,1,3600000,600000,1
+1@herbs,312,121,1,1	boss_monster	Grand Papilia	20668,1,3600000,600000,1

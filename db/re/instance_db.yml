@@ -297,10 +297,10 @@ Body:
         Map: 1@slw
         X: 187
         Y: 24
-  - Id: 37
-     Name: Werner Laboratory central room#2
-     TimeLimit: 3600
-     Enter:
+  - Id: 3
+    Name: Werner Laboratory central room#2
+    TimeLimit: 3600
+    Enter:
         Map: 1@slw
         X: 187
-        Y: 24
+        Y: 24 

@@ -499,7 +499,6 @@
 5408,507,100	// Old_Bandanna
 5409,1,100	// New_Cowboy_Hat
 5410,499,100	// Bread_Bag2
-5412,507,100	// Sweet_Candy
 5413,467,100	// Popcorn_Hat
 5414,467,100	// Campfire_Hat
 5419,1,100	// Evolved_Leaf
@@ -632,7 +631,6 @@
 5858,1,100	// Victory_FB_Hat
 5859,1,100	// Glory_FB_Hat
 5864,475,100	// Shadow_Booster
-5900,467,100	// Divine Guard Hat
 5901,467,100	// Focus Beret
 5902,467,100	// Harvester Hat
 5903,467,100	// Deadman Bandana
@@ -755,18 +753,18 @@
 6219,507,100	// Para_Team_Mark
 6225,475,100	// HD_Carnium
 6226,475,100	// HD_Bradium
-6228,475,100	// Guarantee_Weapon_9Up
-6229,475,100	// Guarantee_Weapon_8Up
-6230,475,100	// Guarantee_Weapon_7Up
-6231,475,100	// Guarantee_Weapon_6Up
-6232,475,100	// Guarantee_Armor_9Up
-6233,475,100	// Guarantee_Armor_8Up
-6234,475,100	// Guarantee_Armor_7Up
-6235,475,100	// Guarantee_Armor_6Up
+6228,8,100	// Guarantee_Weapon_9Up
+6229,8,100	// Guarantee_Weapon_8Up
+6230,8,100	// Guarantee_Weapon_7Up
+6231,8,100	// Guarantee_Weapon_6Up
+6232,8,100	// Guarantee_Armor_9Up
+6233,8,100	// Guarantee_Armor_8Up
+6234,8,100	// Guarantee_Armor_7Up
+6235,8,100	// Guarantee_Armor_6Up
 6236,499,100	// Blue_Card_7
 6237,507,100	// Guarana_Fruit
-6238,475,100	// Guarantee_Weapon_11Up
-6239,475,100	// Guarantee_Armor_11Up
+6238,8,100	// Guarantee_Weapon_11Up
+6239,8,100	// Guarantee_Armor_11Up
 6240,475,100	// HD_Oridecon
 6241,475,100	// HD_Elunium
 6242,9,100	// Midgard_Coin
@@ -1366,6 +1364,7 @@
 //11606,499,100	//
 //11614,499,100	//
 //11615,499,100	//
+12103,8,100	// Bloody_Dead_Branch
 12142,507,100	// Magic_Book
 12153,499,100	// Bow_Mercenary_Scroll1
 12154,499,100	// Bow_Mercenary_Scroll2
@@ -1567,7 +1566,6 @@
 12600,507,100	// Treasure_Box_Scroll
 12607,507,100	// Lolli_Pop_Box
 12610,475,100	// Mysterious_Egg
-12622,507,100	// Boarding_Halter
 12625,475,100	// Sapa_Feat_Cert_Pack
 12633,475,100	// Malang_Cat_Can
 12636,467,100	// Malang_Sp_Can
@@ -1594,7 +1592,6 @@
 12664,475,100	// Trans_Scroll_Golem
 12672,499,100	// Start_New_Box
 12673,475,100	// Lucky_Egg_C10
-12684,475,100	// ASPD_Potion
 12685,475,100	// Gryphon_Egg_Scroll
 12702,467,100	// Old_Bleu_Box
 12704,475,100	// Elixir_Of_Life
@@ -3956,7 +3953,6 @@
 18508,1,100	// Garuda_Hat
 18514,499,100	// Para_Team_Hat2
 18520,475,100	// Jaty_C
-18526,507,100	// Yummy_Lollipop
 18528,1,100	// Tare_Neko_Cru
 18536,1,100	// Foxtail
 18556,499,100	// Angel_Helmet
@@ -3988,9 +3984,7 @@
 18781,475,100	// RWC_Champ_Crown_Black
 18796,475,100	// RWC_Champ_Crown_QF
 18821,1,100	// Rainbow_Feather_Deco
-18828,475,100	// 2012RMSCNO1
-18829,475,100	// 2012RMSCNO2
-18830,475,100	// 2012RMSCNO3
+18829,1,100	// 2012RMSCNO2
 18970,475,100	// Magical_Moon_Cat
 18971,475,100	// Old_Rune_Circlet
 18972,475,100	// Old_Mitra
@@ -4059,7 +4053,6 @@
 19522,1,100	// Mini_Crown1
 19523,475,100	// Donation_Ribbon
 19530,1,100	// C_Wild_Rose
-19531,475,100	// C_Cube_Mask
 19532,475,100	// C_Red_Bunny_Band
 19533,1,100	// C_Spore_Hat
 19534,1,100	// C_Tha_Despero_Mask

@@ -23,6 +23,7 @@
 //23225
 //23226
 //23227
+20547  // C_Ghost_Effect
 23228	//Hazy_Mooncake
 //23282
 //25041
@@ -559,7 +560,6 @@
 4438	//Banshee_Card
 4439	//Flame_Skull_Card
 4440	//Necromancer_Card
-4441	//Fallen_Bishop_Card
 4442	//Tatacho_Card
 4443	//Aqua_Elemental_Card
 4444	//Draco_Card
@@ -1197,7 +1197,7 @@
 12100	//Luk_Dish10
 12101	//Citron
 12102	//Meat_Skewer
-12103	//Bloody_Dead_Branch
+12103  // Bloody_Dead_Branch
 12104	//Random_Quiver
 12105	//Set_Of_Taiming_Item
 12106	//Accessory_Box

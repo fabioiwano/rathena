@@ -287,12 +287,12 @@ F29: Restrict("Pre-RE",5,10);
 // --------------------------------------------------
 @d = true;
 menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
-    	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D42,
+    	"Ayothaya Dungeon",D4, "Barmund Garden",D52, "Barmund Mansion",D51, "Beach Dungeon",D5, "Bifrost Tower",D42,
     	"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
     	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
     	"Einbroch Dungeon",D14, "Fire Basin",D43, "Gefenia",D15, "Geffen Dungeon",D16,
     	"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19, "Ice Dungeon",D20, "Illusion Dungeons",D49, 
-    	"Invaded Prontera",D44, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23, "Legacy of Sage",D51,
+    	"Invaded Prontera",D44, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23, 
 		"Luoyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
 		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
 		"Orc Dungeon",D30, "Payon Dungeon",D31, "Prontera Prison",D45, "Pyramids",D32, "Rachel Sanctuary",D33, "Rock Ridge Mines",D46, "Scaraba Hole",D34, "Sphinx",D35,
@@ -427,13 +427,17 @@ D49: Restrict("RE",7,8);
 
 D50: Restrict("RE",7,8);
 	 setarray @c[2],261,361,200,380,340,206,380,181;
-	 Disp("SP OS:Special Border Area:Organic Field Rudus 1F:Organic Field Rudus 2F:Organic Field Rudus 3F");
+	 Disp("SP OS:Organic Field Rudus 1F:Organic Field Rudus 2F:Organic Field Rudus 3F");
 	 Pick("","sp_os","sp_rudus","sp_rudus2","sp_rudus3");
 
 D51: Restrict("RE",7,8);
 	 setarray @c[2],197,275,159,19,160,19,162,42,12,116,275,21,15,116,157,29,27,25;
 	 Disp("Mansion:Library Corridor:Meditations Large Bath:Time-forgotten Vivarium:1st Floor-Power Plant:2st Floor-Power Plant:3rd Floor-Power Plant:Warehouse-Upper Floor:Warehouse-Lower Floor");
 	 Pick("","ba_maison","ba_lib","ba_bath","ba_lost","ba_pw01","ba_pw02","ba_pw03","ba_2whs01","ba_2whs02");
+
+D52: Restrict("RE");
+	 setarray @c[2],51,82;
+	 Disp("Hidden Garden",1,1); Pick("","1@herbs");
 
 // --------------------------------------------------
 	Castles:

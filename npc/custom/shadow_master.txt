@@ -1,0 +1,146 @@
+prt_monk,116,215,6	script	Shadow Master	4_F_HIMEL2,{
+
+   
+        mes  .npc$;
+		mes "You can't assign this task to a common blacksmith.";
+		mes "How can I help you?";
+		
+		for ( .@i = 0; .@i < getarraysize(.eqptype$); ++.@i ) {
+
+			if(getequipid(.eqptype$[.@i]) > -1){
+				//set .@menu$, .@menu$ + .eqp$[.@i] + ": ";
+				set .@menu$, .@menu$ + getitemname(getequipid(.eqptype$[.@i])) + ":";
+			}else{
+				set .@menu$, .@menu$ + "^0000FF"+ .eqp$[.@i] + " - Not equipped ^000000:";
+			}	
+		}
+
+		select(.@menu$);
+		set .@item, .eqptype$[@menu-1];
+		set .@consumable, 1;
+		next;
+
+		if(getequipid(.@item) <= 0){
+			mes  .npc$;
+			mes "Are you kidding me? I can't see any equipment.";
+			close;
+		}
+
+		if (getequiprefinerycnt(.@item) == 10){
+			mes  .npc$;
+			mes "You already have this item upgraded.";
+			
+		}else{
+			if(countitem(23926) > 0) {
+				mes "I feel a +9 Blacksmith Hammer in your possession...";
+				mes "Give it to me and I will grant you a safe +9 refine.";
+				switch(select("Use hammer:Do not use hammer")){
+
+				Case 1:
+					successrefitem .@item, 9;
+					specialeffect 722;
+					close;
+				Case 2:	
+				mes "Well..wish me luck..";
+				}
+			}
+
+			set .@tempRandom, rand(10);
+			set .@currentRefine, getequiprefinerycnt(.@item);
+
+			//checar que tipo de item
+
+			if(.@item == 16 && countitem(25729) < 1){
+				mes "I can't feel ^0000FFShadowdecon^000000 in your possession.";
+				close;
+			}else if(.@item == 16 && countitem(25729) >= 1){
+				set .@consumable, 25729;
+			}
+
+			if(.@item != 16 && countitem(25731) < 1){
+				mes "I can't feel ^0000FFZeluniun^000000 in your possession.";
+				close;
+			}else if(.@item != 16  && countitem(25731) >= 1){
+				set .@consumable, 25731;
+			}
+
+
+			
+			if(.@currentRefine < 4 ){
+
+
+				successrefitem .@item, 1;
+				mes  .npc$;
+				mes "It worked!";
+				specialeffect 722;
+				close;
+
+			}else if(.@currentRefine >= 4){
+				mes .npc$;
+				mes "It may break in the process.";
+				mes "To avoid break, you must have ^0000FF" + getequiprefinerycnt(.@item) + " Blacksmith blessings^000000 in your possession";
+				mes "Proceed?";
+				next;
+				if(select("Yes:No")&2) {mes .npc$; mes "Alright..."; close; }
+				next;
+				 if(.@currentRefine <= 7){
+
+					 if(.@tempRandom <= 8){
+						 successrefitem .@item, 1;
+						 mes .npc$;
+						 mes "It worked!";
+						 specialeffect 722;
+					 }else{
+						  
+						 if(countitem(6635) >= getequiprefinerycnt(.@item)){
+							 mes .npc$;
+							 mes "It failed, but your equipment is safe...";
+							 delitem 6635, getequiprefinerycnt(.@item);
+							 specialeffect 563;
+						 }else{
+							failedrefitem .@item;
+							mes .npc$;
+						 	mes "Oh..I'm sorry...";
+						 }
+						 
+					 }
+					 delitem .@consumable, 1;
+					 close;
+
+				}else{
+
+					if(.@tempRandom <=2){
+						 successrefitem .@item, 1;
+						 mes .npc$;
+						 mes "It worked!";
+						 specialeffect 722;
+					}else{
+						 if(countitem(6635) >= getequiprefinerycnt(.@item)){
+							 mes .npc$;
+							 mes "It failed, but your equipment is safe...";
+							 delitem 6635, getequiprefinerycnt(.@item);
+							 specialeffect 563;
+						 }else{
+							failedrefitem .@item;
+							mes .npc$;
+						 	mes "Oh..I'm sorry...";
+						 }
+					}
+					 delitem .@consumable, 1;
+					 close;
+
+					
+				}
+			}
+
+		}
+		
+    close;
+
+    OnInit:
+	set      .npc$  ,	"[^0000FFShadow Refiner^000000]"; // NPC Name
+    setarray .eqp$  ,	"Armor", "Weapon", "Shield", "Accessory R", "Accessory L";
+    setarray .eqptype$,   EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_SHADOW_ACC_R, EQI_SHADOW_ACC_L;
+
+
+}

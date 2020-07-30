@@ -1051,6 +1051,13 @@ star_in
 2012rwc_06
 2012rwc_07
 2012rwc_08
+abyss_04
+sp_rudus
+sp_rudus2
+sp_rudus3
+sp_cor
+sp_os
+odin_past
 ba_maison
 ba_lib
 ba_bath
@@ -1060,6 +1067,7 @@ ba_pw02
 ba_pw03
 ba_2whs01
 ba_2whs02
+1@herbs
 
 //======================================================================================
 // - Other/Extra maps JUFARO -
@@ -1069,11 +1077,4 @@ privyard
 novice
 poring01
 poring02
-abyss_04
 madropvp
-sp_rudus
-sp_rudus2
-sp_rudus3
-sp_cor
-sp_os
-odin_past

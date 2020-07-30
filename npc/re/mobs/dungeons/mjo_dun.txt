@@ -34,3 +34,5 @@ mjo_dun03,0,0	monster	Myst	1151,39,5000
 mjo_dun03,0,0	monster	Giearth	1121,5,5000
 mjo_dun03,0,0	monster	Martin	1145,5,5000
 mjo_dun03,0,0	monster	Cramp	1209,3,5000
+
+mjo_dun03,0,0,0,0	boss_monster	Raver Skeleton	25060,1,18000000,600000,0

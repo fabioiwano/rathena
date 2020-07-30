@@ -33,12 +33,13 @@ ma_scene01,174,179,4	script	Taho	541,{
 		mes "Hey. This is too dangerous a place for you. You cannot keep yourself safe. Get out of here and go to the village right now!";
 		close;
 	}
+	/* disable quest requirement
 	if (malaya_bakona1 < 7 && malaya_bakona2 < 15) {
 		mes "[Taho]";
 		mes "We are gonna be killed all by that Bakonawa. Ah, we must slay him but unfortunately we are not prepared.";
 		close;
 	}
-
+	*/
 	set .@party_id,getcharid(1);
 	set .@md_name$, "Bakonawa Lake";
 

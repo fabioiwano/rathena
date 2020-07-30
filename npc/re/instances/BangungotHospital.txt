@@ -20,6 +20,20 @@
 // Instance Creation :: ma_hos_enter
 //============================================================
 ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
+
+	//  completar prereqs
+		setquest 9222; 
+		setquest 9223;
+		erasequest 9222; 
+		erasequest 9223; 
+		setquest 9224; 
+		erasequest 9224; 
+		malaya_bang = 30; 
+		malaya_bang = 40; 
+		setquest 11309; 
+		completequest 11309; 
+		end;
+
 	if (BaseLevel < 100)
 		end;
 	.@party_id = getcharid(1);
@@ -51,6 +65,7 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 			}
 			switch( checkquest(9224,PLAYTIME) ) {// Explore Hospital 2F
 			case -1:
+			/*
 				if (malaya_bang == 30) {
 					malaya_bang = 31;
 					changequest 11302,11303;
@@ -67,6 +82,7 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 					cutin "",255;
 					end;
 				}
+			*/
 			case 0:
 			case 1:
 				mes "[Nurse Maenne]";

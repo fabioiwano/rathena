@@ -124,26 +124,26 @@ tha_t09,0,0	monster	Crow Braon	20783,15,5000
 tha_t10,0,0	monster	Void Mimic	20779,15,5000
 tha_t10,0,0	monster	Book of Death	20780,15,5000
 tha_t10,0,0	monster	Eldest	20781,13,5000
-tha_t10,0,0	monster	Emphatizer	20773,5,5000
-tha_t10,0,0	monster	Happy Giver	20774,5,5000
+tha_t10,0,0	monster	Emphatizer	20787,5,5000
+tha_t10,0,0	monster	Happiness Giver	20788,5,5000
 
 //==================================================
 // tha_t11 - Thanatos Tower - Upper Level
 //==================================================
 tha_t11,0,0	monster	Void Mimic	20779,3,5000
 tha_t11,0,0	monster	Book of Death	20780,3,5000
-tha_t11,0,0	monster	Emphatizer	20773,14,5000
-tha_t11,0,0	monster	Happy Giver	20774,14,5000
-tha_t11,0,0	monster	Pray Giver	20844,15,5000
-tha_t11,0,0	monster	Smile Giver	20845,15,5000
-tha_t11,0,0	monster	Resentful of Thanatos	20777,2,5000
+tha_t11,0,0	monster	Emphatizer	20787,14,5000
+tha_t11,0,0	monster	Happiness Giver	20788,14,5000
+tha_t11,0,0	monster	Pray Giver	20789,15,5000
+tha_t11,0,0	monster	Smile Giver	20791,15,5000
+tha_t11,0,0	monster	Resentment of Thanatos	20777,2,5000
 tha_t11,0,0	monster	Horror of Thanatos	20776,2,5000
 
 //==================================================
 // tha_t12 - Thanatos Tower - Upper Level
 //==================================================
 tha_t12,0,0	monster	Book of Death	20780,3,5000
-tha_t12,0,0	monster	Anger of Thanatos	20775,13,5000
+tha_t12,0,0	monster	Anger of Thanatos	20792,13,5000
 tha_t12,0,0	monster	Horror of Thanatos	20776,15,5000
-tha_t12,0,0	monster	Resentful of Thanatos	20777,14,5000
+tha_t12,0,0	monster	Resentment of Thanatos	20777,14,5000
 tha_t12,0,0	monster	Regret of Thanatos	20778,15,5000
